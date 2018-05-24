@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Restless Wallet</string>
+    <!--Tutorial-->
+    <string name="tutorial_help1">Welcome to the Restless Wallet, a \n simple and open-source way to store \n multiple kinds of digital assets.</string>
+    <string name="tutorial_help2">Assets are held in a wallet on the \n device. Send, receive and pay with \n cryptocurrency today!</string>
+    <string name="tutorial_help3">The team is not responsible for assets \n lost due to compromised or lost keys. \n Be sure to keep secret keys safe and \n secure.</string>
+    <string name="get_started">GET STARTED</string>
+    <string name="restore_from_backup">RESTORE FROM BACKUP</string>
+    <string name="go_it">GO IT</string>
+    <string name="skip">SKIP</string>
+    <string name="create_account">CREATE A NEW ACCOUNT</string>
+    <string name="restore_from_mnemonic">RESTORE FROM MNEMONIC</string>
+    <string name="back">BACK</string>
 </resources>

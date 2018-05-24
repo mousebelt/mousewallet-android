@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/btnBack"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:padding="@dimen/default_margin"
+    android:onClick="onClick">
+
+    <ImageView
+        android:layout_width="12dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/back"/>
+    <TextView
+        style="@style/DefaultText"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:text="@string/back"
+        android:textColor="@color/colorAccent"/>
+</LinearLayout>
