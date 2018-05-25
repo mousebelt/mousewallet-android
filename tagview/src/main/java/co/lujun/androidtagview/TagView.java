@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 lujun
+ * Copyright 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,10 +33,6 @@ import android.view.View;
 
 import static co.lujun.androidtagview.Utils.dp2px;
 
-/**
- * Author: lujun(http://blog.lujun.co)
- * Date: 2015-12-31 11:47
- */
 public class TagView extends View {
 
     /** Border width*/

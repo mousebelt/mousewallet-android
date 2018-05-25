@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 lujun
+ * Copyright 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,6 @@ package co.lujun.androidtagview;
 
 import android.graphics.Color;
 
-/**
- * Author: lujun(http://blog.lujun.co)
- * Date: 2016-1-4 23:20
- */
 public class ColorFactory {
 
     /**
@@ -30,22 +26,22 @@ public class ColorFactory {
      *                     =============
      */
 
-    public static final String BG_COLOR_ALPHA = "33";
-    public static final String BD_COLOR_ALPHA = "88";
+    private static final String BG_COLOR_ALPHA = "33";
+    private static final String BD_COLOR_ALPHA = "88";
 
-    public static final String RED = "F44336";
-    public static final String LIGHTBLUE = "03A9F4";
-    public static final String AMBER = "FFC107";
-    public static final String ORANGE = "FF9800";
-    public static final String YELLOW = "FFEB3B";
-    public static final String LIME = "CDDC39";
-    public static final String BLUE = "2196F3";
-    public static final String INDIGO = "3F51B5";
-    public static final String LIGHTGREEN = "8BC34A";
-    public static final String GREY = "9E9E9E";
-    public static final String DEEPPURPLE = "673AB7";
-    public static final String TEAL = "009688";
-    public static final String CYAN = "00BCD4";
+    private static final String RED = "F44336";
+    private static final String LIGHTBLUE = "03A9F4";
+    private static final String AMBER = "FFC107";
+    private static final String ORANGE = "FF9800";
+    private static final String YELLOW = "FFEB3B";
+    private static final String LIME = "CDDC39";
+    private static final String BLUE = "2196F3";
+    private static final String INDIGO = "3F51B5";
+    private static final String LIGHTGREEN = "8BC34A";
+    private static final String GREY = "9E9E9E";
+    private static final String DEEPPURPLE = "673AB7";
+    private static final String TEAL = "009688";
+    private static final String CYAN = "00BCD4";
 
     public enum PURE_COLOR{CYAN, TEAL}
 
@@ -54,8 +50,8 @@ public class ColorFactory {
     public static final int PURE_CYAN = 1;
     public static final int PURE_TEAL = 2;
 
-    public static final int SHARP666666 = Color.parseColor("#FF666666");
-    public static final int SHARP727272 = Color.parseColor("#FF727272");
+    private static final int SHARP666666 = Color.parseColor("#FF666666");
+    private static final int SHARP727272 = Color.parseColor("#FF727272");
 
     private static final String[] COLORS = new String[]{RED, LIGHTBLUE, AMBER, ORANGE, YELLOW,
             LIME, BLUE, INDIGO, LIGHTGREEN, GREY, DEEPPURPLE, TEAL, CYAN};

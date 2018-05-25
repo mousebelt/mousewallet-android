@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 lujun
+ * Copyright 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,10 +38,6 @@ import java.util.List;
 import static co.lujun.androidtagview.Utils.dp2px;
 import static co.lujun.androidtagview.Utils.sp2px;
 
-/**
- * Author: lujun(http://blog.lujun.co)
- * Date: 2015-12-30 17:14
- */
 public class TagContainerLayout extends ViewGroup {
 
     /**
@@ -98,6 +94,11 @@ public class TagContainerLayout extends ViewGroup {
      * The max line count of TagContainerLayout
      */
     private int mMaxLines = 0;
+
+    /**
+     * The min line count of TagContainerLayout
+     */
+    private int mMinLines = 0;
 
     /**
      * The max length for TagView(default max length 23)
@@ -294,6 +295,7 @@ public class TagContainerLayout extends ViewGroup {
                 mSensitivity);
         mGravity = attributes.getInt(R.styleable.AndroidTagView_container_gravity, mGravity);
         mMaxLines = attributes.getInt(R.styleable.AndroidTagView_container_max_lines, mMaxLines);
+        mMinLines = attributes.getInt(R.styleable.AndroidTagView_container_min_lines, mMinLines);
         mTagMaxLength = attributes.getInt(R.styleable.AndroidTagView_tag_max_length, mTagMaxLength);
         mTheme = attributes.getInt(R.styleable.AndroidTagView_tag_theme, mTheme);
         mTagBorderWidth = attributes.getDimension(R.styleable.AndroidTagView_tag_border_width,
@@ -351,13 +353,13 @@ public class TagContainerLayout extends ViewGroup {
 
         measureChildren(widthMeasureSpec, heightMeasureSpec);
         final int childCount = getChildCount();
-        int lines = childCount == 0 ? 0 : getChildLines(childCount);
+        int lines = getChildLines(childCount);
         int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
 //        int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
         int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
         int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
 
-        if (childCount == 0) {
+        if (lines == 0) {
             setMeasuredDimension(0, 0);
         } else if (heightSpecMode == MeasureSpec.AT_MOST
                 || heightSpecMode == MeasureSpec.UNSPECIFIED) {
@@ -490,7 +492,7 @@ public class TagContainerLayout extends ViewGroup {
             }
         }
 
-        return mMaxLines <= 0 ? lines : mMaxLines;
+        return mMaxLines <= 0 ? (mMinLines > lines ? mMinLines : lines) : mMaxLines;
     }
 
     private int[] onUpdateColorFactory() {
@@ -1017,6 +1019,25 @@ public class TagContainerLayout extends ViewGroup {
      */
     public int getMaxLines() {
         return mMaxLines;
+    }
+
+    /**
+     * Set min line count for TagContainerLayout
+     *
+     * @param minLines min line count
+     */
+    public void setMinLines(int minLines) {
+        mMinLines = minLines;
+        postInvalidate();
+    }
+
+    /**
+     * Get TagContainerLayout's min lines
+     *
+     * @return minLines
+     */
+    public int getMinLines() {
+        return mMinLines;
     }
 
     /**
