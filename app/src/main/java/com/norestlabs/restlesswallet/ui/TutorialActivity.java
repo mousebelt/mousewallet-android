@@ -45,6 +45,7 @@ public class TutorialActivity extends AppCompatActivity {
         adapter.addFragment(ft, null);
         viewPager.setAdapter(adapter);
         viewPager.setOnTouchListener((v, event) -> true);
+        viewPager.setCurrentItem(getIntent().getIntExtra("tabIndex", 0));
     }
 
     public void onClick(View v) {
@@ -63,7 +64,7 @@ public class TutorialActivity extends AppCompatActivity {
             case R.id.btnCreate:
                 break;
             case R.id.btnRestoreMnemonic:
-                intent = new Intent(this, MnemonicActivity_.class);
+                intent = new Intent(this, Mnemonic2Activity_.class);
                 startActivity(intent);
                 finish();
                 break;

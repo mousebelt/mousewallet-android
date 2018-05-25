@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Restless Wallet</string>
+    <!--Common-->
+    <string name="skip">SKIP</string>
+    <string name="back">BACK</string>
+    <string name="btn_continue">CONTINUE</string>
+    <string name="cancel">Cancel</string>
     <!--Tutorial-->
     <string name="tutorial_help1">Welcome to the Restless Wallet, a \n simple and open-source way to store \n multiple kinds of digital assets.</string>
     <string name="tutorial_help2">Assets are held in a wallet on the \n device. Send, receive and pay with \n cryptocurrency today!</string>
@@ -7,8 +12,29 @@
     <string name="get_started">GET STARTED</string>
     <string name="restore_from_backup">RESTORE FROM BACKUP</string>
     <string name="go_it">GO IT</string>
-    <string name="skip">SKIP</string>
     <string name="create_account">CREATE A NEW ACCOUNT</string>
     <string name="restore_from_mnemonic">RESTORE FROM MNEMONIC</string>
-    <string name="back">BACK</string>
+    <!--Mnemonic-->
+    <string name="mnemonic">Mnemonic</string>
+    <string name="verify_mnemonic">VERIFY YOUR MNEMONIC</string>
+    <string name="mnemonic_hint">This is your 12-word mnemonic to restore your wallet. Write this down and do not share it with anyone.</string>
+    <!--PIN-->
+    <string name="verification">Verification</string>
+    <string name="enter_a_pin">ENTER A PIN</string>
+    <string name="enter_your_pin">ENTER YOUR PIN</string>
+    <!--Dummy-->
+    <string-array name="tags">
+        <item>reveal</item>
+        <item>crazy</item>
+        <item>idle</item>
+        <item>goat</item>
+        <item>inhale</item>
+        <item>vintage</item>
+        <item>chest</item>
+        <item>impose</item>
+        <item>reopen</item>
+        <item>picnic</item>
+        <item>uphold</item>
+        <item>accident</item>
+    </string-array>
 </resources>
