@@ -16,25 +16,25 @@
     <string name="restore_from_mnemonic">RESTORE FROM MNEMONIC</string>
     <!--Mnemonic-->
     <string name="mnemonic">Mnemonic</string>
-    <string name="verify_mnemonic">VERIFY YOUR MNEMONIC</string>
     <string name="mnemonic_hint">This is your 12-word mnemonic to restore your wallet. Write this down and do not share it with anyone.</string>
+    <string name="verify_mnemonic">VERIFY YOUR MNEMONIC</string>
     <!--PIN-->
     <string name="verification">Verification</string>
     <string name="enter_a_pin">ENTER A PIN</string>
     <string name="enter_your_pin">ENTER YOUR PIN</string>
     <!--Dummy-->
     <string-array name="tags">
-        <item>reveal</item>
-        <item>crazy</item>
-        <item>idle</item>
+        <item>accident</item>
+        <item>impose</item>
         <item>goat</item>
         <item>inhale</item>
         <item>vintage</item>
-        <item>chest</item>
-        <item>impose</item>
+        <item>idle</item>
+        <item>crazy</item>
+        <item>reveal</item>
         <item>reopen</item>
+        <item>chest</item>
         <item>picnic</item>
         <item>uphold</item>
-        <item>accident</item>
     </string-array>
 </resources>

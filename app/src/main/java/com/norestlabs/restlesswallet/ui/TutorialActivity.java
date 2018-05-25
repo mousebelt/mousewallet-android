@@ -69,10 +69,15 @@ public class TutorialActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.btnBack:
-                viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+                onBackPressed();
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
     }
 }

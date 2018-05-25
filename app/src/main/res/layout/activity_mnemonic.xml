@@ -39,15 +39,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                style="@style/SubTitleText"
-                android:text="@string/verify_mnemonic"/>
+                style="@style/DefaultText"
+                android:text="@string/mnemonic_hint"/>
         </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6"
-            android:weightSum="4"
+            android:layout_weight="3"
+            android:weightSum="5"
             android:orientation="vertical">
 
             <View
@@ -65,7 +65,7 @@
                     android:background="@drawable/tag_container_border"/>
 
                 <co.lujun.androidtagview.TagContainerLayout
-                    android:id="@+id/tagContainerLayout1"
+                    android:id="@+id/tagContainerLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
@@ -73,14 +73,14 @@
                     app:container_border_radius="5dp"
                     app:container_border_width="0dp"
                     app:container_drag_sensitivity="1"
-                    app:container_enable_drag="true"
+                    app:container_enable_drag="false"
                     app:container_min_lines="3"
                     app:horizontal_interval="8dp"
                     app:tag_background_color="@color/colorPrimary"
                     app:tag_bd_distance="2.75dp"
                     app:tag_border_color="@color/colorPrimary"
                     app:tag_border_width="1dp"
-                    app:tag_clickable="true"
+                    app:tag_clickable="false"
                     app:tag_corner_radius="3dp"
                     app:tag_horizontal_padding="10dp"
                     app:tag_max_length="18"
@@ -91,37 +91,6 @@
                     app:vertical_interval="8dp" />
             </FrameLayout>
         </LinearLayout>
-
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="145dp">
-
-            <co.lujun.androidtagview.TagContainerLayout
-                android:id="@+id/tagContainerLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                app:container_background_color="#0000"
-                app:container_border_radius="5dp"
-                app:container_border_width="0dp"
-                app:container_drag_sensitivity="1"
-                app:container_enable_drag="false"
-                app:horizontal_interval="8dp"
-                app:tag_background_color="@color/colorPrimary"
-                app:tag_bd_distance="2.75dp"
-                app:tag_border_color="@color/colorPrimary"
-                app:tag_border_width="1dp"
-                app:tag_clickable="true"
-                app:tag_corner_radius="3dp"
-                app:tag_horizontal_padding="10dp"
-                app:tag_max_length="18"
-                app:tag_text_color="@color/colorWhite"
-                app:tag_text_size="14sp"
-                app:tag_theme="none"
-                app:tag_vertical_padding="10dp"
-                app:vertical_interval="8dp" />
-        </FrameLayout>
 
         <Button
             android:id="@+id/btnContinue"
