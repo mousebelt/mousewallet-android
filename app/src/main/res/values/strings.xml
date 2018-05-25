@@ -5,6 +5,7 @@
     <string name="back">BACK</string>
     <string name="btn_continue">CONTINUE</string>
     <string name="cancel">Cancel</string>
+    <string name="error">ERROR</string>
     <!--Tutorial-->
     <string name="tutorial_help1">Welcome to the Restless Wallet, a \n simple and open-source way to store \n multiple kinds of digital assets.</string>
     <string name="tutorial_help2">Assets are held in a wallet on the \n device. Send, receive and pay with \n cryptocurrency today!</string>
@@ -22,6 +23,7 @@
     <string name="verification">Verification</string>
     <string name="enter_a_pin">ENTER A PIN</string>
     <string name="enter_your_pin">ENTER YOUR PIN</string>
+    <string name="invalid_pin">Invalid PIN, Please try again.</string>
     <!--Dummy-->
     <string-array name="tags">
         <item>accident</item>

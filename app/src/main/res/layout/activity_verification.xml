@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:keyboard="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.VerificationActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <include layout="@layout/action_bar" />
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/default_padding_2x"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/lock"/>
+            <TextView
+                android:id="@+id/txtPIN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                style="@style/SubTitleText"
+                android:text="@string/enter_a_pin"/>
+        </LinearLayout>
+
+        <com.davidmiguel.numberkeyboard.NumberKeyboard
+            android:id="@+id/numberKeyboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            keyboard:keyHeight="70dp"
+            keyboard:keyPadding="8dp"
+            keyboard:keyWidth="70dp"
+            keyboard:keyboardType="custom"
+            keyboard:leftAuxBtnIcon="@drawable/ic_fingerprint"
+            keyboard:numberKeyTextColor="@drawable/key_text"
+            keyboard:rightAuxBtnIcon="@drawable/ic_backspace"/>
+
+    </LinearLayout>
+
+</LinearLayout>

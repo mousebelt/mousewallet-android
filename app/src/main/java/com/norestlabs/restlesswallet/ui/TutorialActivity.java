@@ -44,7 +44,7 @@ public class TutorialActivity extends AppCompatActivity {
         ft = new Tutorial3Fragment_();
         adapter.addFragment(ft, null);
         viewPager.setAdapter(adapter);
-        viewPager.setOnTouchListener((v, event) -> true);
+        viewPager.setOnTouchListener((v, event) -> false);
         viewPager.setCurrentItem(getIntent().getIntExtra("tabIndex", 0));
     }
 
@@ -64,7 +64,7 @@ public class TutorialActivity extends AppCompatActivity {
             case R.id.btnCreate:
                 break;
             case R.id.btnRestoreMnemonic:
-                intent = new Intent(this, Mnemonic2Activity_.class);
+                intent = new Intent(this, MnemonicActivity_.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -78,6 +78,11 @@ public class TutorialActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+        final int index = viewPager.getCurrentItem();
+        if (index > 0) {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

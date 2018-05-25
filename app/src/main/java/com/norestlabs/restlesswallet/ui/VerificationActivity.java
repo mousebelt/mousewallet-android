@@ -12,10 +12,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
-import co.lujun.androidtagview.TagContainerLayout;
-
-@EActivity(R.layout.activity_mnemonic)
-public class MnemonicActivity extends AppCompatActivity {
+@EActivity(R.layout.activity_verification)
+public class VerificationActivity extends AppCompatActivity {
 
     @ViewById
     Toolbar toolbar;
@@ -23,26 +21,15 @@ public class MnemonicActivity extends AppCompatActivity {
     @ViewById
     TextView txtTitle;
 
-    @ViewById
-    TagContainerLayout tagContainerLayout;
-
     @AfterViews
     protected void init() {
         toolbar.setContentInsetsAbsolute(0, 0);
         setSupportActionBar(toolbar);
-        txtTitle.setText(R.string.mnemonic);
-
-        final String[] tags = getResources().getStringArray(R.array.tags);
-        tagContainerLayout.setTags(tags);
+        txtTitle.setText(R.string.verification);
     }
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnContinue:
-                Intent intent = new Intent(this, Mnemonic2Activity_.class);
-                startActivity(intent);
-                finish();
-                break;
             case R.id.btnBack:
                 onBackPressed();
                 break;
@@ -53,8 +40,7 @@ public class MnemonicActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, TutorialActivity_.class);
-        intent.putExtra("tabIndex", 2);
+        Intent intent = new Intent(this, MnemonicActivity_.class);
         startActivity(intent);
         finish();
     }

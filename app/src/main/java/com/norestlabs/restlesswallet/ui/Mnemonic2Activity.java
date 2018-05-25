@@ -77,6 +77,9 @@ public class Mnemonic2Activity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnContinue:
+                Intent intent = new Intent(this, VerificationActivity_.class);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.btnBack:
                 onBackPressed();
