@@ -151,11 +151,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/key7Container">
 
-        <ImageView
+        <TextView
             android:id="@+id/leftAuxBtn"
-            style="@style/key"
-            android:scaleType="center"
-            app:srcCompat="@drawable/ic_fingerprint"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"/>
 
     </com.davidmiguel.numberkeyboard.SquareFrameLayout>
 
@@ -187,6 +188,7 @@
             android:id="@+id/rightAuxBtn"
             style="@style/key"
             android:scaleType="center"
+            android:tint="@drawable/key_text_color"
             app:srcCompat="@drawable/ic_backspace"/>
 
     </com.davidmiguel.numberkeyboard.SquareFrameLayout>

@@ -22,8 +22,11 @@
         <attr name="keyHeight"/>
         <attr name="keyPadding" format="dimension"/>
         <attr name="numberKeyBackground" format="reference"/>
-        <attr name="numberKeyTextColor" format="reference"/>
-        <attr name="leftAuxBtnIcon" format="reference"/>
+        <attr name="numberKeyFontFamily" format="reference"/>
+        <attr name="numberKeyTextColor" format="color"/>
+        <attr name="numberKeyTextSize" format="integer"/>
+        <attr name="leftAuxBtnText" format="string"/>
+        <attr name="leftAuxBtnTintColor" format="color"/>
         <attr name="leftAuxBtnBackground" format="reference"/>
         <attr name="rightAuxBtnIcon" format="reference"/>
         <attr name="rightAuxBtnBackground" format="reference"/>

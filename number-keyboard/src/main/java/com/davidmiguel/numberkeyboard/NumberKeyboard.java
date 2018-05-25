@@ -2,15 +2,20 @@ package com.davidmiguel.numberkeyboard;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Typeface;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorRes;
 import android.support.annotation.Dimension;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.FontRes;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.widget.ImageViewCompat;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -43,10 +48,16 @@ public class NumberKeyboard extends ConstraintLayout {
     private int keyPadding;
     @DrawableRes
     private int numberKeyBackground;
+    @FontRes
+    private int numberKeyTypeFace;
     @ColorRes
     private int numberKeyTextColor;
-    @DrawableRes
-    private int leftAuxBtnIcon;
+    @IntegerRes
+    private int numberKeyTextSize;
+    @StringRes
+    private int leftAuxBtnText;
+    @ColorRes
+    private int leftAuxBtnTintColor;
     @DrawableRes
     private int leftAuxBtnBackground;
     @DrawableRes
@@ -55,7 +66,7 @@ public class NumberKeyboard extends ConstraintLayout {
     private int rightAuxBtnBackground;
 
     private List<TextView> numericKeys;
-    private ImageView leftAuxBtn;
+    private TextView leftAuxBtn;
     private ImageView rightAuxBtn;
 
     private NumberKeyboardListener listener;
@@ -122,7 +133,7 @@ public class NumberKeyboard extends ConstraintLayout {
         for (TextView key : numericKeys) {
             key.getLayoutParams().width = px;
         }
-        leftAuxBtn.getLayoutParams().width = px;
+//        leftAuxBtn.getLayoutParams().width = px;
         rightAuxBtn.getLayoutParams().width = px;
         requestLayout();
     }
@@ -150,7 +161,7 @@ public class NumberKeyboard extends ConstraintLayout {
             key.setPadding(px, px, px, px);
             key.setCompoundDrawablePadding(-1 * px);
         }
-        leftAuxBtn.setPadding(px, px, px, px);
+//        leftAuxBtn.setPadding(px, px, px, px);
         rightAuxBtn.setPadding(px, px, px, px);
     }
 
@@ -173,26 +184,44 @@ public class NumberKeyboard extends ConstraintLayout {
     }
 
     /**
+     * Sets number keys text color.
+     */
+    public void setNumberKeyTextSize(int size) {
+        if (size > 0) {
+            for (TextView key : numericKeys) {
+                TextViewCompat.setAutoSizeTextTypeWithDefaults(key, TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE);
+                key.setTextSize(size);
+            }
+            leftAuxBtn.setTextSize(size);
+        }
+    }
+
+    /**
      * Sets number keys text typeface.
      */
-    public void setNumberKeyTypeface(Typeface typeface) {
-        for (TextView key : numericKeys) {
-            key.setTypeface(typeface);
+    public void setNumberKeyTypeface(int resId) {
+        if (resId > 0) {
+            for (TextView key : numericKeys) {
+                key.setTypeface(ResourcesCompat.getFont(getContext(), resId));
+            }
+            leftAuxBtn.setTypeface(ResourcesCompat.getFont(getContext(), resId));
         }
     }
 
     /**
      * Sets left auxiliary button icon.
      */
-    public void setLeftAuxButtonIcon(@DrawableRes int icon) {
-        leftAuxBtn.setImageResource(icon);
+    public void setLeftAuxButtonText(@StringRes int resId, @ColorRes int color) {
+        leftAuxBtn.setText(resId);
+        leftAuxBtn.setTextColor(ContextCompat.getColorStateList(getContext(), color));
     }
 
     /**
      * Sets right auxiliary button icon.
      */
-    public void setRightAuxButtonIcon(@DrawableRes int icon) {
+    public void setRightAuxButtonIcon(@DrawableRes int icon, @ColorRes int color) {
         rightAuxBtn.setImageResource(icon);
+        ImageViewCompat.setImageTintList(rightAuxBtn, ContextCompat.getColorStateList(getContext(), color));
     }
 
     /**
@@ -230,32 +259,35 @@ public class NumberKeyboard extends ConstraintLayout {
             // Get number key background
             numberKeyBackground = array.getResourceId(R.styleable.NumberKeyboard_numberKeyBackground,
                     R.drawable.key_bg);
+            // Get number key type face
+            numberKeyTypeFace = array.getResourceId(R.styleable.NumberKeyboard_numberKeyFontFamily,
+                    0);
             // Get number key text color
             numberKeyTextColor = array.getResourceId(R.styleable.NumberKeyboard_numberKeyTextColor,
                     R.drawable.key_text_color);
+            numberKeyTextSize = array.getInteger(R.styleable.NumberKeyboard_numberKeyTextSize, 0);
             // Get auxiliary icons
             switch (type) {
                 case 0: // integer
-                    leftAuxBtnIcon = R.drawable.key_bg_transparent;
                     rightAuxBtnIcon = R.drawable.ic_backspace;
                     leftAuxBtnBackground = R.drawable.key_bg_transparent;
                     rightAuxBtnBackground = R.drawable.key_bg_transparent;
                     break;
                 case 1: // decimal
-                    leftAuxBtnIcon = R.drawable.ic_comma;
                     rightAuxBtnIcon = R.drawable.ic_backspace;
                     leftAuxBtnBackground = R.drawable.key_bg;
                     rightAuxBtnBackground = R.drawable.key_bg_transparent;
                     break;
                 case 2: // fingerprint
-                    leftAuxBtnIcon = R.drawable.ic_fingerprint;
                     rightAuxBtnIcon = R.drawable.ic_backspace;
                     leftAuxBtnBackground = R.drawable.key_bg_transparent;
                     rightAuxBtnBackground = R.drawable.key_bg_transparent;
                     break;
                 case 3: // custom
-                    leftAuxBtnIcon = array.getResourceId(R.styleable.NumberKeyboard_leftAuxBtnIcon,
-                            R.drawable.key_bg_transparent);
+                    leftAuxBtnText = array.getResourceId(R.styleable.NumberKeyboard_leftAuxBtnText,
+                            R.string.left);
+                    leftAuxBtnTintColor = array.getResourceId(R.styleable.NumberKeyboard_leftAuxBtnTintColor,
+                            R.drawable.key_text_color);
                     rightAuxBtnIcon = array.getResourceId(R.styleable.NumberKeyboard_rightAuxBtnIcon,
                             R.drawable.key_bg_transparent);
                     leftAuxBtnBackground = array.getResourceId(R.styleable.NumberKeyboard_leftAuxBtnBackground,
@@ -264,7 +296,6 @@ public class NumberKeyboard extends ConstraintLayout {
                             R.drawable.key_bg_transparent);
                     break;
                 default:
-                    leftAuxBtnIcon = R.drawable.key_bg_transparent;
                     rightAuxBtnIcon = R.drawable.key_bg_transparent;
                     leftAuxBtnBackground = R.drawable.key_bg;
                     rightAuxBtnBackground = R.drawable.key_bg;
@@ -308,10 +339,12 @@ public class NumberKeyboard extends ConstraintLayout {
         setKeyHeight(keyHeight);
         setKeyPadding(keyPadding);
         setNumberKeyBackground(numberKeyBackground);
+        setNumberKeyTypeface(numberKeyTypeFace);
         setNumberKeyTextColor(numberKeyTextColor);
-        setLeftAuxButtonIcon(leftAuxBtnIcon);
+        setNumberKeyTextSize(numberKeyTextSize);
+        setLeftAuxButtonText(leftAuxBtnText, leftAuxBtnTintColor);
         setLeftAuxButtonBackground(leftAuxBtnBackground);
-        setRightAuxButtonIcon(rightAuxBtnIcon);
+        setRightAuxButtonIcon(rightAuxBtnIcon, leftAuxBtnTintColor);
         setRightAuxButtonBackground(rightAuxBtnBackground);
     }
 
