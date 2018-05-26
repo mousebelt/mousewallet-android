@@ -1,11 +1,13 @@
 package com.norestlabs.restlesswallet.ui;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +20,7 @@ import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
 
     @ViewById
     Toolbar toolbar;
@@ -28,6 +30,9 @@ public class MainActivity extends AppCompatActivity
 
     @ViewById(R.id.nav_view)
     NavigationView navigationView;
+
+    @ViewById
+    SearchView searchView;
 
     @AfterViews
     protected void init() {
@@ -40,6 +45,8 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setCheckedItem(R.id.nav_home);
         navigationView.setNavigationItemSelectedListener(this);
+
+        searchView.setOnQueryTextListener(this);
     }
 
     @Override
@@ -89,10 +96,22 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_mnemonic) {
 
         } else if (id == R.id.nav_logout) {
-
+            Intent intent = new Intent(this, VerificationActivity_.class);
+            startActivity(intent);
+            finish();
         }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:keyboard="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,7 +15,8 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="?attr/actionBarSize"
+            app:contentInsetStart="0dp">
 
             <include layout="@layout/action_bar" />
 
@@ -135,17 +136,17 @@
                 android:id="@+id/numberKeyboard"
                 android:layout_width="240dp"
                 android:layout_height="300dp"
-                keyboard:keyHeight="48dp"
-                keyboard:keyPadding="8dp"
-                keyboard:keyWidth="48dp"
-                keyboard:keyboardType="custom"
-                keyboard:leftAuxBtnText="@string/cancel"
-                keyboard:leftAuxBtnTintColor="@color/cancel_text"
-                keyboard:numberKeyBackground="@drawable/key_bg"
-                keyboard:numberKeyFontFamily="@font/source_sans_pro_regular"
-                keyboard:numberKeyTextColor="@color/key_text"
-                keyboard:numberKeyTextSize="18"
-                keyboard:rightAuxBtnIcon="@mipmap/enter"/>
+                app:keyHeight="48dp"
+                app:keyPadding="8dp"
+                app:keyWidth="48dp"
+                app:keyboardType="custom"
+                app:leftAuxBtnText="@string/cancel"
+                app:leftAuxBtnTintColor="@color/cancel_text"
+                app:numberKeyBackground="@drawable/key_bg"
+                app:numberKeyFontFamily="@font/source_sans_pro_regular"
+                app:numberKeyTextColor="@color/key_text"
+                app:numberKeyTextSize="18"
+                app:rightAuxBtnIcon="@mipmap/enter"/>
         </LinearLayout>
 
     </LinearLayout>

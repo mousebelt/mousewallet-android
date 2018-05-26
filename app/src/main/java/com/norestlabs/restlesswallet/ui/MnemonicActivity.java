@@ -28,7 +28,6 @@ public class MnemonicActivity extends AppCompatActivity {
 
     @AfterViews
     protected void init() {
-        toolbar.setContentInsetsAbsolute(0, 0);
         setSupportActionBar(toolbar);
         txtTitle.setText(R.string.mnemonic);
 
