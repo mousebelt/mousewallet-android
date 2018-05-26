@@ -22,7 +22,7 @@
     <!--PIN-->
     <string name="verification">Verification</string>
     <string name="enter_a_pin">ENTER A PIN</string>
-    <string name="enter_your_pin">ENTER YOUR PIN</string>
+    <string name="verify_your_pin">VERIFY YOUR PIN</string>
     <string name="invalid_pin">Invalid PIN, Please try again.</string>
     <!--Dummy-->
     <string-array name="tags">

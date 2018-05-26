@@ -11,4 +11,6 @@
 
     <dimen name="default_button_height">50dp</dimen>
     <dimen name="button_height">60dp</dimen>
+    <dimen name="pin_size">14dp</dimen>
+    <dimen name="pin_dot_size">4dp</dimen>
 </resources>
