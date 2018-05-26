@@ -140,10 +140,10 @@
                 keyboard:keyWidth="48dp"
                 keyboard:keyboardType="custom"
                 keyboard:leftAuxBtnText="@string/cancel"
-                keyboard:leftAuxBtnTintColor="@drawable/cancel_text"
+                keyboard:leftAuxBtnTintColor="@color/cancel_text"
                 keyboard:numberKeyBackground="@drawable/key_bg"
                 keyboard:numberKeyFontFamily="@font/source_sans_pro_regular"
-                keyboard:numberKeyTextColor="@drawable/key_text"
+                keyboard:numberKeyTextColor="@color/key_text"
                 keyboard:numberKeyTextSize="18"
                 keyboard:rightAuxBtnIcon="@mipmap/enter"/>
         </LinearLayout>

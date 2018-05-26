@@ -72,7 +72,7 @@ public class VerificationActivity extends AppCompatActivity implements NumberKey
     }
 
     private void onSuccess() {
-        Intent intent = new Intent(this, MnemonicActivity_.class);
+        Intent intent = new Intent(this, MainActivity_.class);
         startActivity(intent);
         finish();
     }

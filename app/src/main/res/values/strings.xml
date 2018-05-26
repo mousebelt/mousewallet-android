@@ -24,7 +24,21 @@
     <string name="enter_a_pin">ENTER A PIN</string>
     <string name="verify_your_pin">VERIFY YOUR PIN</string>
     <string name="invalid_pin">Invalid PIN, Please try again.</string>
+    <!--Menu-->
+    <string name="nav_home">Home</string>
+    <string name="nav_send">Send</string>
+    <string name="nav_receive">Received</string>
+    <string name="nav_swap">Swap</string>
+    <string name="nav_mnemonic">Mnemonic</string>
+    <string name="nav_logout">Logout</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <!--Settings-->
+    <string name="settings">Settings</string>
     <!--Dummy-->
+    <string name="nav_header_title">Blance 1.5 BTC</string>
+    <string name="nav_header_subtitle">Ryan Holloway</string>
     <string-array name="tags">
         <item>accident</item>
         <item>impose</item>
