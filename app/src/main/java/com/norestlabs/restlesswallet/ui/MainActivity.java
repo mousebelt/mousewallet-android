@@ -3,29 +3,23 @@ package com.norestlabs.restlesswallet.ui;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
 import com.norestlabs.restlesswallet.R;
-import com.norestlabs.restlesswallet.models.CoinModel;
-import com.norestlabs.restlesswallet.ui.adapter.CoinAdapter;
+import com.norestlabs.restlesswallet.ui.fragment.HomeFragment;
+import com.norestlabs.restlesswallet.ui.fragment.HomeFragment_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity
@@ -41,17 +35,10 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView;
 
     @ViewById
-    SearchView searchView;
+    public SearchView searchView;
 
-    @ViewById
-    RecyclerView recyclerView;
-
-    CoinAdapter mAdapter;
-    List<CoinModel> mModels;
-
-    private static final Comparator<CoinModel> COMPARATOR = new SortedListAdapter.ComparatorBuilder<CoinModel>()
-            .setOrderForModel(CoinModel.class, (a, b) -> a.getSymbol().compareTo(b.getSymbol()))
-            .build();
+    private HomeFragment homeFragment;
+    private int selectedFragmentIndex = 0;
 
     @AfterViews
     protected void init() {
@@ -67,22 +54,8 @@ public class MainActivity extends AppCompatActivity
 
         searchView.setOnQueryTextListener(this);
 
-        mAdapter = new CoinAdapter(this, CoinModel.class, COMPARATOR);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(mAdapter);
-
-        setDummyData();
-    }
-
-    private void setDummyData() {
-        mModels = new ArrayList<>();
-        mModels.add(new CoinModel("BTC", "Bitcoin", 0.134, 450, R.mipmap.btc));
-        mModels.add(new CoinModel("ETH", "Ethereum", 1.134, 6450, R.mipmap.eth));
-        mModels.add(new CoinModel("OMG", "OmiseGo", 0.134, 250, R.mipmap.omg));
-        mAdapter.edit()
-                .replaceAll(mModels)
-                .commit();
+        homeFragment = new HomeFragment_.FragmentBuilder_().build();
+        loadFragment(selectedFragmentIndex);
     }
 
     @Override
@@ -122,7 +95,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
+            loadFragment(0);
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_receive) {
@@ -141,16 +114,17 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private static List<CoinModel> filter(List<CoinModel> models, String query) {
-        final List<CoinModel> filteredModelList = new ArrayList<>();
-        for (CoinModel model : models) {
-            final String symbol = model.getSymbol().toLowerCase();
-            final String coin = model.getCoin().toLowerCase();
-            if (symbol.contains(query.toLowerCase()) || coin.contains(query.toLowerCase())) {
-                filteredModelList.add(model);
-            }
+    private void loadFragment(int index) {
+        selectedFragmentIndex = index;
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        switch (index) {
+            case 0:
+                ft.replace(R.id.container, homeFragment);
+                break;
+            default:
+                return;
         }
-        return filteredModelList;
+        ft.commit();
     }
 
     @Override
@@ -160,9 +134,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onQueryTextChange(String query) {
-        mAdapter.edit()
-                .replaceAll(filter(mModels, query))
-                .commit();
+        if (selectedFragmentIndex == 0) {
+            homeFragment.onQueryTextChange(query);
+        }
         return true;
     }
 }
