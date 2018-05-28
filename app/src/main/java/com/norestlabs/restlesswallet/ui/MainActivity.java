@@ -29,7 +29,7 @@ import java.util.List;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener, SortedListAdapter.Callback {
+        implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
 
     @ViewById
     Toolbar toolbar;
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     List<CoinModel> mModels;
 
     private static final Comparator<CoinModel> COMPARATOR = new SortedListAdapter.ComparatorBuilder<CoinModel>()
-            .setOrderForModel(CoinModel.class, (a, b) -> a.getCoin().compareTo(b.getCoin()))
+            .setOrderForModel(CoinModel.class, (a, b) -> a.getSymbol().compareTo(b.getSymbol()))
             .build();
 
     @AfterViews
@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity
         searchView.setOnQueryTextListener(this);
 
         mAdapter = new CoinAdapter(this, CoinModel.class, COMPARATOR);
-        mAdapter.addCallback(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
@@ -142,23 +141,28 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private static List<CoinModel> filter(List<CoinModel> models, String query) {
+        final List<CoinModel> filteredModelList = new ArrayList<>();
+        for (CoinModel model : models) {
+            final String symbol = model.getSymbol().toLowerCase();
+            final String coin = model.getCoin().toLowerCase();
+            if (symbol.contains(query.toLowerCase()) || coin.contains(query.toLowerCase())) {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
+    }
+
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
     }
 
     @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
-    }
-
-    @Override
-    public void onEditStarted() {
-
-    }
-
-    @Override
-    public void onEditFinished() {
-
+    public boolean onQueryTextChange(String query) {
+        mAdapter.edit()
+                .replaceAll(filter(mModels, query))
+                .commit();
+        return true;
     }
 }

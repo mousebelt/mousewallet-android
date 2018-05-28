@@ -42,11 +42,19 @@ public class CoinModel implements SortedListAdapter.ViewModel {
 
     @Override
     public <T> boolean isSameModelAs(@NonNull T model) {
+        if (model instanceof CoinModel) {
+            final CoinModel wordModel = (CoinModel) model;
+            return wordModel.symbol.equals(symbol);
+        }
         return false;
     }
 
     @Override
     public <T> boolean isContentTheSameAs(@NonNull T model) {
+        if (model instanceof CoinModel) {
+            final CoinModel wordModel = (CoinModel) model;
+            return wordModel.balance == balance;
+        }
         return false;
     }
 }
