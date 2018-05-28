@@ -7,20 +7,29 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
 import com.norestlabs.restlesswallet.R;
+import com.norestlabs.restlesswallet.models.CoinModel;
+import com.norestlabs.restlesswallet.ui.adapter.CoinAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener, SortedListAdapter.Callback {
 
     @ViewById
     Toolbar toolbar;
@@ -33,6 +42,16 @@ public class MainActivity extends AppCompatActivity
 
     @ViewById
     SearchView searchView;
+
+    @ViewById
+    RecyclerView recyclerView;
+
+    CoinAdapter mAdapter;
+    List<CoinModel> mModels;
+
+    private static final Comparator<CoinModel> COMPARATOR = new SortedListAdapter.ComparatorBuilder<CoinModel>()
+            .setOrderForModel(CoinModel.class, (a, b) -> a.getCoin().compareTo(b.getCoin()))
+            .build();
 
     @AfterViews
     protected void init() {
@@ -47,6 +66,24 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         searchView.setOnQueryTextListener(this);
+
+        mAdapter = new CoinAdapter(this, CoinModel.class, COMPARATOR);
+        mAdapter.addCallback(this);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(mAdapter);
+
+        setDummyData();
+    }
+
+    private void setDummyData() {
+        mModels = new ArrayList<>();
+        mModels.add(new CoinModel("BTC", "Bitcoin", 0.134, 450, R.mipmap.btc));
+        mModels.add(new CoinModel("ETH", "Ethereum", 1.134, 6450, R.mipmap.eth));
+        mModels.add(new CoinModel("OMG", "OmiseGo", 0.134, 250, R.mipmap.omg));
+        mAdapter.edit()
+                .replaceAll(mModels)
+                .commit();
     }
 
     @Override
@@ -113,5 +150,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+
+    @Override
+    public void onEditStarted() {
+
+    }
+
+    @Override
+    public void onEditFinished() {
+
     }
 }

@@ -54,6 +54,7 @@
                     <TextView
                         android:id="@+id/textView"
                         style="@style/DefaultText"
+                        android:layout_gravity="center_horizontal"
                         android:text="@string/tutorial_help1" />
                 </FrameLayout>
             </LinearLayout>

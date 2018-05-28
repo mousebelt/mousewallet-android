@@ -13,9 +13,9 @@ import com.norestlabs.restlesswallet.ui.holder.CoinHolder;
 
 import java.util.Comparator;
 
-public class WalletAdapter extends SortedListAdapter<CoinModel> {
+public class CoinAdapter extends SortedListAdapter<CoinModel> {
 
-    public WalletAdapter(@NonNull Context context, @NonNull Class<CoinModel> itemClass, @NonNull Comparator<CoinModel> comparator) {
+    public CoinAdapter(@NonNull Context context, @NonNull Class<CoinModel> itemClass, @NonNull Comparator<CoinModel> comparator) {
         super(context, itemClass, comparator);
     }
 

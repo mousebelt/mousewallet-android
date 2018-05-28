@@ -1,6 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="84dp"
+    android:layout_marginTop="@dimen/default_margin"
+    android:layout_marginLeft="@dimen/default_margin"
+    android:layout_marginRight="@dimen/default_margin"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="1dp">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/star"/>
+        <ImageView
+            android:id="@+id/imgSymbol"
+            android:layout_width="@dimen/symbol_size"
+            android:layout_height="@dimen/symbol_size"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/btc"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtSymbol"
+                style="@style/SubTitleText"
+                android:text="BTC"/>
+            <TextView
+                android:id="@+id/txtCoin"
+                style="@style/DefaultText"
+                android:text="Bitcoin"
+                android:textColor="#979797"
+                android:textSize="@dimen/small_font_size"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtBalance"
+                style="@style/SubTitleText"
+                android:text="0.134"/>
+            <TextView
+                android:id="@+id/txtPrice"
+                style="@style/SubTitleText"
+                android:text="$450.00"
+                android:textColor="@color/colorGreen"
+                android:textSize="@dimen/small_font_size"/>
+        </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/forward"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

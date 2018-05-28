@@ -12,10 +12,12 @@
     <dimen name="default_font_size">18sp</dimen>
     <dimen name="button_font_size">16sp</dimen>
     <dimen name="title_font_size">22sp</dimen>
+    <dimen name="small_font_size">14sp</dimen>
 
     <dimen name="default_button_height">50dp</dimen>
     <dimen name="button_height">60dp</dimen>
     <dimen name="pin_size">14dp</dimen>
     <dimen name="pin_dot_size">4dp</dimen>
+    <dimen name="symbol_size">42dp</dimen>
 
 </resources>

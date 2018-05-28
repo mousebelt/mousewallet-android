@@ -3,10 +3,12 @@
     <color name="colorPrimary">#e34132</color>
     <color name="colorPrimaryDark">#ec584c</color>
     <color name="colorAccent">#d1372d</color>
+    <color name="colorBackground">#f8f8f8</color>
     <color name="colorIconTint">#747474</color>
 
     <color name="colorWhite">#fff</color>
     <color name="colorBlack">#000</color>
+    <color name="colorGreen">#72cd4e</color>
 
     <color name="textColorPrimary">#646464</color>
 </resources>
