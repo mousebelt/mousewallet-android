@@ -44,7 +44,8 @@ public class TutorialActivity extends AppCompatActivity {
         ft = new Tutorial3Fragment_();
         adapter.addFragment(ft, null);
         viewPager.setAdapter(adapter);
-        viewPager.setOnTouchListener((v, event) -> true);
+        viewPager.setOnTouchListener((v, event) -> false);
+        viewPager.setCurrentItem(getIntent().getIntExtra("tabIndex", 0));
     }
 
     public void onClick(View v) {
@@ -68,10 +69,20 @@ public class TutorialActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.btnBack:
-                viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+                onBackPressed();
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        final int index = viewPager.getCurrentItem();
+        if (index > 0) {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+        } else {
+            super.onBackPressed();
         }
     }
 }

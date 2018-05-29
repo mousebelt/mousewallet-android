@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorWhite</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -11,18 +12,33 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="DefaultText">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/source_sans_pro</item>
+        <item name="android:fontFamily">@font/source_sans_pro_regular</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/textColorPrimary</item>
         <item name="android:textSize">@dimen/default_font_size</item>
     </style>
+
+    <style name="TitleText" parent="DefaultText">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/title_font_size</item>
+    </style>
+
+    <style name="SubTitleText" parent="DefaultText">
+        <item name="android:fontFamily">@font/source_sans_pro_semibold</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
     <style name="DefaultButton" parent="Widget.AppCompat.Button.Colored">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/default_button_height</item>
-        <item name="android:fontFamily">@font/source_sans_pro</item>
+        <item name="android:fontFamily">@font/source_sans_pro_regular</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">@dimen/button_font_size</item>
     </style>

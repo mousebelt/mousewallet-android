@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Restless Wallet</string>
+    <!--Common-->
+    <string name="skip">SKIP</string>
+    <string name="back">BACK</string>
+    <string name="btn_continue">CONTINUE</string>
+    <string name="cancel">Cancel</string>
+    <string name="error">ERROR</string>
     <!--Tutorial-->
     <string name="tutorial_help1">Welcome to the Restless Wallet, a \n simple and open-source way to store \n multiple kinds of digital assets.</string>
     <string name="tutorial_help2">Assets are held in a wallet on the \n device. Send, receive and pay with \n cryptocurrency today!</string>
@@ -7,8 +13,46 @@
     <string name="get_started">GET STARTED</string>
     <string name="restore_from_backup">RESTORE FROM BACKUP</string>
     <string name="go_it">GO IT</string>
-    <string name="skip">SKIP</string>
     <string name="create_account">CREATE A NEW ACCOUNT</string>
     <string name="restore_from_mnemonic">RESTORE FROM MNEMONIC</string>
-    <string name="back">BACK</string>
+    <!--Mnemonic-->
+    <string name="mnemonic">Mnemonic</string>
+    <string name="mnemonic_hint">This is your 12-word mnemonic to restore your wallet. Write this down and do not share it with anyone.</string>
+    <string name="verify_mnemonic">VERIFY YOUR MNEMONIC</string>
+    <!--PIN-->
+    <string name="verification">Verification</string>
+    <string name="enter_a_pin">ENTER A PIN</string>
+    <string name="verify_your_pin">VERIFY YOUR PIN</string>
+    <string name="invalid_pin">Invalid PIN, Please try again.</string>
+    <!--Menu-->
+    <string name="nav_home">Home</string>
+    <string name="nav_send">Send</string>
+    <string name="nav_receive">Received</string>
+    <string name="nav_swap">Swap</string>
+    <string name="nav_mnemonic">Mnemonic</string>
+    <string name="nav_logout">Logout</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <!--Home-->
+    <string name="search_coin">Search a coin</string>
+    <!--Settings-->
+    <string name="settings">Settings</string>
+    <!--Dummy-->
+    <string name="nav_header_title">Blance 1.5 BTC</string>
+    <string name="nav_header_subtitle">Ryan Holloway</string>
+    <string-array name="tags">
+        <item>accident</item>
+        <item>impose</item>
+        <item>goat</item>
+        <item>inhale</item>
+        <item>vintage</item>
+        <item>idle</item>
+        <item>crazy</item>
+        <item>reveal</item>
+        <item>reopen</item>
+        <item>chest</item>
+        <item>picnic</item>
+        <item>uphold</item>
+    </string-array>
 </resources>
