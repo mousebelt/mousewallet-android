@@ -13,6 +13,7 @@ import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.ui.adapter.ViewPagerAdapter;
 import com.norestlabs.restlesswallet.ui.fragment.ReceiveFragment_;
 import com.norestlabs.restlesswallet.ui.fragment.SendFragment_;
+import com.norestlabs.restlesswallet.ui.fragment.SwapFragment_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -51,7 +52,7 @@ public class TransactionActivity extends AppCompatActivity {
         adapter.addFragment(ft, getString(R.string.receive));
         ft = new SendFragment_();
         adapter.addFragment(ft, getString(R.string.send));
-        ft = new SendFragment_();
+        ft = new SwapFragment_();
         adapter.addFragment(ft, getString(R.string.swap));
         viewPager.setAdapter(adapter);
     }

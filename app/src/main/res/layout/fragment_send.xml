@@ -125,7 +125,7 @@
 
                     <TextView
                         style="@style/ItemText"
-                        android:text="Transaction Free"
+                        android:text="Transaction Fee"
                         android:textColor="@color/colorBlack"/>
                     <TextView
                         android:id="@+id/txtTransactionFree"

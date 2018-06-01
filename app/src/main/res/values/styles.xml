@@ -54,6 +54,10 @@
         <item name="android:textSize">@dimen/small_font_size</item>
     </style>
 
+    <style name="ItemTextSmall" parent="DefaultText">
+        <item name="android:textSize">@dimen/tiny_font_size</item>
+    </style>
+
     <style name="ItemTextInput" parent="ItemText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@android:color/transparent</item>
