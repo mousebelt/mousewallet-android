@@ -36,6 +36,11 @@
     <string name="nav_header_desc">Navigation header</string>
     <!--Home-->
     <string name="search_coin">Search a coin</string>
+    <!--Transaction-->
+    <string name="add_favorite">Add to Favorites</string>
+    <string name="receive">Receive</string>
+    <string name="send">Send</string>
+    <string name="swap">Swap</string>
     <!--Settings-->
     <string name="settings">Settings</string>
     <!--Dummy-->

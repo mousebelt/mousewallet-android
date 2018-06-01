@@ -4,7 +4,9 @@ import android.support.annotation.NonNull;
 
 import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
 
-public class CoinModel implements SortedListAdapter.ViewModel {
+import java.io.Serializable;
+
+public class CoinModel implements SortedListAdapter.ViewModel, Serializable {
 
     private String symbol;
     private String coin;
