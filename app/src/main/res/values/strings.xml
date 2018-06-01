@@ -41,6 +41,9 @@
     <string name="receive">Receive</string>
     <string name="send">Send</string>
     <string name="swap">Swap</string>
+    <string name="slow">Slow</string>
+    <string name="medium">Medium</string>
+    <string name="fast">Fast</string>
     <!--Settings-->
     <string name="settings">Settings</string>
     <!--Dummy-->

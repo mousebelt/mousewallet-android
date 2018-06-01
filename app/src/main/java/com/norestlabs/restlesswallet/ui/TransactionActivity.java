@@ -6,10 +6,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.ui.adapter.ViewPagerAdapter;
+import com.norestlabs.restlesswallet.ui.fragment.SendFragment_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -44,6 +46,12 @@ public class TransactionActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        Fragment ft = new SendFragment_();
+        adapter.addFragment(ft, getString(R.string.receive));
+        ft = new SendFragment_();
+        adapter.addFragment(ft, getString(R.string.send));
+        ft = new SendFragment_();
+        adapter.addFragment(ft, getString(R.string.swap));
         viewPager.setAdapter(adapter);
     }
 
@@ -63,5 +71,14 @@ public class TransactionActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnSend:
+                break;
+            default:
+                break;
+        }
     }
 }
