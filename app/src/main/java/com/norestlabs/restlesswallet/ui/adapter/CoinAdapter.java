@@ -15,14 +15,21 @@ import java.util.Comparator;
 
 public class CoinAdapter extends SortedListAdapter<CoinModel> {
 
-    public CoinAdapter(@NonNull Context context, @NonNull Class<CoinModel> itemClass, @NonNull Comparator<CoinModel> comparator) {
+    public interface OnItemClickListener {
+        void onClick(CoinModel model);
+    }
+
+    private final OnItemClickListener mListener;
+
+    public CoinAdapter(@NonNull Context context, @NonNull Class<CoinModel> itemClass, @NonNull Comparator<CoinModel> comparator, OnItemClickListener listener) {
         super(context, itemClass, comparator);
+        mListener = listener;
     }
 
     @NonNull
     @Override
     protected ViewHolder<? extends CoinModel> onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent, int viewType) {
         final View itemView = inflater.inflate(R.layout.item_coin, parent, false);
-        return new CoinHolder(itemView);
+        return new CoinHolder(itemView, mListener);
     }
 }

@@ -1,5 +1,6 @@
 package com.norestlabs.restlesswallet.ui.fragment;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.ui.MainActivity;
 import com.norestlabs.restlesswallet.ui.QueryListener;
+import com.norestlabs.restlesswallet.ui.TransactionActivity_;
 import com.norestlabs.restlesswallet.ui.adapter.CoinAdapter;
 
 import org.androidannotations.annotations.AfterViews;
@@ -34,7 +36,11 @@ public class HomeFragment extends Fragment implements QueryListener {
 
     @AfterViews
     void init() {
-        mAdapter = new CoinAdapter(getContext(), CoinModel.class, COMPARATOR);
+        mAdapter = new CoinAdapter(getContext(), CoinModel.class, COMPARATOR, model -> {
+            Intent intent = new Intent(getContext(), TransactionActivity_.class);
+            intent.putExtra("data", model);
+            startActivity(intent);
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAdapter);

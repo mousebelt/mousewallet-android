@@ -14,16 +14,16 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".ui.TutorialActivity_"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MnemonicActivity_"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.Mnemonic2Activity_"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.VerificationActivity_"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MainActivity_"
             android:screenOrientation="portrait">
@@ -32,6 +32,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.TransactionActivity_"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
