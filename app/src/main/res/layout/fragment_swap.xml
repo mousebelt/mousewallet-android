@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_margin_2x">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardElevation="1dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/DefaultItem"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/default_padding">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="@dimen/symbol_size_normal"
+                                android:layout_height="@dimen/symbol_size_normal"
+                                android:adjustViewBounds="true"
+                                android:src="@mipmap/btc"/>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <Spinner
+                                    android:id="@+id/spinnerFrom"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/spinner"/>
+                                <TextView
+                                    android:layout_marginStart="@dimen/default_margin"
+                                    style="@style/ItemTextSmall"
+                                    android:fontFamily="@font/source_sans_pro_semibold"
+                                    android:text="BTC"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp">
+
+                            <TextView
+                                style="@style/ItemTextSmall"
+                                android:text="Balance: "/>
+                            <TextView
+                                style="@style/ItemTextSmall"
+                                android:text="1,234134234556"
+                                android:textColor="@color/colorBlack"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginEnd="13dp"
+                        android:adjustViewBounds="true"
+                        android:src="@mipmap/swap"/>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="@dimen/symbol_size_normal"
+                                android:layout_height="@dimen/symbol_size_normal"
+                                android:adjustViewBounds="true"
+                                android:src="@mipmap/omg"/>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <Spinner
+                                    android:id="@+id/spinnerTo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/spinner"/>
+                                <TextView
+                                    android:layout_marginStart="@dimen/default_margin"
+                                    style="@style/ItemTextSmall"
+                                    android:fontFamily="@font/source_sans_pro_semibold"
+                                    android:text="BTC"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp">
+
+                            <TextView
+                                style="@style/ItemTextSmall"
+                                android:text="Balance: "/>
+                            <TextView
+                                style="@style/ItemTextSmall"
+                                android:text="1,234134234556"
+                                android:textColor="@color/colorBlack"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <View style="@style/DefaultBorder"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    style="@style/DefaultItem">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            style="@style/ItemText"
+                            android:text="Exchange available Rate: "/>
+                        <TextView
+                            style="@style/ItemText"
+                            android:text="1 BTC = 12.234"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/colorBlack"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            style="@style/ItemText"
+                            android:text="OMG"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/colorBlack"/>
+                        <TextView
+                            style="@style/ItemText"
+                            android:text=" powered by shapeshife"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:layout_marginStart="@dimen/default_padding"
+                    android:layout_marginEnd="@dimen/default_padding">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtSymbolFrom"
+                            android:layout_marginBottom="@dimen/default_margin"
+                            style="@style/ItemText"
+                            android:text="BTC"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/colorBlack"/>
+                        <View style="@style/DefaultBorder"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="26dp"
+                        android:layout_marginEnd="26dp"
+                        android:adjustViewBounds="true"
+                        android:src="@mipmap/swap"/>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtSymbolTo"
+                            android:layout_marginBottom="@dimen/default_margin"
+                            style="@style/ItemText"
+                            android:text="ETH"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/colorBlack"/>
+                        <View style="@style/DefaultBorder"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="min: ∅.1 BTC max: ∅.4 OMG"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    style="@style/ItemText"
+                    android:text="Transaction Fee "/>
+                <TextView
+                    android:id="@+id/txtTransactionFree"
+                    style="@style/ItemText"
+                    android:text="0.000444BTC=ETH 13.00"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorBlack"/>
+            </LinearLayout>
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_margin">
+
+                <TextView
+                    android:layout_weight="1"
+                    style="@style/ItemText"
+                    android:text="@string/slow"
+                    android:textAlignment="textStart"/>
+                <TextView
+                    style="@style/ItemText"
+                    android:text="@string/medium"/>
+                <TextView
+                    android:layout_weight="1"
+                    style="@style/ItemText"
+                    android:text="@string/fast"
+                    android:textAlignment="textEnd"/>
+            </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/default_padding_2x"
+                android:paddingEnd="@dimen/default_padding_2x">
+
+                <Button
+                    android:id="@+id/btnSend"
+                    android:layout_gravity="center"
+                    style="@style/DefaultButton"
+                    android:onClick="onClick"
+                    android:text="@string/send" />
+            </FrameLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>
