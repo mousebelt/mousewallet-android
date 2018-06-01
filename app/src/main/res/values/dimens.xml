@@ -21,6 +21,8 @@
     <dimen name="pin_size">14dp</dimen>
     <dimen name="pin_dot_size">4dp</dimen>
     <dimen name="symbol_size">42dp</dimen>
+    <dimen name="symbol_size_small">26dp</dimen>
     <dimen name="icon_size">16dp</dimen>
+    <dimen name="qrcode_size">210dp</dimen>
 
 </resources>

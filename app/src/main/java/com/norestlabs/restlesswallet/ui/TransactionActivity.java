@@ -11,6 +11,7 @@ import android.view.View;
 import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.ui.adapter.ViewPagerAdapter;
+import com.norestlabs.restlesswallet.ui.fragment.ReceiveFragment_;
 import com.norestlabs.restlesswallet.ui.fragment.SendFragment_;
 
 import org.androidannotations.annotations.AfterViews;
@@ -46,7 +47,7 @@ public class TransactionActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        Fragment ft = new SendFragment_();
+        Fragment ft = new ReceiveFragment_();
         adapter.addFragment(ft, getString(R.string.receive));
         ft = new SendFragment_();
         adapter.addFragment(ft, getString(R.string.send));
