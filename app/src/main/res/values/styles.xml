@@ -16,6 +16,21 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="DefaultBorder">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/colorGray</item>
+    </style>
+
+    <style name="DefaultItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginTop">@dimen/default_padding</item>
+        <item name="android:layout_marginBottom">@dimen/default_padding</item>
+        <item name="android:paddingEnd">@dimen/default_padding</item>
+    </style>
+
     <style name="DefaultText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -35,11 +50,25 @@
         <item name="android:textColor">@color/colorBlack</item>
     </style>
 
+    <style name="ItemText" parent="DefaultText">
+        <item name="android:textSize">@dimen/small_font_size</item>
+    </style>
+
+    <style name="ItemTextInput" parent="ItemText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+
     <style name="DefaultButton" parent="Widget.AppCompat.Button.Colored">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/default_button_height</item>
         <item name="android:fontFamily">@font/source_sans_pro_regular</item>
         <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/button_font_size</item>
+    </style>
+
+    <style name="TabText" parent="DefaultText">
         <item name="android:textSize">@dimen/button_font_size</item>
     </style>
 

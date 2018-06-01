@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_margin_2x">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardElevation="1dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/default_padding">
+
+                <LinearLayout
+                    style="@style/DefaultItem">
+
+                    <ImageView
+                        android:id="@+id/imgSymbol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@mipmap/btc"/>
+                    <TextView
+                        android:id="@+id/txtSymbol"
+                        android:layout_marginStart="@dimen/default_margin"
+                        style="@style/SubTitleText"
+                        android:text="BTC"/>
+                    <TextView
+                        android:id="@+id/txtCoin"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/default_margin"
+                        android:textAlignment="textStart"
+                        style="@style/ItemText"
+                        android:text="(Bitcoin)"/>
+                    <ImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:adjustViewBounds="true"
+                        android:src="@mipmap/forward"/>
+                </LinearLayout>
+                <View style="@style/DefaultBorder"/>
+                <LinearLayout
+                    android:layout_height="@dimen/default_item_height"
+                    android:layout_margin="0dp"
+                    style="@style/DefaultItem">
+
+                    <EditText
+                        android:layout_weight="1"
+                        style="@style/ItemTextInput"
+                        android:hint="Enter receive address"
+                        android:maxLines="3"/>
+                    <ImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:adjustViewBounds="true"
+                        android:src="@mipmap/user"/>
+                </LinearLayout>
+                <View style="@style/DefaultBorder"/>
+                <LinearLayout
+                    style="@style/DefaultItem">
+
+                    <TextView
+                        android:id="@+id/txtSymbolFrom"
+                        android:layout_weight="1"
+                        style="@style/ItemText"
+                        android:text="BTC"
+                        android:textAlignment="textStart"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@mipmap/swap"/>
+                    <TextView
+                        android:id="@+id/txtSymbolTo"
+                        android:layout_weight="1"
+                        style="@style/ItemText"
+                        android:text="ETH"
+                        android:textAlignment="textEnd"/>
+                </LinearLayout>
+                <View style="@style/DefaultBorder"/>
+                <LinearLayout
+                    android:layout_marginBottom="0dp"
+                    style="@style/DefaultItem"
+                    android:gravity="end">
+
+                    <TextView
+                        style="@style/ItemText"
+                        android:text="Balance 0.123000 BTC"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/default_padding">
+
+                <LinearLayout
+                    android:layout_height="@dimen/default_item_height"
+                    android:layout_margin="0dp"
+                    style="@style/DefaultItem">
+
+                    <EditText
+                        style="@style/ItemTextInput"
+                        android:hint="Memo(optional)"
+                        android:maxLines="4"/>
+                </LinearLayout>
+                <View style="@style/DefaultBorder"/>
+                <LinearLayout
+                    style="@style/DefaultItem">
+
+                    <TextView
+                        style="@style/ItemText"
+                        android:text="Transaction Free"
+                        android:textColor="@color/colorBlack"/>
+                    <TextView
+                        android:id="@+id/txtTransactionFree"
+                        android:layout_weight="1"
+                        style="@style/ItemText"
+                        android:text="0.000444BTC=ETH 13.00"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/colorPrimary"/>
+                </LinearLayout>
+            </LinearLayout>
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_margin">
+
+                <TextView
+                    android:layout_weight="1"
+                    style="@style/ItemText"
+                    android:text="@string/slow"
+                    android:textAlignment="textStart"/>
+                <TextView
+                    style="@style/ItemText"
+                    android:text="@string/medium"/>
+                <TextView
+                    android:layout_weight="1"
+                    style="@style/ItemText"
+                    android:text="@string/fast"
+                    android:textAlignment="textEnd"/>
+            </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/default_padding_2x"
+                android:paddingEnd="@dimen/default_padding_2x">
+
+                <Button
+                    android:id="@+id/btnSend"
+                    android:layout_gravity="center"
+                    style="@style/DefaultButton"
+                    android:onClick="onClick"
+                    android:text="@string/send" />
+            </FrameLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

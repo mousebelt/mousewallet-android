@@ -127,7 +127,6 @@
         <Button
             android:id="@+id/btnContinue"
             style="@style/DefaultButton"
-            android:layout_height="@dimen/button_height"
             android:onClick="onClick"
             android:text="@string/btn_continue" />
 
