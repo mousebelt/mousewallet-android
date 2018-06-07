@@ -1,3 +1,4 @@
 include ':app'
 include ':tagview'
 include ':number-keyboard'
+include ':NRLWalletSDK'
