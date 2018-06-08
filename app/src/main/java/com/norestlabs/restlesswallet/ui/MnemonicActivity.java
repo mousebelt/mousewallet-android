@@ -13,6 +13,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import co.lujun.androidtagview.TagContainerLayout;
+import module.nrlwallet.com.nrlwalletsdk.Language.English;
+import module.nrlwallet.com.nrlwalletsdk.Utils.GenerateMnemonic;
 
 @EActivity(R.layout.activity_mnemonic)
 public class MnemonicActivity extends AppCompatActivity {
@@ -26,12 +28,16 @@ public class MnemonicActivity extends AppCompatActivity {
     @ViewById
     TagContainerLayout tagContainerLayout;
 
+    String[] tags;
+
     @AfterViews
     protected void init() {
         setSupportActionBar(toolbar);
         txtTitle.setText(R.string.mnemonic);
 
-        final String[] tags = getResources().getStringArray(R.array.tags);
+        final StringBuilder sb = new StringBuilder();
+        new GenerateMnemonic(English.INSTANCE).createMnemonic(sb::append);
+        tags = sb.toString().split(" ");
         tagContainerLayout.setTags(tags);
     }
 
@@ -39,6 +45,7 @@ public class MnemonicActivity extends AppCompatActivity {
         switch (v.getId()) {
             case R.id.btnContinue:
                 Intent intent = new Intent(this, Mnemonic2Activity_.class);
+                intent.putExtra("tags", tags);
                 startActivity(intent);
                 finish();
                 break;
