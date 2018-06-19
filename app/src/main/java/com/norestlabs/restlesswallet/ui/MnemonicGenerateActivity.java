@@ -16,8 +16,8 @@ import co.lujun.androidtagview.TagContainerLayout;
 import module.nrlwallet.com.nrlwalletsdk.Language.English;
 import module.nrlwallet.com.nrlwalletsdk.Utils.GenerateMnemonic;
 
-@EActivity(R.layout.activity_mnemonic)
-public class MnemonicActivity extends AppCompatActivity {
+@EActivity(R.layout.activity_mnemonic_generate)
+public class MnemonicGenerateActivity extends AppCompatActivity {
 
     @ViewById
     Toolbar toolbar;
@@ -28,7 +28,7 @@ public class MnemonicActivity extends AppCompatActivity {
     @ViewById
     TagContainerLayout tagContainerLayout;
 
-    String[] tags;
+    private String[] tags;
 
     @AfterViews
     protected void init() {
@@ -44,7 +44,7 @@ public class MnemonicActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnContinue:
-                Intent intent = new Intent(this, Mnemonic2Activity_.class);
+                Intent intent = new Intent(this, MnemonicVerifyActivity_.class);
                 intent.putExtra("tags", tags);
                 startActivity(intent);
                 finish();

@@ -54,17 +54,18 @@ public class TutorialActivity extends AppCompatActivity {
             case R.id.btnStart:
                 viewPager.setCurrentItem(1);
                 break;
-            case R.id.btnRestore:
-                break;
             case R.id.btnGo:
                 viewPager.setCurrentItem(2);
                 break;
             case R.id.btnSkip:
-                break;
             case R.id.btnCreate:
+                intent = new Intent(this, MnemonicGenerateActivity_.class);
+                startActivity(intent);
+                finish();
                 break;
+            case R.id.btnRestore:
             case R.id.btnRestoreMnemonic:
-                intent = new Intent(this, MnemonicActivity_.class);
+                intent = new Intent(this, MnemonicRestoreActivity_.class);
                 startActivity(intent);
                 finish();
                 break;

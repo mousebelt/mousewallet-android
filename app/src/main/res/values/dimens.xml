@@ -27,4 +27,6 @@
     <dimen name="icon_size">16dp</dimen>
     <dimen name="qrcode_size">210dp</dimen>
 
+    <dimen name="key_height">52dp</dimen>
+
 </resources>
