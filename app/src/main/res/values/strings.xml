@@ -3,6 +3,7 @@
     <!--Common-->
     <string name="skip">SKIP</string>
     <string name="back">BACK</string>
+    <string name="next">NEXT</string>
     <string name="btn_continue">CONTINUE</string>
     <string name="cancel">Cancel</string>
     <string name="error">ERROR</string>
@@ -19,6 +20,11 @@
     <string name="mnemonic">Mnemonic</string>
     <string name="mnemonic_hint">This is your 12-word mnemonic to restore your wallet. Write this down and do not share it with anyone.</string>
     <string name="verify_mnemonic">VERIFY YOUR MNEMONIC</string>
+    <string name="enter_mnemonic">ENTER YOUR MNEMONIC</string>
+    <string name="invalid_sort_mnemonic">Please sort all the mnemonic!</string>
+    <string name="invalid_mnemonic">The mnemonic is not matching!</string>
+    <string name="invalid_fill_mnemonic">Mnemonic should consist of 12 words!</string>
+    <string name="invalid_seed">Cannot produce seed!</string>
     <!--PIN-->
     <string name="verification">Verification</string>
     <string name="enter_a_pin">ENTER A PIN</string>

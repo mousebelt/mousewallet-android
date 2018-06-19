@@ -12,12 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity
-            android:name=".ui.TutorialActivity_"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.MnemonicActivity_"
-            android:screenOrientation="portrait">
+        <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,20 +20,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.Mnemonic2Activity_"
+            android:name=".ui.TutorialActivity_"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.VerificationActivity_"
+            android:name=".ui.MnemonicGenerateActivity_"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.MnemonicVerifyActivity_"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.MnemonicRestoreActivity_"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.PINVerificationActivity_"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MainActivity_"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.TransactionActivity_"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_mnemonic) {
 
         } else if (id == R.id.nav_logout) {
-            Intent intent = new Intent(this, VerificationActivity_.class);
+            Intent intent = new Intent(this, PINVerificationActivity_.class);
             startActivity(intent);
             finish();
         }

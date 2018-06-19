@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorWhite</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -29,6 +30,14 @@
         <item name="android:layout_marginTop">@dimen/default_padding</item>
         <item name="android:layout_marginBottom">@dimen/default_padding</item>
         <item name="android:paddingEnd">@dimen/default_padding</item>
+    </style>
+
+    <style name="DefaultButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/default_button_height</item>
+        <item name="android:fontFamily">@font/source_sans_pro_regular</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/button_font_size</item>
     </style>
 
     <style name="DefaultText">
@@ -64,15 +73,13 @@
         <item name="android:textAlignment">textStart</item>
     </style>
 
-    <style name="DefaultButton" parent="Widget.AppCompat.Button.Colored">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/default_button_height</item>
-        <item name="android:fontFamily">@font/source_sans_pro_regular</item>
-        <item name="android:textColor">@color/colorWhite</item>
+    <style name="TabText" parent="DefaultText">
         <item name="android:textSize">@dimen/button_font_size</item>
     </style>
 
-    <style name="TabText" parent="DefaultText">
+    <style name="KeyboardText" parent="DefaultText">
+        <item name="android:fontFamily">@font/roboto_mono_regular</item>
+        <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/button_font_size</item>
     </style>
 

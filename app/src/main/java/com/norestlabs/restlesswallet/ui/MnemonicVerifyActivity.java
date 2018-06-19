@@ -17,8 +17,8 @@ import org.androidannotations.annotations.ViewById;
 import co.lujun.androidtagview.TagContainerLayout;
 import co.lujun.androidtagview.TagView;
 
-@EActivity(R.layout.activity_mnemonic2)
-public class Mnemonic2Activity extends AppCompatActivity {
+@EActivity(R.layout.activity_mnemonic_verify)
+public class MnemonicVerifyActivity extends AppCompatActivity {
 
     @ViewById
     Toolbar toolbar;
@@ -29,7 +29,7 @@ public class Mnemonic2Activity extends AppCompatActivity {
     @ViewById
     TagContainerLayout tagContainerLayout1, tagContainerLayout2;
 
-    String[] tags;
+    private String[] tags;
 
     @AfterViews
     protected void init() {
@@ -77,22 +77,22 @@ public class Mnemonic2Activity extends AppCompatActivity {
 
     private void verifyTags() {
         if (tagContainerLayout1.getTags().size() != tags.length) {
-            showFailedError();
+            showFailedError(R.string.invalid_sort_mnemonic);
             return;
         }
         for (int i = 0; i < tags.length; i ++) {
             if (!tagContainerLayout1.getTags().get(i).equals(tags[i])) {
-                showFailedError();
+                showFailedError(R.string.invalid_mnemonic);
                 return;
             }
         }
-        Intent intent = new Intent(this, VerificationActivity_.class);
+        Intent intent = new Intent(this, PINVerificationActivity_.class);
         startActivity(intent);
         finish();
     }
 
-    private void showFailedError() {
-        Toast.makeText(this, "Your mnemonic not match!", Toast.LENGTH_SHORT).show();
+    private void showFailedError(int resId) {
+        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
     }
 
     public void onClick(View v) {
@@ -110,7 +110,7 @@ public class Mnemonic2Activity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, MnemonicActivity_.class);
+        Intent intent = new Intent(this, MnemonicGenerateActivity_.class);
         startActivity(intent);
         finish();
     }
