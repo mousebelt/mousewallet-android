@@ -6,13 +6,11 @@ import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import tgio.rncryptor.RNCryptorNative;
@@ -74,6 +72,7 @@ public class AppPreferences {
         final String encrypted = toKey(value);
         if (encrypted == null) {
             preferences.edit().remove(PREFERENCE_PINCODE).apply();
+            pincode = null;
             return false;
         } else {
             preferences.edit().putString(PREFERENCE_PINCODE, encrypted).apply();
@@ -161,7 +160,11 @@ public class AppPreferences {
 
     private String encrypt(String value, String key) {
         RNCryptorNative rncryptor = new RNCryptorNative();
-        return new String(rncryptor.encrypt(value, key));
+        try {
+            return new String(rncryptor.encrypt(value, key), CHARSET);
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
     }
 
     private String decrypt(String value, String key) {

@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.norestlabs.restlesswallet.R;
+import com.norestlabs.restlesswallet.RWApplication;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment_;
 
@@ -92,8 +93,8 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent intent;
         int id = item.getItemId();
-
         if (id == R.id.nav_home) {
             loadFragment(0);
         } else if (id == R.id.nav_send) {
@@ -105,7 +106,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_mnemonic) {
 
         } else if (id == R.id.nav_logout) {
-            Intent intent = new Intent(this, PINVerificationActivity_.class);
+            RWApplication.getApp().getPreferences().setPin(null);
+            RWApplication.getApp().getPreferences().setMnemonic(null);
+            intent = new Intent(this, TutorialActivity_.class);
             startActivity(intent);
             finish();
         }
