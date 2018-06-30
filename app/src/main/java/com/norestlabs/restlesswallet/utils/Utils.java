@@ -1,5 +1,6 @@
 package com.norestlabs.restlesswallet.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Random;
 
@@ -25,6 +26,14 @@ public class Utils {
             result = result.concat(" " + item);
         }
         return result.substring(1);
+    }
+
+    public static byte[] stringToBytes(String string) {
+        try {
+            return string.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
     }
 
     public static String generateSeed(String strMnemonic) {

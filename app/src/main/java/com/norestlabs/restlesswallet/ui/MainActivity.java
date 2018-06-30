@@ -17,10 +17,17 @@ import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.RWApplication;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment_;
+import com.norestlabs.restlesswallet.utils.Utils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLBitcoin;
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLEthereum;
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLLite;
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLNeo;
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLStellar;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity
@@ -57,6 +64,38 @@ public class MainActivity extends AppCompatActivity
 
         homeFragment = new HomeFragment_.FragmentBuilder_().build();
         loadFragment(selectedFragmentIndex);
+
+//        generateWallet();
+    }
+
+    private void generateWallet() {
+        byte[] bseed = Utils.stringToBytes(RWApplication.getApp().getSeed());
+
+        //ETH
+//        NRLEthereum nrlEthereum = new NRLEthereum(bseed);
+//        String ethRootKey = nrlEthereum.getRootKey();
+//        String ethPrivateKey = nrlEthereum.getPrivateKey();
+//        String ethAddress = nrlEthereum.getAddress();
+
+        //BTC
+//        NRLBitcoin nrlBitcoin = new NRLBitcoin(bseed);
+//        String btcPrivateKey = nrlBitcoin.getPublicKey();
+//        String btcAddress = nrlBitcoin.getAddress();
+
+        //LTC
+        NRLLite nrlLite = new NRLLite(bseed);
+        String nrlPrivateKey = nrlLite.getPublicKey();
+        String nrlAddress = nrlLite.getAddress();
+
+        //STL
+//        NRLStellar nrlStellar = new NRLStellar(bseed);
+//        String stlPrivateKey = nrlStellar.getPrivateKey();
+//        String stlAddress = nrlStellar.getAddress();
+
+        //NEO
+        NRLNeo nrlNeo = new NRLNeo(bseed);
+        String neoPrivateKey = nrlNeo.getPrivateKey();
+        String neoAddress = nrlNeo.getAddress();
     }
 
     @Override
