@@ -41,6 +41,9 @@
             android:name=".ui.TransactionActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+        <activity android:name=".ui.AboutActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

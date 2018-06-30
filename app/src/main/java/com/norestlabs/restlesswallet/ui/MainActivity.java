@@ -144,6 +144,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_mnemonic) {
 
+        } else if (id == R.id.nav_about) {
+            intent = new Intent(this, AboutActivity_.class);
+            startActivity(intent);
         } else if (id == R.id.nav_logout) {
             RWApplication.getApp().getPreferences().setPin(null);
             RWApplication.getApp().getPreferences().setMnemonic(null);

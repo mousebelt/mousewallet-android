@@ -36,6 +36,7 @@
     <string name="nav_receive">Received</string>
     <string name="nav_swap">Swap</string>
     <string name="nav_mnemonic">Mnemonic</string>
+    <string name="nav_about">About</string>
     <string name="nav_logout">Logout</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -52,6 +53,11 @@
     <string name="fast">Fast</string>
     <!--Settings-->
     <string name="settings">Settings</string>
+    <!--About-->
+    <string name="version">Version %s</string>
+    <string name="about1">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque.</string>
+    <string name="about2">Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</string>
+    <string name="about3">Doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.</string>
     <!--Dummy-->
     <string name="nav_header_title">Blance 1.5 BTC</string>
     <string name="nav_header_subtitle">Ryan Holloway</string>

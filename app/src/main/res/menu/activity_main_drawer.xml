@@ -25,6 +25,10 @@
             android:icon="@mipmap/ic_mnemonic"
             android:title="@string/nav_mnemonic" />
         <item
+            android:id="@+id/nav_about"
+            android:icon="@mipmap/user"
+            android:title="@string/nav_about" />
+        <item
             android:id="@+id/nav_logout"
             android:icon="@mipmap/ic_logout"
             android:title="@string/nav_logout" />
