@@ -45,8 +45,8 @@ public class ReceiveFragment extends Fragment {
 
             @Override
             public void qrGenerated(Bitmap bitmap) {
-                pbQRCode.setVisibility(View.GONE);
-                imgQRCode.setImageBitmap(bitmap);
+                if (pbQRCode != null) pbQRCode.setVisibility(View.GONE);
+                if (imgQRCode != null) imgQRCode.setImageBitmap(bitmap);
             }
         });
         qrGenerator.execute(qrCode);

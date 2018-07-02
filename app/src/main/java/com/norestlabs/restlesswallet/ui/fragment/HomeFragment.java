@@ -52,6 +52,9 @@ public class HomeFragment extends Fragment implements QueryListener {
         mModels = new ArrayList<>();
         mModels.add(new CoinModel("BTC", "Bitcoin", 0.134, 450, R.mipmap.btc));
         mModels.add(new CoinModel("ETH", "Ethereum", 1.134, 6450, R.mipmap.eth));
+        mModels.add(new CoinModel("LTC", "Litecoin", 1.134, 6450, R.mipmap.ltc));
+        mModels.add(new CoinModel("NEO", "Neo", 1.134, 6450, R.mipmap.neo));
+        mModels.add(new CoinModel("STL", "Stellar", 0.134, 250, R.mipmap.stl));
         mModels.add(new CoinModel("OMG", "OmiseGo", 0.134, 250, R.mipmap.omg));
         mAdapter.edit()
                 .replaceAll(filter(mModels, ((MainActivity)getActivity()).searchView.getQuery().toString()))

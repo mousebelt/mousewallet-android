@@ -7,6 +7,7 @@
     <string name="btn_continue">CONTINUE</string>
     <string name="cancel">Cancel</string>
     <string name="error">ERROR</string>
+    <string name="no_internet_connection">There\'s no internet connection</string>
     <!--Tutorial-->
     <string name="tutorial_help1">Welcome to the Restless Wallet, a \n simple and open-source way to store \n multiple kinds of digital assets.</string>
     <string name="tutorial_help2">Assets are held in a wallet on the \n device. Send, receive and pay with \n cryptocurrency today!</string>
@@ -51,6 +52,15 @@
     <string name="slow">Slow</string>
     <string name="medium">Medium</string>
     <string name="fast">Fast</string>
+    <!--Swap-->
+    <string name="unsupported">not supported</string>
+    <string name="unavailable">unavailable</string>
+    <string name="exchange_rate_from_shapeshift">Exchange available Rate: 1 %1$s = %2$.4f %3$s powered by shapeshift</string>
+    <string name="swap_min_max">min: %1$.4f %2$s  max: %3$.4f %4$s</string>
+    <string name="transaction_fee">%1$.4f %2$s = %3$.4f %4$s</string>
+    <string name="swap_amount_empty_error">Please input amount!</string>
+    <string name="swap_amount_min_error">%1$s amount cannot be smaller than %2$f</string>
+    <string name="swap_amount_max_error">%1$s amount cannot be larger than %2$f</string>
     <!--Settings-->
     <string name="settings">Settings</string>
     <!--About-->

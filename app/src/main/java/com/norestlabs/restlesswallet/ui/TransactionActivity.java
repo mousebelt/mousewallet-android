@@ -30,7 +30,7 @@ public class TransactionActivity extends AppCompatActivity {
     @ViewById
     ViewPager viewPager;
 
-    private CoinModel mModel;
+    public CoinModel coinModel;
 
     @AfterViews
     protected void init() {
@@ -38,8 +38,8 @@ public class TransactionActivity extends AppCompatActivity {
 
         Serializable serializable = getIntent().getSerializableExtra("data");
         if (serializable != null) {
-            mModel = (CoinModel)serializable;
-            getSupportActionBar().setTitle(mModel.getCoin());
+            coinModel = (CoinModel)serializable;
+            getSupportActionBar().setTitle(coinModel.getCoin());
         }
 
         setupViewPager();
@@ -77,8 +77,6 @@ public class TransactionActivity extends AppCompatActivity {
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnSend:
-                break;
             default:
                 break;
         }
