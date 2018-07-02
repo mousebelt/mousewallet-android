@@ -136,23 +136,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_home) {
             loadFragment(0);
-        } else if (id == R.id.nav_send) {
-
-        } else if (id == R.id.nav_receive) {
-
-        } else if (id == R.id.nav_swap) {
-
-        } else if (id == R.id.nav_mnemonic) {
-
         } else if (id == R.id.nav_about) {
             intent = new Intent(this, AboutActivity_.class);
             startActivity(intent);
-        } else if (id == R.id.nav_logout) {
-            RWApplication.getApp().getPreferences().setPin(null);
-            RWApplication.getApp().getPreferences().setMnemonic(null);
-            intent = new Intent(this, TutorialActivity_.class);
-            startActivity(intent);
-            finish();
+        } else if (id == R.id.nav_settings) {
+
         }
 
         drawer.closeDrawer(GravityCompat.START);

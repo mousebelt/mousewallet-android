@@ -9,29 +9,13 @@
             android:icon="@mipmap/ic_home"
             android:title="@string/nav_home" />
         <item
-            android:id="@+id/nav_send"
-            android:icon="@mipmap/ic_send"
-            android:title="@string/nav_send" />
-        <item
-            android:id="@+id/nav_receive"
-            android:icon="@mipmap/ic_receive"
-            android:title="@string/nav_receive" />
-        <item
-            android:id="@+id/nav_swap"
-            android:icon="@mipmap/ic_swap"
-            android:title="@string/nav_swap" />
-        <item
-            android:id="@+id/nav_mnemonic"
-            android:icon="@mipmap/ic_mnemonic"
-            android:title="@string/nav_mnemonic" />
-        <item
             android:id="@+id/nav_about"
             android:icon="@mipmap/user"
             android:title="@string/nav_about" />
         <item
-            android:id="@+id/nav_logout"
-            android:icon="@mipmap/ic_logout"
-            android:title="@string/nav_logout" />
+            android:id="@+id/nav_settings"
+            android:icon="@mipmap/ic_settings"
+            android:title="@string/settings" />
     </group>
 
 </menu>
