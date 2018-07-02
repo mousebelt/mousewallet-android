@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/colorButtonNormal</item>
         <item name="android:windowBackground">@color/colorWhite</item>
         <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
     </style>
@@ -38,6 +39,11 @@
         <item name="android:fontFamily">@font/source_sans_pro_regular</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">@dimen/button_font_size</item>
+    </style>
+
+    <style name="DisabledButton" parent="DefaultButton">
+        <item name="android:background">@color/colorButtonNormal</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
     </style>
 
     <style name="DefaultText">

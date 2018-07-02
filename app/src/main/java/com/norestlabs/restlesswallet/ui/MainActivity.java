@@ -140,7 +140,11 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(this, AboutActivity_.class);
             startActivity(intent);
         } else if (id == R.id.nav_settings) {
-
+            RWApplication.getApp().getPreferences().setPin(null);
+            RWApplication.getApp().getPreferences().setMnemonic(null);
+            intent = new Intent(this, TutorialActivity_.class);
+            startActivity(intent);
+            finish();
         }
 
         drawer.closeDrawer(GravityCompat.START);

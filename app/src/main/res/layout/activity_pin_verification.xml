@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_padding"
                 android:adjustViewBounds="true"
+                android:tint="@color/colorPrimary"
                 android:src="@mipmap/lock"/>
 
             <FrameLayout

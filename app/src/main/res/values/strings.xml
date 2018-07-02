@@ -65,9 +65,11 @@
     <string name="settings">Settings</string>
     <!--About-->
     <string name="version">Version %s</string>
-    <string name="about1">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque.</string>
-    <string name="about2">Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</string>
-    <string name="about3">Doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.</string>
+    <string name="about1">MouseWallet is a simple multi-chain wallet native on Android and iOS. It supports the Bitcoin, Litecoin, Ethereum, Stellar and NEO blockchains inside the wallet, tracking the balances from each of them.</string>
+    <string name="about2">The only full-service blockchain accelerator in the world. MouseBelt is a joint-venture between No Rest Labs and NueValue Capital.</string>
+    <string name="about3">No Rest Labs is a blockchain-focused engineering group. They have helped companies build out platforms and projects from ideas.</string>
+    <string name="about4">NueValue Capital is a blockchain venture capital firm. They have invested more than $40 million in over 60 companies since 2013.</string>
+    <string name="visit">Visit</string>
     <!--Dummy-->
     <string name="nav_header_title">Blance 1.5 BTC</string>
     <string name="nav_header_subtitle">Ryan Holloway</string>

@@ -1,12 +1,15 @@
 package com.norestlabs.restlesswallet.ui.fragment;
 
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,7 +59,10 @@ public class SwapFragment extends Fragment {
     EditText edtSymbolFrom, edtSymbolTo;
 
     @ViewById
-    View btnSend;
+    SeekBar seekBar;
+
+    @ViewById
+    Button btnSend;
 
     ArrayAdapter adapterFrom;
     SwapAdapter adapterTo;
@@ -171,7 +177,7 @@ public class SwapFragment extends Fragment {
         txtExchangeRate.setText(getString(R.string.exchange_rate_from_shapeshift, baseCoin.getSymbol(), marketInfo.getRate(), selectedSymbol));
         txtSwapMinMax.setText(getString(R.string.swap_min_max, marketInfo.getMinimum(), baseCoin.getSymbol(), marketInfo.getMaxLimit(), selectedSymbol));
         updateFeeView();
-        btnSend.setEnabled(true);
+        setEnabled(true);
     }
 
     private void updateFeeView() {
@@ -182,6 +188,12 @@ public class SwapFragment extends Fragment {
             amount = 1;
         }
         txtTransactionFee.setText(getString(R.string.transaction_fee, amount, baseCoin.getSymbol(), marketInfo.getMinerFee() * amount, "USD"));
+    }
+
+    private void setEnabled(boolean enabled) {
+        seekBar.setEnabled(enabled);
+        btnSend.setEnabled(enabled);
+        btnSend.setTextColor(Color.parseColor(enabled ? "#ffffff" : "#666666"));
     }
 
     private void getSwapCoins() {
@@ -228,14 +240,14 @@ public class SwapFragment extends Fragment {
                     updateMarketView();
                 } else {
                     Toast.makeText(getContext(), Utils.getErrorStringFromBody(response.errorBody()), Toast.LENGTH_SHORT).show();
-                    btnSend.setEnabled(false);
+                    setEnabled(false);
                 }
             }
 
             @Override
             public void onFailure(Call<MarketInfoResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                btnSend.setEnabled(false);
+                setEnabled(false);
             }
         });
     }
@@ -256,14 +268,14 @@ public class SwapFragment extends Fragment {
                     }
                 } else {
                     Toast.makeText(getContext(), Utils.getErrorStringFromBody(response.errorBody()), Toast.LENGTH_SHORT).show();
-                    btnSend.setEnabled(false);
+                    setEnabled(false);
                 }
             }
 
             @Override
             public void onFailure(Call<MarketInfoResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                btnSend.setEnabled(false);
+                setEnabled(false);
             }
         });
     }

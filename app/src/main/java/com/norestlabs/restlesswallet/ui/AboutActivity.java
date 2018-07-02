@@ -16,16 +16,14 @@ import org.androidannotations.annotations.ViewById;
 public class AboutActivity extends AppCompatActivity {
 
     @ViewById
-    TextView txtVersion1, txtVersion2, txtVersion3;
+    TextView txtVersion;
 
     @AfterViews
     protected void init() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.nav_about);
 
-        txtVersion1.setText(getString(R.string.version, BuildConfig.VERSION_NAME));
-        txtVersion2.setText(getString(R.string.version, BuildConfig.VERSION_NAME));
-        txtVersion3.setText(getString(R.string.version, BuildConfig.VERSION_NAME));
+        txtVersion.setText(getString(R.string.version, BuildConfig.VERSION_NAME));
     }
 
     @Override
@@ -39,6 +37,12 @@ public class AboutActivity extends AppCompatActivity {
 
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btnVisit1:
+                break;
+            case R.id.btnVisit2:
+                break;
+            case R.id.btnVisit3:
+                break;
             default:
                 break;
         }
