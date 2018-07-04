@@ -79,12 +79,5 @@ public class Utils {
         } catch (IOException e) {
             return e.getMessage();
         }
-        return result.substring(1);
-    }
-
-    public static String generateSeed(String strMnemonic) {
-        final byte[] bseed = new MnemonicToSeed().calculateSeedByte(strMnemonic, "");
-        final String seed = new MnemonicToSeed().calculateSeed(strMnemonic, "");
-        return seed;
     }
 }
