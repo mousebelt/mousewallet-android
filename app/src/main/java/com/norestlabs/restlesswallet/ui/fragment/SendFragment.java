@@ -18,6 +18,7 @@ import com.norestlabs.restlesswallet.RWApplication;
 import com.norestlabs.restlesswallet.api.ApiClient;
 import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.models.response.BitcoinFeeResponse;
+import com.norestlabs.restlesswallet.models.response.ConversionResponse;
 import com.norestlabs.restlesswallet.models.response.EtherChainResponse;
 import com.norestlabs.restlesswallet.ui.TransactionActivity;
 import com.norestlabs.restlesswallet.utils.Constants;
@@ -60,7 +61,7 @@ public class SendFragment extends Fragment {
     Button btnSend;
 
     CoinModel coinModel;
-    double balance;
+    double conversionRate, balance;
     double transactionFee[] = {0, 0, 0};
 
     @AfterViews
@@ -76,6 +77,7 @@ public class SendFragment extends Fragment {
         edtSymbolFrom.setHint(coinModel.getSymbol());
         edtSymbolTo.setHint("USD");
 
+        getUSDConversionRate();
         getTransactionFee();
     }
 
@@ -102,7 +104,7 @@ public class SendFragment extends Fragment {
             amount = -1;
         }
         if (edtSymbolFrom.hasFocus()) {
-            edtSymbolTo.setText(amount < 0 ? "" : String.format(Locale.US, "%.3f", amount * getUSDRate()));
+            edtSymbolTo.setText(amount < 0 ? "" : String.format(Locale.US, "%.3f", amount * conversionRate));
         }
         updateFeeView();
     }
@@ -115,8 +117,8 @@ public class SendFragment extends Fragment {
         } catch (NumberFormatException e) {
             amount = -1;
         }
-        if (edtSymbolTo.hasFocus()) {
-            edtSymbolFrom.setText(amount < 0 ? "" : String.format(Locale.US, "%.3f", amount / getUSDRate()));
+        if (edtSymbolTo.hasFocus() && conversionRate > 0) {
+            edtSymbolFrom.setText(amount < 0 ? "" : String.format(Locale.US, "%.3f", amount / conversionRate));
         }
     }
 
@@ -168,8 +170,42 @@ public class SendFragment extends Fragment {
         if (isVisible()) Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private double getUSDRate() {
-        return 0;
+    private void getUSDConversionRate() {
+        Call<ConversionResponse> call = ApiClient.getInterface(Constants.COINMARKET_URL).getCoinMarketCap("USD");
+        call.enqueue(new Callback<ConversionResponse>() {
+            @Override
+            public void onResponse(Call<ConversionResponse> call, Response<ConversionResponse> response) {
+                int statusCode = response.code();
+                if (statusCode == 200) {
+                    final ConversionResponse data = response.body();
+                    switch (coinModel.getSymbol()) {
+                        case "BTC":
+                            conversionRate = data.getBTC().getUSDPrice();
+                            break;
+                        case "ETH":
+                            conversionRate = data.getETH().getUSDPrice();
+                            break;
+                        case "LTC":
+                            conversionRate = data.getLTC().getUSDPrice();
+                        case "NEO":
+                            conversionRate = data.getNEO().getUSDPrice();
+                        case "STL":
+                            conversionRate = data.getSTL().getUSDPrice();
+                            break;
+                        default:
+                            return;
+                    }
+                    onFromTextChanged(edtSymbolFrom.getText());
+                } else {
+                    showToastMessage(Utils.getErrorStringFromBody(response.errorBody()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ConversionResponse> call, Throwable t) {
+                showToastMessage(t.getMessage());
+            }
+        });
     }
 
     private void getTransactionFee() {
