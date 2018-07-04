@@ -54,14 +54,14 @@
     <string name="fast">Fast</string>
     <!--Receive-->
     <string name="current_balance_title">Current Balance:&#160;</string>
-    <string name="current_balance_value">%1$.2f %2$s</string>
+    <string name="current_balance_value">%1$.3f %2$s</string>
     <string name="alert_copied">Copied to Clipboard!</string>
     <!--Swap-->
     <string name="unsupported">not supported</string>
     <string name="unavailable">unavailable</string>
     <string name="exchange_rate_from_shapeshift">Exchange available Rate: 1 %1$s = %2$.3f %3$s powered by shapeshift</string>
-    <string name="swap_min_max">min: %1$.2f %2$s  max: %3$.2f %4$s</string>
-    <string name="transaction_fee">%1$.2f %2$s = %3$.2f %4$s</string>
+    <string name="swap_min_max">min: %1$.3f %2$s  max: %3$.3f %4$s</string>
+    <string name="transaction_fee">%1$.3f %2$s = %3$.3f %4$s</string>
     <string name="swap_amount_empty_error">Please input amount!</string>
     <string name="swap_amount_min_error">%1$s amount cannot be smaller than %2$f</string>
     <string name="swap_amount_max_error">%1$s amount cannot be larger than %2$f</string>

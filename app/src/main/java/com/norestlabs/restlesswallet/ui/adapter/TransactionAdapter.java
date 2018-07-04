@@ -18,9 +18,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionHolder> 
     private NeoTransaction transaction;
 
     public TransactionAdapter(List<Transaction> transactions) {
-        final Transaction transaction = transactions.get(0);
-        if (transaction instanceof NeoTransaction) {
-            this.transaction = (NeoTransaction)transaction;
+        if (transactions.size() > 0) {
+            final Transaction transaction = transactions.get(0);
+            if (transaction instanceof NeoTransaction) {
+                this.transaction = (NeoTransaction)transaction;
+            }
         }
     }
 
@@ -50,6 +52,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionHolder> 
 
     @Override
     public int getItemCount() {
-        return transaction.vin.size() + transaction.vout.size();
+        return transaction == null ? 0 : transaction.vin.size() + transaction.vout.size();
     }
 }

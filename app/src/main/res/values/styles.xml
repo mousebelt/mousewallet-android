@@ -18,6 +18,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="DiscreteSeekBar" parent="Widget.AppCompat.SeekBar.Discrete">
+        <item name="android:colorControlActivated">@color/colorAccent</item>
+    </style>
+
     <style name="DefaultBorder">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>

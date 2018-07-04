@@ -141,7 +141,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"/>
+                android:layout_marginEnd="@dimen/default_margin"
+                style="@style/DiscreteSeekBar"
+                android:max="2"
+                android:progress="1"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

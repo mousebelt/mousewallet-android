@@ -29,6 +29,7 @@ import com.norestlabs.restlesswallet.utils.Utils;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.SeekBarProgressChange;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 
@@ -132,6 +133,11 @@ public class SwapFragment extends Fragment {
         if (edtSymbolTo.hasFocus()) {
             edtSymbolFrom.setText(amount < 0 ? "" : String.format(Locale.US, "%.4f", amount / marketInfo.getRate()));
         }
+    }
+
+    @SeekBarProgressChange(R.id.seekBar)
+    void onProgressChange(int progress) {
+
     }
 
     private void updateView() {

@@ -84,7 +84,9 @@ public class TransactionActivity extends AppCompatActivity {
                         selectedAddress = nrlNeo.getAddress();
                     }
                     selectedBalance = Global.neoBalance;
-                    selectedTransactions.addAll(Global.neoTransactions);
+                    if (Global.neoTransactions != null) {
+                        selectedTransactions.addAll(Global.neoTransactions);
+                    }
                     break;
                 case "STL":
                     final NRLStellar nrlStellar = RWApplication.getApp().getStellar();
