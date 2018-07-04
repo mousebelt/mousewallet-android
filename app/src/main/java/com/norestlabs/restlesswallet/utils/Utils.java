@@ -62,11 +62,20 @@ public class Utils {
         return context.getResources().getIdentifier(name, "mipmap", context.getPackageName());
     }
 
-    public static String getErrorStringFromBody(ResponseBody error) {
-        if (error == null) return "Unexpected error";
+    public static String getErrorStringFromBody(ResponseBody responseBody) {
+        if (responseBody == null) return "Unexpected error";
         try {
-            ErrorResponse response = new Gson().fromJson(error.string(), ErrorResponse.class);
-            return response.getError();
+            final String error = responseBody.string();
+            if (error.contains("{")) {
+                ErrorResponse response = new Gson().fromJson(error, ErrorResponse.class);
+                if (response == null) {
+                    return error;
+                } else {
+                    return response.getError();
+                }
+            } else {
+                return error;
+            }
         } catch (IOException e) {
             return e.getMessage();
         }

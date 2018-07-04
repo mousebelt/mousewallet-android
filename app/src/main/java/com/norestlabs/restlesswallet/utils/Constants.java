@@ -1,8 +1,9 @@
 package com.norestlabs.restlesswallet.utils;
 
 public class Constants {
-    public static final String BASE_URL = "https://shapeshift.io/";
-    public static final String IMAGE_URL = BASE_URL + "img/uploads/";
+    public static final String SHAPESHIFT_URL = "https://shapeshift.io/";
+    public static final String ETHERCHAIN_URL = "https://www.etherchain.org/api/";
+    public static final String BTCFEE_URL = "https://bitcoinfees.earn.com/api/v1/fees/";
 
     public static final int SPLASH_DURATION = 0;
     public static final int PIN_DURATION = 100;

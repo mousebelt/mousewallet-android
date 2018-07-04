@@ -1,7 +1,9 @@
 package com.norestlabs.restlesswallet.api;
 
 import com.norestlabs.restlesswallet.models.request.ShiftRequest;
+import com.norestlabs.restlesswallet.models.response.BitcoinFeeResponse;
 import com.norestlabs.restlesswallet.models.response.CoinResponse;
+import com.norestlabs.restlesswallet.models.response.EtherChainResponse;
 import com.norestlabs.restlesswallet.models.response.MarketInfoResponse;
 
 import retrofit2.Call;
@@ -20,4 +22,10 @@ public interface ApiInterface {
 
     @POST("shift")
     Call<MarketInfoResponse> shift(@Body ShiftRequest request);
+
+    @GET("gasPriceOracle")
+    Call<EtherChainResponse> getETHFee();
+
+    @GET("recommended")
+    Call<BitcoinFeeResponse> getBTCFee();
 }

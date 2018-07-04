@@ -56,6 +56,9 @@
     <string name="current_balance_title">Current Balance:&#160;</string>
     <string name="current_balance_value">%1$.3f %2$s</string>
     <string name="alert_copied">Copied to Clipboard!</string>
+    <string name="tokens_found">Tokens Found</string>
+    <!--Send-->
+    <string name="address_empty_error">Please input address!</string>
     <!--Swap-->
     <string name="unsupported">not supported</string>
     <string name="unavailable">unavailable</string>

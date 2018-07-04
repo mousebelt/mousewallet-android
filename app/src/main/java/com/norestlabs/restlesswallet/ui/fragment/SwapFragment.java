@@ -23,6 +23,7 @@ import com.norestlabs.restlesswallet.models.response.CoinResponse;
 import com.norestlabs.restlesswallet.models.response.MarketInfoResponse;
 import com.norestlabs.restlesswallet.ui.TransactionActivity;
 import com.norestlabs.restlesswallet.ui.adapter.SwapAdapter;
+import com.norestlabs.restlesswallet.utils.Constants;
 import com.norestlabs.restlesswallet.utils.Global;
 import com.norestlabs.restlesswallet.utils.Utils;
 
@@ -110,6 +111,7 @@ public class SwapFragment extends Fragment {
 
     @TextChange(R.id.edtSymbolFrom)
     void onFromTextChanged(CharSequence s) {
+        if (marketInfo == null) return;
         double amount;
         try {
             amount = Double.valueOf(s.toString());
@@ -117,13 +119,14 @@ public class SwapFragment extends Fragment {
             amount = -1;
         }
         if (edtSymbolFrom.hasFocus()) {
-            edtSymbolTo.setText(amount < 0 ? "" : String.format(Locale.US, "%.4f", amount * marketInfo.getRate()));
+            edtSymbolTo.setText(amount < 0 ? "" : String.format(Locale.US, "%.3f", amount * marketInfo.getRate()));
         }
         updateFeeView();
     }
 
     @TextChange(R.id.edtSymbolTo)
     void onToTextChanged(CharSequence s) {
+        if (marketInfo == null) return;
         double amount;
         try {
             amount = Double.valueOf(s.toString());
@@ -131,7 +134,7 @@ public class SwapFragment extends Fragment {
             amount = -1;
         }
         if (edtSymbolTo.hasFocus()) {
-            edtSymbolFrom.setText(amount < 0 ? "" : String.format(Locale.US, "%.4f", amount / marketInfo.getRate()));
+            edtSymbolFrom.setText(amount < 0 ? "" : String.format(Locale.US, "%.3f", amount / marketInfo.getRate()));
         }
     }
 
@@ -203,17 +206,19 @@ public class SwapFragment extends Fragment {
 
     private void setEnabled(boolean enabled) {
         if (!isAdded()) return;
+        edtSymbolFrom.setEnabled(enabled);
+        edtSymbolTo.setEnabled(enabled);
         seekBar.setEnabled(enabled);
         btnSend.setEnabled(enabled);
         btnSend.setTextColor(Color.parseColor(enabled ? "#ffffff" : "#666666"));
     }
 
     private void showToastMessage(String message) {
-        if (isAdded()) Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        if (isVisible()) Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void getSwapCoins() {
-        Call<CoinResponse> call = ApiClient.getInterface().getCoins();
+        Call<CoinResponse> call = ApiClient.getInterface(Constants.SHAPESHIFT_URL).getCoins();
         call.enqueue(new Callback<CoinResponse>() {
             @Override
             public void onResponse(Call<CoinResponse> call, Response<CoinResponse> response) {
@@ -245,7 +250,7 @@ public class SwapFragment extends Fragment {
 
     private void getMarketInfo() {
         if (baseCoin == null) return;
-        Call<MarketInfoResponse> call = ApiClient.getInterface().getMarketInfo(baseCoin.getSymbol().toLowerCase()
+        Call<MarketInfoResponse> call = ApiClient.getInterface(Constants.SHAPESHIFT_URL).getMarketInfo(baseCoin.getSymbol().toLowerCase()
                 + "_" + selectedSymbol.toLowerCase());
         call.enqueue(new Callback<MarketInfoResponse>() {
             @Override
@@ -270,7 +275,7 @@ public class SwapFragment extends Fragment {
 
     private void shift(double fromValue) {
         //TODO: set withdrawal and returnAddress parameter
-        Call<MarketInfoResponse> call = ApiClient.getInterface().shift(new ShiftRequest("", baseCoin.getSymbol().toLowerCase() + "_" + selectedSymbol.toLowerCase(), ""));
+        Call<MarketInfoResponse> call = ApiClient.getInterface(Constants.SHAPESHIFT_URL).shift(new ShiftRequest("", baseCoin.getSymbol().toLowerCase() + "_" + selectedSymbol.toLowerCase(), ""));
         call.enqueue(new Callback<MarketInfoResponse>() {
             @Override
             public void onResponse(Call<MarketInfoResponse> call, Response<MarketInfoResponse> response) {

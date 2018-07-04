@@ -22,6 +22,6 @@ public class TransactionHolder extends RecyclerView.ViewHolder {
     public void updateView(String address, String value) {
         txtAddress.setText(address);
         txtValue.setText(value);
-        txtValue.setTextColor(Color.parseColor(value.charAt(0) == '+' ? "#33cc71" : "#878585"));
+        txtValue.setTextColor(Color.parseColor(value.charAt(0) == '+' ? "#33cc71" : "#ff193f"));
     }
 }

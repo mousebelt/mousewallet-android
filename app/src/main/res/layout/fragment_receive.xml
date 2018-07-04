@@ -35,42 +35,55 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
-
+        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7"
-            android:gravity="center"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
-
-            <ImageView
-                android:id="@+id/imgSymbol"
-                android:layout_width="@dimen/symbol_size_small"
-                android:layout_height="@dimen/symbol_size_small"
-                android:adjustViewBounds="true"
-                android:src="@mipmap/btc"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:adjustViewBounds="true"
-                android:src="@mipmap/expand"/>
+            android:layout_weight="9"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            
             <TextView
-                android:id="@+id/txtQRCode"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:layout_weight="1"
-                style="@style/TabText"
-                android:maxLines="2"
-                android:textColor="@color/colorBlack"/>
-            <ImageView
-                android:id="@+id/btnCopy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@mipmap/clipboard"/>
+                android:layout_marginTop="@dimen/default_margin_2x"
+                style="@style/TokenText"
+                android:text="@string/tokens_found"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <ImageView
+                    android:id="@+id/imgSymbol"
+                    android:layout_width="@dimen/symbol_size_small"
+                    android:layout_height="@dimen/symbol_size_small"
+                    android:adjustViewBounds="true"
+                    android:src="@mipmap/btc"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:adjustViewBounds="true"
+                    android:src="@mipmap/expand"/>
+                <TextView
+                    android:id="@+id/txtQRCode"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    android:layout_weight="1"
+                    style="@style/TabText"
+                    android:maxLines="2"
+                    android:textColor="@color/colorBlack"/>
+                <ImageView
+                    android:id="@+id/btnCopy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@mipmap/clipboard"/>
+            </LinearLayout>
         </LinearLayout>
+        
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -103,7 +116,7 @@
                 android:layout_weight="2"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
-                android:paddingBottom="@dimen/default_padding_2x"/>
+                android:paddingBottom="@dimen/default_padding"/>
         </LinearLayout>
     </LinearLayout>
 

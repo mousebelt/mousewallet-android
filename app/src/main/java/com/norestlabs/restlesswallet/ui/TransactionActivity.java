@@ -1,5 +1,6 @@
 package com.norestlabs.restlesswallet.ui;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -7,13 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.RWApplication;
 import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.models.wallet.Transaction;
 import com.norestlabs.restlesswallet.ui.adapter.ViewPagerAdapter;
 import com.norestlabs.restlesswallet.ui.fragment.ReceiveFragment_;
+import com.norestlabs.restlesswallet.ui.fragment.SendFragment;
 import com.norestlabs.restlesswallet.ui.fragment.SendFragment_;
 import com.norestlabs.restlesswallet.ui.fragment.SwapFragment_;
 import com.norestlabs.restlesswallet.utils.Global;
@@ -40,6 +45,9 @@ public class TransactionActivity extends AppCompatActivity {
 
     @ViewById
     ViewPager viewPager;
+
+    private Menu menu;
+    private ViewPagerAdapter adapter;
 
     public CoinModel coinModel;
     public String selectedAddress;
@@ -105,7 +113,7 @@ public class TransactionActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
         Fragment ft = new ReceiveFragment_();
         adapter.addFragment(ft, getString(R.string.receive));
         ft = new SendFragment_();
@@ -113,11 +121,33 @@ public class TransactionActivity extends AppCompatActivity {
         ft = new SwapFragment_();
         adapter.addFragment(ft, getString(R.string.swap));
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1) {
+                    menu.getItem(0).setIcon(R.mipmap.ic_capture);
+                } else {
+                    menu.getItem(0).setIcon(R.drawable.star_empty);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_favorite, menu);
+        this.menu = menu;
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -125,7 +155,11 @@ public class TransactionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_favorite) {
-            item.setIcon(R.drawable.star_empty);
+            if (viewPager.getCurrentItem() == 1) {
+                ((SendFragment)adapter.getItem(1)).scan();
+            } else {
+                item.setIcon(R.drawable.star_empty);
+            }
             return true;
         } else if (id == android.R.id.home) {
             finish();
