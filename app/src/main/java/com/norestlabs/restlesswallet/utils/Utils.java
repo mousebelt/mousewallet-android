@@ -45,6 +45,7 @@ public class Utils {
 
     public static byte[] stringToBytes(String string) {
         try {
+            if (string == null) return null;
             return string.getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
             return null;

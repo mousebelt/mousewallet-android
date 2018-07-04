@@ -6,6 +6,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.models.wallet.Transaction;
 import com.norestlabs.restlesswallet.ui.TransactionActivity;
+import com.norestlabs.restlesswallet.ui.adapter.TransactionAdapter;
 import com.norestlabs.restlesswallet.utils.QRGenerator;
 import com.norestlabs.restlesswallet.utils.Utils;
 
@@ -40,11 +43,15 @@ public class ReceiveFragment extends Fragment {
     @ViewById
     TextView txtQRCode, txtBalance;
 
+    @ViewById
+    RecyclerView recyclerView;
+
     CoinModel coinModel;
     String address;
     double balance;
     List<Transaction> transactions;
     private QRGenerator qrGenerator;
+    private TransactionAdapter mAdapter;
 
     @AfterViews
     void init() {
@@ -61,6 +68,10 @@ public class ReceiveFragment extends Fragment {
             showQRCode(address);
             txtQRCode.setText(address);
         }
+
+        mAdapter = new TransactionAdapter(transactions);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(mAdapter);
     }
 
     @Click(R.id.btnCopy)

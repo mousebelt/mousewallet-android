@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -97,49 +96,14 @@
                     style="@style/SubTitleText"
                     android:textColor="@color/colorOrange"/>
             </LinearLayout>
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
-                android:paddingBottom="@dimen/default_padding_2x">
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:cardCornerRadius="4dp"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardElevation="1dp"
-                    app:cardPreventCornerOverlap="false"
-                    app:cardUseCompatPadding="true">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/default_padding"
-                        android:layout_marginEnd="@dimen/default_padding">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_gravity="center"
-                            android:gravity="start"
-                            style="@style/ItemText"
-                            android:maxLines="3"
-                            android:text="dssfsdfsdefwwefwefweewfgrtiiorjioreuigoeregioriogrieogioeioiorguioreugioigioergiof"
-                            android:textAlignment="textStart"/>
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_marginTop="@dimen/default_padding"
-                            style="@style/SubTitleText"
-                            android:text="+1.00213"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/colorDarkGreen"/>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-            </LinearLayout>
+                android:paddingBottom="@dimen/default_padding_2x"/>
         </LinearLayout>
     </LinearLayout>
 

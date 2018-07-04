@@ -135,6 +135,7 @@ public class SwapFragment extends Fragment {
     }
 
     private void updateView() {
+        if (!isAdded()) return;
         pairedCoins = new ArrayList<>();
         for (Coin coin : Global.swapCoins) {
             if (coin.getSymbol().equals(coinModel.getSymbol())) {
@@ -195,9 +196,14 @@ public class SwapFragment extends Fragment {
     }
 
     private void setEnabled(boolean enabled) {
+        if (!isAdded()) return;
         seekBar.setEnabled(enabled);
         btnSend.setEnabled(enabled);
         btnSend.setTextColor(Color.parseColor(enabled ? "#ffffff" : "#666666"));
+    }
+
+    private void showToastMessage(String message) {
+        if (isAdded()) Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void getSwapCoins() {
@@ -209,13 +215,13 @@ public class SwapFragment extends Fragment {
                 if (statusCode == 200) {
                     injectSwapCoins(response.body());
                 } else {
-                    Toast.makeText(getContext(), Utils.getErrorStringFromBody(response.errorBody()), Toast.LENGTH_SHORT).show();
+                    showToastMessage(Utils.getErrorStringFromBody(response.errorBody()));
                 }
             }
 
             @Override
             public void onFailure(Call<CoinResponse> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                showToastMessage(t.getMessage());
             }
         });
     }
@@ -243,14 +249,14 @@ public class SwapFragment extends Fragment {
                     marketInfo = response.body();
                     updateMarketView();
                 } else {
-                    Toast.makeText(getContext(), Utils.getErrorStringFromBody(response.errorBody()), Toast.LENGTH_SHORT).show();
+                    showToastMessage(Utils.getErrorStringFromBody(response.errorBody()));
                     setEnabled(false);
                 }
             }
 
             @Override
             public void onFailure(Call<MarketInfoResponse> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                showToastMessage(t.getMessage());
                 setEnabled(false);
             }
         });
@@ -265,20 +271,20 @@ public class SwapFragment extends Fragment {
                 int statusCode = response.code();
                 if (statusCode == 200) {
                     if (response.body().getError() != null) {
-                        Toast.makeText(getContext(), response.body().getError(), Toast.LENGTH_SHORT).show();
+                        showToastMessage(response.body().getError());
                     } else {
                         //TODO: what to do next
-                        Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
+                        showToastMessage("Success!");
                     }
                 } else {
-                    Toast.makeText(getContext(), Utils.getErrorStringFromBody(response.errorBody()), Toast.LENGTH_SHORT).show();
+                    showToastMessage(Utils.getErrorStringFromBody(response.errorBody()));
                     setEnabled(false);
                 }
             }
 
             @Override
             public void onFailure(Call<MarketInfoResponse> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                showToastMessage(t.getMessage());
                 setEnabled(false);
             }
         });
