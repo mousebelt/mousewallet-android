@@ -1,17 +1,32 @@
 package com.norestlabs.restlesswallet.ui.fragment;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.norestlabs.restlesswallet.R;
+import com.norestlabs.restlesswallet.models.CoinModel;
+import com.norestlabs.restlesswallet.models.wallet.Transaction;
+import com.norestlabs.restlesswallet.ui.TransactionActivity;
+import com.norestlabs.restlesswallet.ui.adapter.TransactionAdapter;
 import com.norestlabs.restlesswallet.utils.QRGenerator;
+import com.norestlabs.restlesswallet.utils.Utils;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.List;
 
 @EFragment(R.layout.fragment_receive)
 public class ReceiveFragment extends Fragment {
@@ -22,14 +37,53 @@ public class ReceiveFragment extends Fragment {
     @ViewById
     View pbQRCode;
 
+    @ViewById
+    ImageView imgSymbol;
+
+    @ViewById
+    TextView txtQRCode, txtBalance;
+
+    @ViewById
+    RecyclerView recyclerView;
+
+    CoinModel coinModel;
+    String address;
+    double balance;
+    List<Transaction> transactions;
     private QRGenerator qrGenerator;
+    private TransactionAdapter mAdapter;
 
     @AfterViews
     void init() {
-        showQRCode("56&VZB09SD97S867S%6879S809A0GE9876A5F68A654A7867ASB568H");
+        final TransactionActivity activity = ((TransactionActivity)getContext());
+        coinModel = activity.coinModel;
+        address = activity.selectedAddress;
+        balance = activity.selectedBalance;
+        transactions = activity.selectedTransactions;
+
+        imgSymbol.setImageResource(Utils.getResourceId(activity, coinModel.getSymbol().toLowerCase()));
+        txtBalance.setText(getString(R.string.current_balance_value, balance, coinModel.getSymbol()));
+
+        if (address != null) {
+            showQRCode(address);
+            txtQRCode.setText(address);
+        }
+
+        mAdapter = new TransactionAdapter(transactions);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(mAdapter);
     }
 
-    private void showQRCode(String qrCode) {
+    @Click(R.id.btnCopy)
+    void onCopy() {
+        if (address == null) return;
+        final ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        final ClipData clip = ClipData.newPlainText("Wallet Address", address);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(getContext(), R.string.alert_copied, Toast.LENGTH_SHORT).show();
+    }
+
+    private void showQRCode(final String qrCode) {
         if (qrGenerator != null && qrGenerator.getStatus() == AsyncTask.Status.RUNNING) {
             qrGenerator.cancel(true);
         }
@@ -45,8 +99,8 @@ public class ReceiveFragment extends Fragment {
 
             @Override
             public void qrGenerated(Bitmap bitmap) {
-                pbQRCode.setVisibility(View.GONE);
-                imgQRCode.setImageBitmap(bitmap);
+                if (pbQRCode != null) pbQRCode.setVisibility(View.GONE);
+                if (imgQRCode != null) imgQRCode.setImageBitmap(bitmap);
             }
         });
         qrGenerator.execute(qrCode);

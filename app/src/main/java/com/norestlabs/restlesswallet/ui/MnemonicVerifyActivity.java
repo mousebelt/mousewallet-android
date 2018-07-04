@@ -3,6 +3,8 @@ package com.norestlabs.restlesswallet.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,9 +88,22 @@ public class MnemonicVerifyActivity extends AppCompatActivity {
                 return;
             }
         }
-        Intent intent = new Intent(this, PINVerificationActivity_.class);
-        startActivity(intent);
-        finish();
+
+        final String mnemonic = TextUtils.join(" ", tags);
+        final String seed = Utils.generateSeed(mnemonic);
+
+        Log.d("MNEMONIC", mnemonic);
+        Log.d("SEED", seed);
+
+        if (seed == null || seed.isEmpty()) {
+            showFailedError(R.string.invalid_mnemonic);
+        } else {
+            Intent intent = new Intent(this, PINVerificationActivity_.class);
+            intent.putExtra("mnemonic", mnemonic);
+            intent.putExtra("seed", seed);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void showFailedError(int resId) {

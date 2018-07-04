@@ -37,15 +37,22 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
+                    android:weightSum="3"
+                    android:gravity="center"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:adjustViewBounds="true"
-                    android:src="@mipmap/nitro" />
+                    android:layout_marginBottom="20dp">
 
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:adjustViewBounds="true"
+                        android:src="@mipmap/mouse_logo1" />
+                </LinearLayout>
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

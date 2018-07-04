@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.AboutActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding_2x"
+        android:paddingBottom="@dimen/default_padding_2x"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/mouse_logo2" />
+        <TextView
+            android:id="@+id/txtVersion"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
+            style="@style/DefaultText"
+            android:text="@string/version"
+            android:textColor="#979797"
+            android:textSize="@dimen/button_font_size"/>
+        <TextView
+            style="@style/DefaultText"
+            android:text="@string/about1"
+            android:textAlignment="textStart"
+            android:textColor="#666666"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding_3x"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/mous_logo3" />
+        <TextView
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_margin"
+            style="@style/DefaultText"
+            android:text="@string/about2"
+            android:textAlignment="textStart"
+            android:textColor="#666666"/>
+        <Button
+            android:id="@+id/btnVisit1"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:onClick="onClick"
+            style="@style/DefaultButton"
+            android:text="@string/visit"
+            android:textColor="@color/colorBlack"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding_2x"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/logo1" />
+        <TextView
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_margin"
+            style="@style/DefaultText"
+            android:text="@string/about3"
+            android:textAlignment="textStart"
+            android:textColor="#666666"/>
+        <Button
+            android:id="@+id/btnVisit2"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:onClick="onClick"
+            style="@style/DefaultButton"
+            android:text="@string/visit"
+            android:textColor="@color/colorBlack"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding_2x"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/logo2" />
+        <TextView
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_margin"
+            style="@style/DefaultText"
+            android:text="@string/about3"
+            android:textAlignment="textStart"
+            android:textColor="#666666"/>
+        <Button
+            android:id="@+id/btnVisit3"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:onClick="onClick"
+            style="@style/DefaultButton"
+            android:text="@string/visit"
+            android:textColor="@color/colorBlack"/>
+    </LinearLayout>
+
+</ScrollView>

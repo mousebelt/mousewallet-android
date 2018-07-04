@@ -1,3 +1,5 @@
 include ':app'
 include ':tagview'
 include ':number-keyboard'
+include ':NRLWalletSDK'
+project(':NRLWalletSDK').projectDir = new File(rootProject.projectDir, '../nrlwallet-android-sdk/NRLWalletSDK')

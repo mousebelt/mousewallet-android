@@ -1,6 +1,7 @@
 package com.norestlabs.restlesswallet.ui;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -13,13 +14,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.norestlabs.restlesswallet.R;
+import com.norestlabs.restlesswallet.RWApplication;
+import com.norestlabs.restlesswallet.models.wallet.NeoTransaction;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment_;
+import com.norestlabs.restlesswallet.utils.Constants;
+import com.norestlabs.restlesswallet.utils.Global;
+import com.norestlabs.restlesswallet.utils.Utils;
+import com.norestlabs.restlesswallet.utils.WalletUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
+
+import java.util.List;
+
+import module.nrlwallet.com.nrlwalletsdk.abstracts.NRLCallback;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity
@@ -56,6 +70,115 @@ public class MainActivity extends AppCompatActivity
 
         homeFragment = new HomeFragment_.FragmentBuilder_().build();
         loadFragment(selectedFragmentIndex);
+
+        if (RWApplication.getApp().getStellar() == null) {
+            new Handler().postDelayed(() -> generateWallet(), Constants.REQUEST_DURATION);
+        }
+    }
+
+    private void generateWallet() {
+        final byte[] bSeed = Utils.stringToBytes(RWApplication.getApp().getSeed());
+
+//        WalletUtils.getEthereumWallet(bSeed, new NRLCallback() {
+//            @Override
+//            public void onFailure(Throwable t) {
+//
+//            }
+//            @Override
+//            public void onResponse(String response) {
+//
+//            }
+//            @Override
+//            public void onResponseArray(JSONArray jsonArray) {
+//
+//            }
+//        }, new NRLCallback() {
+//            @Override
+//            public void onFailure(Throwable t) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(String response) {
+//
+//            }
+//
+//            @Override
+//            public void onResponseArray(JSONArray jsonArray) {
+//
+//            }
+//        });
+
+        WalletUtils.getNeoWallet(bSeed, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+            @Override
+            public void onResponse(String response) {
+                Global.neoBalance = Double.valueOf(response);
+                if (selectedFragmentIndex == 0) {
+                    homeFragment.onBalanceChange(Global.neoBalance, 3);
+                }
+            }
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {
+
+            }
+        }, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {
+                Global.neoTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<NeoTransaction>>(){}.getType());
+            }
+        });
+
+//        WalletUtils.getStellarWallet(bSeed, new NRLCallback() {
+//            @Override
+//            public void onFailure(Throwable t) {
+//
+//            }
+//            @Override
+//            public void onResponse(String response) {
+//
+//            }
+//            @Override
+//            public void onResponseArray(JSONArray jsonArray) {
+//
+//            }
+//        }, new NRLCallback() {
+//            @Override
+//            public void onFailure(Throwable t) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(String response) {
+//
+//            }
+//
+//            @Override
+//            public void onResponseArray(JSONArray jsonArray) {
+//
+//            }
+//        });
+
+//        NRLBitcoin nrlBitcoin = new NRLBitcoin(bseed);
+//        String btcPrivateKey = nrlBitcoin.getPublicKey();
+//        String btcAddress = nrlBitcoin.getAddress();
+
+//        NRLLite nrlLite = new NRLLite(bseed);
+//        String nrlPrivateKey = nrlLite.getPublicKey();
+//        String nrlAddress = nrlLite.getAddress();
     }
 
     @Override
@@ -92,20 +215,17 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent intent;
         int id = item.getItemId();
-
         if (id == R.id.nav_home) {
             loadFragment(0);
-        } else if (id == R.id.nav_send) {
-
-        } else if (id == R.id.nav_receive) {
-
-        } else if (id == R.id.nav_swap) {
-
-        } else if (id == R.id.nav_mnemonic) {
-
-        } else if (id == R.id.nav_logout) {
-            Intent intent = new Intent(this, PINVerificationActivity_.class);
+        } else if (id == R.id.nav_about) {
+            intent = new Intent(this, AboutActivity_.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_settings) {
+            RWApplication.getApp().getPreferences().setPin(null);
+            RWApplication.getApp().getPreferences().setMnemonic(null);
+            intent = new Intent(this, TutorialActivity_.class);
             startActivity(intent);
             finish();
         }

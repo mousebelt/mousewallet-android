@@ -12,6 +12,7 @@
         android:layout_width="12dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
+        android:tint="@color/colorAccent"
         android:src="@mipmap/back"/>
     <TextView
         style="@style/DefaultText"

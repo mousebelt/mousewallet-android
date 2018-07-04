@@ -3,6 +3,7 @@
     package="com.norestlabs.restlesswallet">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".RWApplication"
@@ -39,6 +40,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.TransactionActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ui.AboutActivity_"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
     </application>

@@ -9,9 +9,9 @@ import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
 import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.ui.MainActivity;
-import com.norestlabs.restlesswallet.ui.QueryListener;
 import com.norestlabs.restlesswallet.ui.TransactionActivity_;
 import com.norestlabs.restlesswallet.ui.adapter.CoinAdapter;
+import com.norestlabs.restlesswallet.utils.Global;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -22,7 +22,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @EFragment(R.layout.fragment_home)
-public class HomeFragment extends Fragment implements QueryListener {
+public class HomeFragment extends Fragment {
 
     @ViewById
     RecyclerView recyclerView;
@@ -50,9 +50,11 @@ public class HomeFragment extends Fragment implements QueryListener {
 
     private void setDummyData() {
         mModels = new ArrayList<>();
-        mModels.add(new CoinModel("BTC", "Bitcoin", 0.134, 450, R.mipmap.btc));
-        mModels.add(new CoinModel("ETH", "Ethereum", 1.134, 6450, R.mipmap.eth));
-        mModels.add(new CoinModel("OMG", "OmiseGo", 0.134, 250, R.mipmap.omg));
+        mModels.add(new CoinModel("BTC", "Bitcoin", Global.btcBalance, 450, R.mipmap.btc));
+        mModels.add(new CoinModel("ETH", "Ethereum", Global.ethBalance, 6450, R.mipmap.eth));
+        mModels.add(new CoinModel("LTC", "Litecoin", Global.ltcBalance, 6450, R.mipmap.ltc));
+        mModels.add(new CoinModel("NEO", "Neo", Global.neoBalance, 6450, R.mipmap.neo));
+        mModels.add(new CoinModel("STL", "Stellar", Global.stlBalance, 250, R.mipmap.stl));
         mAdapter.edit()
                 .replaceAll(filter(mModels, ((MainActivity)getActivity()).searchView.getQuery().toString()))
                 .commit();
@@ -63,17 +65,23 @@ public class HomeFragment extends Fragment implements QueryListener {
         for (CoinModel model : models) {
             final String symbol = model.getSymbol().toLowerCase();
             final String coin = model.getCoin().toLowerCase();
-            if (symbol.contains(query.toLowerCase()) || coin.contains(query.toLowerCase())) {
+            if (symbol.contains(query.toLowerCase().trim()) || coin.contains(query.toLowerCase().trim())) {
                 filteredModelList.add(model);
             }
         }
         return filteredModelList;
     }
 
-    @Override
     public void onQueryTextChange(String query) {
         mAdapter.edit()
                 .replaceAll(filter(mModels, query))
                 .commit();
+    }
+
+    public void onBalanceChange(double balance, int index) {
+        mModels.get(index).setBalance(balance);
+        getActivity().runOnUiThread(() -> {
+            mAdapter.notifyDataSetChanged();
+        });
     }
 }

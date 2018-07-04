@@ -32,20 +32,17 @@
                         android:id="@+id/imgSymbol"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:src="@mipmap/btc"/>
+                        android:adjustViewBounds="true"/>
                     <TextView
                         android:id="@+id/txtSymbol"
                         android:layout_marginStart="@dimen/default_margin"
-                        style="@style/SubTitleText"
-                        android:text="BTC"/>
+                        style="@style/SubTitleText"/>
                     <TextView
                         android:id="@+id/txtCoin"
                         android:layout_weight="1"
                         android:layout_marginStart="@dimen/default_margin"
                         android:textAlignment="textStart"
-                        style="@style/ItemText"
-                        android:text="(Bitcoin)"/>
+                        style="@style/ItemText"/>
                     <ImageView
                         android:layout_width="@dimen/icon_size"
                         android:layout_height="@dimen/icon_size"
@@ -59,6 +56,7 @@
                     style="@style/DefaultItem">
 
                     <EditText
+                        android:id="@+id/edtAddress"
                         android:layout_weight="1"
                         style="@style/ItemTextInput"
                         android:hint="Enter receive address"
@@ -73,22 +71,22 @@
                 <LinearLayout
                     style="@style/DefaultItem">
 
-                    <TextView
-                        android:id="@+id/txtSymbolFrom"
+                    <EditText
+                        android:id="@+id/edtSymbolFrom"
                         android:layout_weight="1"
-                        style="@style/ItemText"
-                        android:text="BTC"
+                        style="@style/ItemTextInput"
+                        android:inputType="numberDecimal"
                         android:textAlignment="textStart"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:src="@mipmap/swap"/>
-                    <TextView
-                        android:id="@+id/txtSymbolTo"
+                    <EditText
+                        android:id="@+id/edtSymbolTo"
                         android:layout_weight="1"
-                        style="@style/ItemText"
-                        android:text="ETH"
+                        style="@style/ItemTextInput"
+                        android:inputType="numberDecimal"
                         android:textAlignment="textEnd"/>
                 </LinearLayout>
                 <View style="@style/DefaultBorder"/>
@@ -98,8 +96,8 @@
                     android:gravity="end">
 
                     <TextView
+                        android:id="@+id/txtBalance"
                         style="@style/ItemText"
-                        android:text="Balance 0.123000 BTC"
                         android:textColor="@color/colorBlack"/>
                 </LinearLayout>
             </LinearLayout>
@@ -115,6 +113,7 @@
                     style="@style/DefaultItem">
 
                     <EditText
+                        android:id="@+id/edtMemo"
                         style="@style/ItemTextInput"
                         android:hint="Memo(optional)"
                         android:maxLines="4"/>
@@ -128,10 +127,9 @@
                         android:text="Transaction Fee"
                         android:textColor="@color/colorBlack"/>
                     <TextView
-                        android:id="@+id/txtTransactionFree"
+                        android:id="@+id/txtTransactionFee"
                         android:layout_weight="1"
                         style="@style/ItemText"
-                        android:text="0.000444BTC=ETH 13.00"
                         android:textAlignment="textEnd"
                         android:textColor="@color/colorPrimary"/>
                 </LinearLayout>
@@ -141,7 +139,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"/>
+                android:layout_marginEnd="@dimen/default_margin"
+                style="@style/DiscreteSeekBar"
+                android:max="2"
+                android:progress="1"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

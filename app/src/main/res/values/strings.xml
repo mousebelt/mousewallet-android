@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Restless Wallet</string>
+    <string name="app_name">Mouse Wallet</string>
     <!--Common-->
     <string name="skip">SKIP</string>
     <string name="back">BACK</string>
@@ -7,6 +7,7 @@
     <string name="btn_continue">CONTINUE</string>
     <string name="cancel">Cancel</string>
     <string name="error">ERROR</string>
+    <string name="no_internet_connection">There\'s no internet connection</string>
     <!--Tutorial-->
     <string name="tutorial_help1">Welcome to the Restless Wallet, a \n simple and open-source way to store \n multiple kinds of digital assets.</string>
     <string name="tutorial_help2">Assets are held in a wallet on the \n device. Send, receive and pay with \n cryptocurrency today!</string>
@@ -36,12 +37,13 @@
     <string name="nav_receive">Received</string>
     <string name="nav_swap">Swap</string>
     <string name="nav_mnemonic">Mnemonic</string>
+    <string name="nav_about">About</string>
     <string name="nav_logout">Logout</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_desc">Navigation header</string>
     <!--Home-->
-    <string name="search_coin">Search a coin</string>
+    <string name="search_coin">Search</string>
     <!--Transaction-->
     <string name="add_favorite">Add to Favorites</string>
     <string name="receive">Receive</string>
@@ -50,8 +52,31 @@
     <string name="slow">Slow</string>
     <string name="medium">Medium</string>
     <string name="fast">Fast</string>
+    <!--Receive-->
+    <string name="current_balance_title">Current Balance:&#160;</string>
+    <string name="current_balance_value">%1$.3f %2$s</string>
+    <string name="alert_copied">Copied to Clipboard!</string>
+    <string name="tokens_found">Tokens Found</string>
+    <!--Send-->
+    <string name="address_empty_error">Please input address!</string>
+    <!--Swap-->
+    <string name="unsupported">not supported</string>
+    <string name="unavailable">unavailable</string>
+    <string name="exchange_rate_from_shapeshift">Exchange available Rate: 1 %1$s = %2$.3f %3$s powered by shapeshift</string>
+    <string name="swap_min_max">min: %1$.3f %2$s  max: %3$.3f %4$s</string>
+    <string name="transaction_fee">%1$.3f %2$s = %3$.3f %4$s</string>
+    <string name="swap_amount_empty_error">Please input amount!</string>
+    <string name="swap_amount_min_error">%1$s amount cannot be smaller than %2$f</string>
+    <string name="swap_amount_max_error">%1$s amount cannot be larger than %2$f</string>
     <!--Settings-->
     <string name="settings">Settings</string>
+    <!--About-->
+    <string name="version">Version %s</string>
+    <string name="about1">MouseWallet is a simple multi-chain wallet native on Android and iOS. It supports the Bitcoin, Litecoin, Ethereum, Stellar and NEO blockchains inside the wallet, tracking the balances from each of them.</string>
+    <string name="about2">The only full-service blockchain accelerator in the world. MouseBelt is a joint-venture between No Rest Labs and NueValue Capital.</string>
+    <string name="about3">No Rest Labs is a blockchain-focused engineering group. They have helped companies build out platforms and projects from ideas.</string>
+    <string name="about4">NueValue Capital is a blockchain venture capital firm. They have invested more than $40 million in over 60 companies since 2013.</string>
+    <string name="visit">Visit</string>
     <!--Dummy-->
     <string name="nav_header_title">Blance 1.5 BTC</string>
     <string name="nav_header_subtitle">Ryan Holloway</string>

@@ -42,6 +42,14 @@ public class CoinModel implements SortedListAdapter.ViewModel, Serializable {
         return imgResId;
     }
 
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public <T> boolean isSameModelAs(@NonNull T model) {
         if (model instanceof CoinModel) {
