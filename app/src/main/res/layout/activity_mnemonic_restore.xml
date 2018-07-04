@@ -101,7 +101,8 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/colorKeyboardBorder"/>
-            <TextView                android:id="@+id/txtHint3"
+            <TextView
+                android:id="@+id/txtHint3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
