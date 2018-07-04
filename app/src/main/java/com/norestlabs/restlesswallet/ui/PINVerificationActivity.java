@@ -104,7 +104,7 @@ public class PINVerificationActivity extends AppCompatActivity implements Number
             Intent intent = new Intent(this, MainActivity_.class);
             startActivity(intent);
             finish();
-        }, Constants.PIN_DURATION);
+        }, 0);
     }
 
     @Override

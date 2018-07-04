@@ -9,17 +9,28 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.norestlabs.restlesswallet.R;
+import com.norestlabs.restlesswallet.RWApplication;
 import com.norestlabs.restlesswallet.models.CoinModel;
+import com.norestlabs.restlesswallet.models.wallet.Transaction;
 import com.norestlabs.restlesswallet.ui.adapter.ViewPagerAdapter;
 import com.norestlabs.restlesswallet.ui.fragment.ReceiveFragment_;
 import com.norestlabs.restlesswallet.ui.fragment.SendFragment_;
 import com.norestlabs.restlesswallet.ui.fragment.SwapFragment_;
+import com.norestlabs.restlesswallet.utils.Global;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLBitcoin;
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLEthereum;
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLLite;
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLNeo;
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLStellar;
 
 @EActivity(R.layout.activity_transaction)
 public class TransactionActivity extends AppCompatActivity {
@@ -31,6 +42,9 @@ public class TransactionActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     public CoinModel coinModel;
+    public String selectedAddress;
+    public double selectedBalance;
+    public List<Transaction> selectedTransactions;
 
     @AfterViews
     protected void init() {
@@ -40,6 +54,48 @@ public class TransactionActivity extends AppCompatActivity {
         if (serializable != null) {
             coinModel = (CoinModel)serializable;
             getSupportActionBar().setTitle(coinModel.getCoin());
+
+            selectedTransactions = new ArrayList<>();
+            switch (coinModel.getSymbol()) {
+                case "BTC":
+                    final NRLBitcoin nrlBitcoin = RWApplication.getApp().getBitcoin();
+                    if (nrlBitcoin != null) {
+                        selectedAddress = nrlBitcoin.getAddress();
+                    }
+                    selectedBalance = Global.btcBalance;
+                    break;
+                case "ETH":
+                    final NRLEthereum nrlEthereum = RWApplication.getApp().getEthereum();
+                    if (nrlEthereum != null) {
+                        selectedAddress = nrlEthereum.getAddress();
+                    }
+                    selectedBalance = Global.ethBalance;
+                    break;
+                case "LTC":
+                    final NRLLite nrlLite = RWApplication.getApp().getLitecoin();
+                    if (nrlLite != null) {
+                        selectedAddress = nrlLite.getAddress();
+                    }
+                    selectedBalance = Global.ltcBalance;
+                    break;
+                case "NEO":
+                    final NRLNeo nrlNeo = RWApplication.getApp().getNeo();
+                    if (nrlNeo != null) {
+                        selectedAddress = nrlNeo.getAddress();
+                    }
+                    selectedBalance = Global.neoBalance;
+                    selectedTransactions.addAll(Global.neoTransactions);
+                    break;
+                case "STL":
+                    final NRLStellar nrlStellar = RWApplication.getApp().getStellar();
+                    if (nrlStellar != null) {
+                        selectedAddress = nrlStellar.getAddress();
+                    }
+                    selectedBalance = Global.stlBalance;
+                    break;
+                default:
+                    break;
+            }
         }
 
         setupViewPager();

@@ -144,12 +144,14 @@ public class SwapFragment extends Fragment {
             }
         }
 
-        if (baseCoin == null) {
-            txtStatus.setText(R.string.unsupported);
-            txtStatus.setVisibility(View.VISIBLE);
-        } else if (baseCoin.getStatus().equals("unavailable")) {
-            txtStatus.setText(R.string.unavailable);
-            txtStatus.setVisibility(View.VISIBLE);
+        if (txtStatus != null) {
+            if (baseCoin == null) {
+                txtStatus.setText(R.string.unsupported);
+                txtStatus.setVisibility(View.VISIBLE);
+            } else if (baseCoin.getStatus().equals("unavailable")) {
+                txtStatus.setText(R.string.unavailable);
+                txtStatus.setVisibility(View.VISIBLE);
+            }
         }
 
         adapterTo = new SwapAdapter(getContext(), R.layout.spinner_item, pairedCoins);
@@ -174,6 +176,7 @@ public class SwapFragment extends Fragment {
     }
 
     private void updateMarketView() {
+        if (!isAdded()) return;
         txtExchangeRate.setText(getString(R.string.exchange_rate_from_shapeshift, baseCoin.getSymbol(), marketInfo.getRate(), selectedSymbol));
         txtSwapMinMax.setText(getString(R.string.swap_min_max, marketInfo.getMinimum(), baseCoin.getSymbol(), marketInfo.getMaxLimit(), selectedSymbol));
         updateFeeView();
@@ -181,6 +184,7 @@ public class SwapFragment extends Fragment {
     }
 
     private void updateFeeView() {
+        if (marketInfo == null) return;
         double amount;
         try {
             amount = Double.valueOf(edtSymbolFrom.getText().toString());

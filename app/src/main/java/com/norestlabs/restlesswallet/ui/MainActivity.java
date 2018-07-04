@@ -1,6 +1,7 @@
 package com.norestlabs.restlesswallet.ui;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -13,21 +14,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.RWApplication;
+import com.norestlabs.restlesswallet.models.wallet.NeoTransaction;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment_;
+import com.norestlabs.restlesswallet.utils.Constants;
+import com.norestlabs.restlesswallet.utils.Global;
 import com.norestlabs.restlesswallet.utils.Utils;
+import com.norestlabs.restlesswallet.utils.WalletUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
 
-import module.nrlwallet.com.nrlwalletsdk.Coins.NRLBitcoin;
-import module.nrlwallet.com.nrlwalletsdk.Coins.NRLEthereum;
-import module.nrlwallet.com.nrlwalletsdk.Coins.NRLLite;
-import module.nrlwallet.com.nrlwalletsdk.Coins.NRLNeo;
-import module.nrlwallet.com.nrlwalletsdk.Coins.NRLStellar;
+import java.util.List;
+
+import module.nrlwallet.com.nrlwalletsdk.abstracts.NRLCallback;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity
@@ -65,37 +71,114 @@ public class MainActivity extends AppCompatActivity
         homeFragment = new HomeFragment_.FragmentBuilder_().build();
         loadFragment(selectedFragmentIndex);
 
-//        generateWallet();
+        if (RWApplication.getApp().getStellar() == null) {
+            new Handler().postDelayed(() -> generateWallet(), Constants.REQUEST_DURATION);
+        }
     }
 
     private void generateWallet() {
-        byte[] bseed = Utils.stringToBytes(RWApplication.getApp().getSeed());
+        final byte[] bSeed = Utils.stringToBytes(RWApplication.getApp().getSeed());
 
-        //ETH
-//        NRLEthereum nrlEthereum = new NRLEthereum(bseed);
-//        String ethRootKey = nrlEthereum.getRootKey();
-//        String ethPrivateKey = nrlEthereum.getPrivateKey();
-//        String ethAddress = nrlEthereum.getAddress();
+//        WalletUtils.getEthereumWallet(bSeed, new NRLCallback() {
+//            @Override
+//            public void onFailure(Throwable t) {
+//
+//            }
+//            @Override
+//            public void onResponse(String response) {
+//
+//            }
+//            @Override
+//            public void onResponseArray(JSONArray jsonArray) {
+//
+//            }
+//        }, new NRLCallback() {
+//            @Override
+//            public void onFailure(Throwable t) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(String response) {
+//
+//            }
+//
+//            @Override
+//            public void onResponseArray(JSONArray jsonArray) {
+//
+//            }
+//        });
 
-        //BTC
+        WalletUtils.getNeoWallet(bSeed, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+            @Override
+            public void onResponse(String response) {
+                Global.neoBalance = Double.valueOf(response);
+                if (selectedFragmentIndex == 0) {
+                    homeFragment.onBalanceChange(Global.neoBalance, 3);
+                }
+            }
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {
+
+            }
+        }, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {
+                Global.neoTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<NeoTransaction>>(){}.getType());
+            }
+        });
+
+//        WalletUtils.getStellarWallet(bSeed, new NRLCallback() {
+//            @Override
+//            public void onFailure(Throwable t) {
+//
+//            }
+//            @Override
+//            public void onResponse(String response) {
+//
+//            }
+//            @Override
+//            public void onResponseArray(JSONArray jsonArray) {
+//
+//            }
+//        }, new NRLCallback() {
+//            @Override
+//            public void onFailure(Throwable t) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(String response) {
+//
+//            }
+//
+//            @Override
+//            public void onResponseArray(JSONArray jsonArray) {
+//
+//            }
+//        });
+
 //        NRLBitcoin nrlBitcoin = new NRLBitcoin(bseed);
 //        String btcPrivateKey = nrlBitcoin.getPublicKey();
 //        String btcAddress = nrlBitcoin.getAddress();
 
-        //LTC
-        NRLLite nrlLite = new NRLLite(bseed);
-        String nrlPrivateKey = nrlLite.getPublicKey();
-        String nrlAddress = nrlLite.getAddress();
-
-        //STL
-//        NRLStellar nrlStellar = new NRLStellar(bseed);
-//        String stlPrivateKey = nrlStellar.getPrivateKey();
-//        String stlAddress = nrlStellar.getAddress();
-
-        //NEO
-        NRLNeo nrlNeo = new NRLNeo(bseed);
-        String neoPrivateKey = nrlNeo.getPrivateKey();
-        String neoAddress = nrlNeo.getAddress();
+//        NRLLite nrlLite = new NRLLite(bseed);
+//        String nrlPrivateKey = nrlLite.getPublicKey();
+//        String nrlAddress = nrlLite.getAddress();
     }
 
     @Override

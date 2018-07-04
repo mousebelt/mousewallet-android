@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Restless Wallet</string>
+    <string name="app_name">Mouse Wallet</string>
     <!--Common-->
     <string name="skip">SKIP</string>
     <string name="back">BACK</string>
@@ -43,7 +43,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_desc">Navigation header</string>
     <!--Home-->
-    <string name="search_coin">Search a coin</string>
+    <string name="search_coin">Search</string>
     <!--Transaction-->
     <string name="add_favorite">Add to Favorites</string>
     <string name="receive">Receive</string>
@@ -52,12 +52,16 @@
     <string name="slow">Slow</string>
     <string name="medium">Medium</string>
     <string name="fast">Fast</string>
+    <!--Receive-->
+    <string name="current_balance_title">Current Balance:&#160;</string>
+    <string name="current_balance_value">%1$.2f %2$s</string>
+    <string name="alert_copied">Copied to Clipboard!</string>
     <!--Swap-->
     <string name="unsupported">not supported</string>
     <string name="unavailable">unavailable</string>
-    <string name="exchange_rate_from_shapeshift">Exchange available Rate: 1 %1$s = %2$.4f %3$s powered by shapeshift</string>
-    <string name="swap_min_max">min: %1$.4f %2$s  max: %3$.4f %4$s</string>
-    <string name="transaction_fee">%1$.4f %2$s = %3$.4f %4$s</string>
+    <string name="exchange_rate_from_shapeshift">Exchange available Rate: 1 %1$s = %2$.3f %3$s powered by shapeshift</string>
+    <string name="swap_min_max">min: %1$.2f %2$s  max: %3$.2f %4$s</string>
+    <string name="transaction_fee">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="swap_amount_empty_error">Please input amount!</string>
     <string name="swap_amount_min_error">%1$s amount cannot be smaller than %2$f</string>
     <string name="swap_amount_max_error">%1$s amount cannot be larger than %2$f</string>
