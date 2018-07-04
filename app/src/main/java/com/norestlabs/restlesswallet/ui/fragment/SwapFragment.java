@@ -144,7 +144,7 @@ public class SwapFragment extends Fragment {
     }
 
     private void updateView() {
-        if (!isAdded()) return;
+        if (!isVisible()) return;
         pairedCoins = new ArrayList<>();
         for (Coin coin : Global.swapCoins) {
             if (coin.getSymbol().equals(coinModel.getSymbol())) {
@@ -186,26 +186,31 @@ public class SwapFragment extends Fragment {
     }
 
     private void updateMarketView() {
-        if (!isAdded()) return;
-        txtExchangeRate.setText(getString(R.string.exchange_rate_from_shapeshift, baseCoin.getSymbol(), marketInfo.getRate(), selectedSymbol));
-        txtSwapMinMax.setText(getString(R.string.swap_min_max, marketInfo.getMinimum(), baseCoin.getSymbol(), marketInfo.getMaxLimit(), selectedSymbol));
+        if (!isVisible()) return;
+        double rate = 0, min = 0, max = 0;
+        if (marketInfo != null) {
+            rate = marketInfo.getRate();
+            min = marketInfo.getMinimum();
+            max = marketInfo.getMaxLimit();
+        }
+        txtExchangeRate.setText(getString(R.string.exchange_rate_from_shapeshift, baseCoin.getSymbol(), rate, selectedSymbol));
+        txtSwapMinMax.setText(getString(R.string.swap_min_max, min, baseCoin.getSymbol(), max, selectedSymbol));
         updateFeeView();
-        setEnabled(true);
     }
 
     private void updateFeeView() {
-        if (marketInfo == null) return;
+        final double fee = marketInfo == null ? 0 : marketInfo.getMinerFee();
         double amount;
         try {
             amount = Double.valueOf(edtSymbolFrom.getText().toString());
         } catch (NumberFormatException e) {
             amount = 1;
         }
-        txtTransactionFee.setText(getString(R.string.transaction_fee, amount, baseCoin.getSymbol(), marketInfo.getMinerFee() * amount, "USD"));
+        txtTransactionFee.setText(getString(R.string.transaction_fee, amount, baseCoin.getSymbol(), fee * amount, "USD"));
     }
 
     private void setEnabled(boolean enabled) {
-        if (!isAdded()) return;
+        if (!isVisible()) return;
         edtSymbolFrom.setEnabled(enabled);
         edtSymbolTo.setEnabled(enabled);
         seekBar.setEnabled(enabled);
@@ -214,7 +219,9 @@ public class SwapFragment extends Fragment {
     }
 
     private void showToastMessage(String message) {
-        if (isVisible()) Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        if (isVisible() && ((TransactionActivity)getContext()).getTabPosition() == 2) {
+            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void getSwapCoins() {
@@ -250,6 +257,7 @@ public class SwapFragment extends Fragment {
 
     private void getMarketInfo() {
         if (baseCoin == null) return;
+        marketInfo = null;
         Call<MarketInfoResponse> call = ApiClient.getInterface(Constants.SHAPESHIFT_URL).getMarketInfo(baseCoin.getSymbol().toLowerCase()
                 + "_" + selectedSymbol.toLowerCase());
         call.enqueue(new Callback<MarketInfoResponse>() {
@@ -258,17 +266,19 @@ public class SwapFragment extends Fragment {
                 int statusCode = response.code();
                 if (statusCode == 200) {
                     marketInfo = response.body();
-                    updateMarketView();
+                    setEnabled(true);
                 } else {
                     showToastMessage(Utils.getErrorStringFromBody(response.errorBody()));
                     setEnabled(false);
                 }
+                updateMarketView();
             }
 
             @Override
             public void onFailure(Call<MarketInfoResponse> call, Throwable t) {
                 showToastMessage(t.getMessage());
                 setEnabled(false);
+                updateMarketView();
             }
         });
     }

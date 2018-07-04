@@ -80,7 +80,6 @@
                             <TextView
                                 android:id="@+id/txtBalanceFrom"
                                 style="@style/ItemTextSmall"
-                                android:text="1,234134234556"
                                 android:textColor="@color/colorBlack"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -135,7 +134,6 @@
                             <TextView
                                 android:id="@+id/txtBalanceTo"
                                 style="@style/ItemTextSmall"
-                                android:text="1,234134234556"
                                 android:textColor="@color/colorBlack"/>
                         </LinearLayout>
                     </LinearLayout>

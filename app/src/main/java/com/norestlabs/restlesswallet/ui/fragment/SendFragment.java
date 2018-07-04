@@ -156,7 +156,7 @@ public class SendFragment extends Fragment {
     }
 
     private void setEnabled(boolean enabled) {
-        if (!isAdded()) return;
+        if (!isVisible()) return;
         edtSymbolFrom.setEnabled(enabled);
         edtSymbolTo.setEnabled(enabled);
         seekBar.setEnabled(enabled);
@@ -165,7 +165,7 @@ public class SendFragment extends Fragment {
     }
 
     private void showToastMessage(String message) {
-        if (isAdded()) Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        if (isVisible()) Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     private double getUSDRate() {

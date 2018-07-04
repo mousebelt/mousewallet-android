@@ -167,6 +167,10 @@ public class TransactionActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public int getTabPosition() {
+        return viewPager.getCurrentItem();
+    }
+
     public void onClick(View v) {
         switch (v.getId()) {
             default:
