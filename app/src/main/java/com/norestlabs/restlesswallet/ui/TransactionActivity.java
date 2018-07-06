@@ -1,6 +1,5 @@
 package com.norestlabs.restlesswallet.ui;
 
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -8,10 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.RWApplication;
 import com.norestlabs.restlesswallet.models.CoinModel;
@@ -71,6 +67,7 @@ public class TransactionActivity extends AppCompatActivity {
                         selectedAddress = nrlBitcoin.getAddress();
                     }
                     selectedBalance = Global.btcBalance;
+                    selectedTransactions = Global.btcTransactions;
                     break;
                 case "ETH":
                     final NRLEthereum nrlEthereum = RWApplication.getApp().getEthereum();
@@ -78,6 +75,7 @@ public class TransactionActivity extends AppCompatActivity {
                         selectedAddress = nrlEthereum.getAddress();
                     }
                     selectedBalance = Global.ethBalance;
+                    selectedTransactions = Global.ethTransactions;
                     break;
                 case "LTC":
                     final NRLLite nrlLite = RWApplication.getApp().getLitecoin();
@@ -85,6 +83,7 @@ public class TransactionActivity extends AppCompatActivity {
                         selectedAddress = nrlLite.getAddress();
                     }
                     selectedBalance = Global.ltcBalance;
+                    selectedTransactions = Global.ltcTransactions;
                     break;
                 case "NEO":
                     final NRLNeo nrlNeo = RWApplication.getApp().getNeo();
@@ -92,9 +91,7 @@ public class TransactionActivity extends AppCompatActivity {
                         selectedAddress = nrlNeo.getAddress();
                     }
                     selectedBalance = Global.neoBalance;
-                    if (Global.neoTransactions != null) {
-                        selectedTransactions.addAll(Global.neoTransactions);
-                    }
+                    selectedTransactions = Global.neoTransactions;
                     break;
                 case "STL":
                     final NRLStellar nrlStellar = RWApplication.getApp().getStellar();
@@ -102,6 +99,7 @@ public class TransactionActivity extends AppCompatActivity {
                         selectedAddress = nrlStellar.getAddress();
                     }
                     selectedBalance = Global.stlBalance;
+                    selectedTransactions = Global.stlTransactions;
                     break;
                 default:
                     break;

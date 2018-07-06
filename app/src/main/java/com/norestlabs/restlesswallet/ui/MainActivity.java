@@ -2,7 +2,6 @@ package com.norestlabs.restlesswallet.ui;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -16,19 +15,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.RWApplication;
-import com.norestlabs.restlesswallet.models.wallet.EthereumTransaction;
-import com.norestlabs.restlesswallet.models.wallet.LitecoinTransaction;
-import com.norestlabs.restlesswallet.models.wallet.NeoTransaction;
-import com.norestlabs.restlesswallet.models.wallet.StellarTransaction;
 import com.norestlabs.restlesswallet.models.wallet.Transaction;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment_;
-import com.norestlabs.restlesswallet.utils.Constants;
 import com.norestlabs.restlesswallet.utils.Global;
 import com.norestlabs.restlesswallet.utils.Utils;
 import com.norestlabs.restlesswallet.utils.WalletUtils;
@@ -137,7 +132,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onResponseArray(JSONArray jsonArray) {
-                Global.ethTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<EthereumTransaction>>(){}.getType());
+                Global.ethTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
             }
         });
 
@@ -169,7 +164,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onResponseArray(JSONArray jsonArray) {
-                Global.ltcTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<LitecoinTransaction>>(){}.getType());
+                Global.ltcTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
             }
         });
 
@@ -201,7 +196,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onResponseArray(JSONArray jsonArray) {
-                Global.neoTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<NeoTransaction>>(){}.getType());
+                Global.neoTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
             }
         });
 
@@ -213,8 +208,12 @@ public class MainActivity extends AppCompatActivity
             }
             @Override
             public void onResponse(String response) {
-                Global.stlBalance = Double.valueOf(response);
-                homeFragment.onBalanceChange(Global.stlBalance, 4);
+                try {
+                    Global.stlBalance = Double.valueOf(response);
+                    homeFragment.onBalanceChange(Global.stlBalance, 4);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
             }
             @Override
             public void onResponseArray(JSONArray jsonArray) {
@@ -233,29 +232,29 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onResponseArray(JSONArray jsonArray) {
-                Global.stlTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<StellarTransaction>>(){}.getType());
+                Global.stlTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
             }
         });
 
         //BTC
-        final String balance = WalletUtils.getBitcoinWallet(bSeed, new NRLCallback() {
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-
-            @Override
-            public void onResponse(String response) {
-
-            }
-
-            @Override
-            public void onResponseArray(JSONArray jsonArray) {
-                Global.btcTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
-            }
-        });
-        Global.btcBalance = Double.valueOf(balance);
-        homeFragment.onBalanceChange(Global.btcBalance, 0);
+//        final String balance = WalletUtils.getBitcoinWallet(bSeed, new NRLCallback() {
+//            @Override
+//            public void onFailure(Throwable t) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(String response) {
+//
+//            }
+//
+//            @Override
+//            public void onResponseArray(JSONArray jsonArray) {
+//                Global.btcTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
+//            }
+//        });
+//        Global.btcBalance = Double.valueOf(balance);
+//        homeFragment.onBalanceChange(Global.btcBalance, 0);
     }
 
     @Override
