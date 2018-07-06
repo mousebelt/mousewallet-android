@@ -261,9 +261,9 @@ public class SendFragment extends Fragment {
                 if (statusCode == 200) {
                     final BitcoinFeeResponse fee = response.body();
                     if (fee != null) {
-                        transactionFee[0] = fee.getHalfHourFee();
-                        transactionFee[1] = fee.getFastestFee();
-                        transactionFee[2] = fee.getHourFee();
+                        transactionFee[0] = fee.getHourFee();
+                        transactionFee[1] = fee.getHalfHourFee();
+                        transactionFee[2] = fee.getFastestFee();
                         updateFeeView();
                     }
                 } else {
@@ -293,7 +293,7 @@ public class SendFragment extends Fragment {
             case "ETH":
                 final NRLEthereum nrlEthereum = RWApplication.getApp().getEthereum();
                 if (nrlEthereum != null) {
-                    nrlEthereum.createTransaction(amount, address, memo, fee);
+                    nrlEthereum.createTransaction(String.valueOf(amount), address, memo, fee);
                 }
                 break;
             case "LTC":

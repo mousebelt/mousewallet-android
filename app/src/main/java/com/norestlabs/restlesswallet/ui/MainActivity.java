@@ -1,6 +1,7 @@
 package com.norestlabs.restlesswallet.ui;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,12 +14,18 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.RWApplication;
+import com.norestlabs.restlesswallet.models.wallet.EthereumTransaction;
+import com.norestlabs.restlesswallet.models.wallet.LitecoinTransaction;
 import com.norestlabs.restlesswallet.models.wallet.NeoTransaction;
+import com.norestlabs.restlesswallet.models.wallet.StellarTransaction;
+import com.norestlabs.restlesswallet.models.wallet.Transaction;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment_;
 import com.norestlabs.restlesswallet.utils.Constants;
@@ -51,8 +58,30 @@ public class MainActivity extends AppCompatActivity
     @ViewById
     public SearchView searchView;
 
+    @ViewById
+    ProgressBar progressBar;
+
     private HomeFragment homeFragment;
     private int selectedFragmentIndex = 0;
+
+    private class GenerateTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            generateWallet();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
 
     @AfterViews
     protected void init() {
@@ -71,44 +100,80 @@ public class MainActivity extends AppCompatActivity
         homeFragment = new HomeFragment_.FragmentBuilder_().build();
         loadFragment(selectedFragmentIndex);
 
-        if (RWApplication.getApp().getStellar() == null) {
-            new Handler().postDelayed(() -> generateWallet(), Constants.REQUEST_DURATION);
+        if (RWApplication.getApp().getBitcoin() == null) {
+            new GenerateTask().execute();
+//            new Handler().postDelayed(() -> generateWallet(), Constants.REQUEST_DURATION);
         }
     }
 
     private void generateWallet() {
         final byte[] bSeed = Utils.stringToBytes(RWApplication.getApp().getSeed());
 
-//        WalletUtils.getEthereumWallet(bSeed, new NRLCallback() {
-//            @Override
-//            public void onFailure(Throwable t) {
-//
-//            }
-//            @Override
-//            public void onResponse(String response) {
-//
-//            }
-//            @Override
-//            public void onResponseArray(JSONArray jsonArray) {
-//
-//            }
-//        }, new NRLCallback() {
-//            @Override
-//            public void onFailure(Throwable t) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(String response) {
-//
-//            }
-//
-//            @Override
-//            public void onResponseArray(JSONArray jsonArray) {
-//
-//            }
-//        });
+        //ETH
+        WalletUtils.getEthereumWallet(bSeed, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
 
+            }
+            @Override
+            public void onResponse(String response) {
+                Global.ethBalance = Double.valueOf(response);
+                homeFragment.onBalanceChange(Global.ethBalance, 1);
+            }
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {
+
+            }
+        }, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {
+                Global.ethTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<EthereumTransaction>>(){}.getType());
+            }
+        });
+
+        //LTC
+        WalletUtils.getLitecoinWallet(bSeed, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+            @Override
+            public void onResponse(String response) {
+                Global.ltcBalance = Double.valueOf(response);
+                homeFragment.onBalanceChange(Global.ltcBalance, 2);
+            }
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {
+
+            }
+        }, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {
+                Global.ltcTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<LitecoinTransaction>>(){}.getType());
+            }
+        });
+
+        //NEO
         WalletUtils.getNeoWallet(bSeed, new NRLCallback() {
             @Override
             public void onFailure(Throwable t) {
@@ -117,9 +182,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onResponse(String response) {
                 Global.neoBalance = Double.valueOf(response);
-                if (selectedFragmentIndex == 0) {
-                    homeFragment.onBalanceChange(Global.neoBalance, 3);
-                }
+                homeFragment.onBalanceChange(Global.neoBalance, 3);
             }
             @Override
             public void onResponseArray(JSONArray jsonArray) {
@@ -142,43 +205,57 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-//        WalletUtils.getStellarWallet(bSeed, new NRLCallback() {
-//            @Override
-//            public void onFailure(Throwable t) {
-//
-//            }
-//            @Override
-//            public void onResponse(String response) {
-//
-//            }
-//            @Override
-//            public void onResponseArray(JSONArray jsonArray) {
-//
-//            }
-//        }, new NRLCallback() {
-//            @Override
-//            public void onFailure(Throwable t) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(String response) {
-//
-//            }
-//
-//            @Override
-//            public void onResponseArray(JSONArray jsonArray) {
-//
-//            }
-//        });
+        //STL
+        WalletUtils.getStellarWallet(bSeed, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
 
-//        NRLBitcoin nrlBitcoin = new NRLBitcoin(bseed);
-//        String btcPrivateKey = nrlBitcoin.getPublicKey();
-//        String btcAddress = nrlBitcoin.getAddress();
+            }
+            @Override
+            public void onResponse(String response) {
+                Global.stlBalance = Double.valueOf(response);
+                homeFragment.onBalanceChange(Global.stlBalance, 4);
+            }
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {
 
-//        NRLLite nrlLite = new NRLLite(bseed);
-//        String nrlPrivateKey = nrlLite.getPublicKey();
-//        String nrlAddress = nrlLite.getAddress();
+            }
+        }, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {
+                Global.stlTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<StellarTransaction>>(){}.getType());
+            }
+        });
+
+        //BTC
+        final String balance = WalletUtils.getBitcoinWallet(bSeed, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {
+                Global.btcTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
+            }
+        });
+        Global.btcBalance = Double.valueOf(balance);
+        homeFragment.onBalanceChange(Global.btcBalance, 0);
     }
 
     @Override

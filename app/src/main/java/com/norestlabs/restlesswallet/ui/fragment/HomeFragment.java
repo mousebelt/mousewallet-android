@@ -80,8 +80,10 @@ public class HomeFragment extends Fragment {
 
     public void onBalanceChange(double balance, int index) {
         mModels.get(index).setBalance(balance);
-        getActivity().runOnUiThread(() -> {
-            mAdapter.notifyDataSetChanged();
-        });
+        if (mAdapter != null) {
+            getActivity().runOnUiThread(() -> {
+                mAdapter.notifyDataSetChanged();
+            });
+        }
     }
 }
