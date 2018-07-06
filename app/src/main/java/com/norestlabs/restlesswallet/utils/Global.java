@@ -15,9 +15,5 @@ public class Global {
 
     public static double btcBalance, ethBalance, ltcBalance, neoBalance, stlBalance;
 
-    public static List<Transaction> btcTransactions;
-    public static List<EthereumTransaction> ethTransactions;
-    public static List<LitecoinTransaction> ltcTransactions;
-    public static List<NeoTransaction> neoTransactions;
-    public static List<StellarTransaction> stlTransactions;
+    public static List<Transaction> btcTransactions, ethTransactions, ltcTransactions, neoTransactions, stlTransactions;
 }

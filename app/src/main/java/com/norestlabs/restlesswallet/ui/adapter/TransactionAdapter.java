@@ -7,22 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.norestlabs.restlesswallet.R;
-import com.norestlabs.restlesswallet.models.wallet.NeoTransaction;
 import com.norestlabs.restlesswallet.models.wallet.Transaction;
 import com.norestlabs.restlesswallet.ui.holder.TransactionHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionHolder> {
 
-    private NeoTransaction transaction;
+    private List<Transaction> transactions = new ArrayList<>();
 
     public TransactionAdapter(List<Transaction> transactions) {
-        if (transactions.size() > 0) {
-            final Transaction transaction = transactions.get(0);
-            if (transaction instanceof NeoTransaction) {
-                this.transaction = (NeoTransaction)transaction;
-            }
+        if (transactions != null) {
+            this.transactions = transactions;
         }
     }
 
@@ -37,21 +34,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull TransactionHolder viewHolder, int position) {
-        String address;
-        double value;
-        if (position < transaction.vin.size()) {
-            address = transaction.vin.get(position).address.address;
-            value = transaction.vin.get(position).address.value;
-            viewHolder.updateView(address, "+" + value);
-        } else {
-            address = transaction.vout.get(position - transaction.vin.size()).address;
-            value = transaction.vout.get(position - transaction.vin.size()).value;
-            viewHolder.updateView(address, "-" + value);
-        }
+        final Transaction transaction = transactions.get(position);
+        viewHolder.updateView(transaction.getTxid(), String.valueOf(transaction.getValue()));
     }
 
     @Override
     public int getItemCount() {
-        return transaction == null ? 0 : transaction.vin.size() + transaction.vout.size();
+        return transactions.size();
     }
 }
