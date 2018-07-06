@@ -11,21 +11,24 @@ import module.nrlwallet.com.nrlwalletsdk.abstracts.NRLCallback;
 
 public class WalletUtils {
 
-    public static void getBitcoinWallet(byte[] bSeed, NRLCallback bCallback, NRLCallback tCallback) {
-        final NRLBitcoin nrlBitcoin = new NRLBitcoin(bSeed, null);
-        nrlBitcoin.getBalance();
+    public static String getBitcoinWallet(byte[] bSeed, NRLCallback tCallback) {
+        final NRLBitcoin nrlBitcoin = new NRLBitcoin(bSeed);
+        nrlBitcoin.getTransctions(tCallback);
+        return nrlBitcoin.getBalance();
     }
 
     public static void getEthereumWallet(byte[] bSeed, NRLCallback bCallback, NRLCallback tCallback) {
-        final NRLEthereum nrlEthereum = new NRLEthereum(bSeed);
+        final NRLEthereum nrlEthereum = new NRLEthereum(bSeed, RWApplication.getApp().getPreferences().getMnemonic());
         nrlEthereum.getBalance(bCallback);
         nrlEthereum.getTransactions(tCallback);
         RWApplication.getApp().setEthereum(nrlEthereum);
     }
 
     public static void getLitecoinWallet(byte[] bSeed, NRLCallback bCallback, NRLCallback tCallback) {
-        final NRLLite nrlLitecoin = new NRLLite(bSeed);
-//        nrlLitecoin.getBalance();
+        final NRLLite nrlLite = new NRLLite(bSeed, RWApplication.getApp().getPreferences().getMnemonic());
+        nrlLite.getBalance(bCallback);
+        nrlLite.getTransactions(tCallback);
+        RWApplication.getApp().setLitecoin(nrlLite);
     }
 
     public static void getNeoWallet(byte[] bSeed, NRLCallback bCallback, NRLCallback tCallback) {

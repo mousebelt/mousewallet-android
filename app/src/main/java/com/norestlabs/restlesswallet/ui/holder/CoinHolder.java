@@ -10,6 +10,8 @@ import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.ui.adapter.CoinAdapter;
 
+import java.util.Locale;
+
 public class CoinHolder extends SortedListAdapter.ViewHolder<CoinModel> {
 
     private final View view;
@@ -38,8 +40,8 @@ public class CoinHolder extends SortedListAdapter.ViewHolder<CoinModel> {
     protected void performBind(@NonNull CoinModel item) {
         txtSymbol.setText(item.getSymbol());
         txtCoin.setText(item.getCoin());
-        txtBalance.setText(String.valueOf(item.getBalance()));
-        txtPrice.setText("$" + item.getPrice());
+        txtBalance.setText(String.format(Locale.US, "%.4f", item.getBalance()));
+        txtPrice.setText(String.format(Locale.US, "$%.4f", item.getPrice()));
         imgSymbol.setImageResource(item.getImgResId());
 
         view.setOnClickListener(v -> {

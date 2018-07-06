@@ -30,8 +30,7 @@
             android:layout_height="@dimen/symbol_size"
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
-            android:adjustViewBounds="true"
-            android:src="@mipmap/btc"/>
+            android:adjustViewBounds="true"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -40,32 +39,28 @@
 
             <TextView
                 android:id="@+id/txtSymbol"
-                style="@style/SubTitleText"
-                android:text="BTC"/>
+                style="@style/SubTitleText"/>
             <TextView
                 android:id="@+id/txtCoin"
                 style="@style/DefaultText"
-                android:text="Bitcoin"
                 android:textColor="#979797"
                 android:textSize="@dimen/small_font_size"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_padding"
-            android:layout_weight="1"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:layout_weight="2"
             android:gravity="end"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtBalance"
-                style="@style/SubTitleText"
-                android:text="0.134"/>
+                style="@style/SubTitleText"/>
             <TextView
                 android:id="@+id/txtPrice"
                 style="@style/SubTitleText"
-                android:text="$450.00"
                 android:textColor="@color/colorGreen"
                 android:textSize="@dimen/small_font_size"/>
         </LinearLayout>
