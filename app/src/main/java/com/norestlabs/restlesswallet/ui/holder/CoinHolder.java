@@ -9,6 +9,7 @@ import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
 import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.ui.adapter.CoinAdapter;
+import com.norestlabs.restlesswallet.utils.Global;
 
 import java.util.Locale;
 
@@ -41,7 +42,29 @@ public class CoinHolder extends SortedListAdapter.ViewHolder<CoinModel> {
         txtSymbol.setText(item.getSymbol());
         txtCoin.setText(item.getCoin());
         txtBalance.setText(String.format(Locale.US, "%.4f", item.getBalance()));
-        txtPrice.setText(String.format(Locale.US, "$%.4f", item.getPrice()));
+
+        if (Global.marketInfo != null) {
+            double usdPrice = 0;
+            switch (item.getSymbol()) {
+                case "BTC":
+                    usdPrice = Global.marketInfo.get(0).getUSDPrice();
+                    break;
+                case "ETH":
+                    usdPrice = Global.marketInfo.get(1).getUSDPrice();
+                    break;
+                case "LTC":
+                    usdPrice = Global.marketInfo.get(2).getUSDPrice();
+                case "NEO":
+                    usdPrice = Global.marketInfo.get(3).getUSDPrice();
+                case "STL":
+                    usdPrice = Global.marketInfo.get(4).getUSDPrice();
+                    break;
+                default:
+                    break;
+            }
+            txtPrice.setText(String.format(Locale.US, "$%.4f", item.getBalance() * usdPrice));
+        }
+
         imgSymbol.setImageResource(item.getImgResId());
 
         view.setOnClickListener(v -> {

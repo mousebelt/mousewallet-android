@@ -18,10 +18,10 @@ import com.norestlabs.restlesswallet.RWApplication;
 import com.norestlabs.restlesswallet.api.ApiClient;
 import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.models.response.BitcoinFeeResponse;
-import com.norestlabs.restlesswallet.models.response.ConversionResponse;
 import com.norestlabs.restlesswallet.models.response.EtherChainResponse;
 import com.norestlabs.restlesswallet.ui.TransactionActivity;
 import com.norestlabs.restlesswallet.utils.Constants;
+import com.norestlabs.restlesswallet.utils.Global;
 import com.norestlabs.restlesswallet.utils.Utils;
 
 import org.androidannotations.annotations.AfterViews;
@@ -171,41 +171,26 @@ public class SendFragment extends Fragment {
     }
 
     private void getUSDConversionRate() {
-        Call<ConversionResponse> call = ApiClient.getInterface(Constants.COINMARKET_URL).getCoinMarketCap("USD");
-        call.enqueue(new Callback<ConversionResponse>() {
-            @Override
-            public void onResponse(Call<ConversionResponse> call, Response<ConversionResponse> response) {
-                int statusCode = response.code();
-                if (statusCode == 200) {
-                    final ConversionResponse data = response.body();
-                    switch (coinModel.getSymbol()) {
-                        case "BTC":
-                            conversionRate = data.getBTC().getUSDPrice();
-                            break;
-                        case "ETH":
-                            conversionRate = data.getETH().getUSDPrice();
-                            break;
-                        case "LTC":
-                            conversionRate = data.getLTC().getUSDPrice();
-                        case "NEO":
-                            conversionRate = data.getNEO().getUSDPrice();
-                        case "STL":
-                            conversionRate = data.getSTL().getUSDPrice();
-                            break;
-                        default:
-                            return;
-                    }
-                    onFromTextChanged(edtSymbolFrom.getText());
-                } else {
-                    showToastMessage(Utils.getErrorStringFromBody(response.errorBody()));
-                }
+        if (Global.marketInfo != null) {
+            switch (coinModel.getSymbol()) {
+                case "BTC":
+                    conversionRate = Global.marketInfo.get(0).getUSDPrice();
+                    break;
+                case "ETH":
+                    conversionRate = Global.marketInfo.get(1).getUSDPrice();
+                    break;
+                case "LTC":
+                    conversionRate = Global.marketInfo.get(2).getUSDPrice();
+                case "NEO":
+                    conversionRate = Global.marketInfo.get(3).getUSDPrice();
+                case "STL":
+                    conversionRate = Global.marketInfo.get(4).getUSDPrice();
+                    break;
+                default:
+                    return;
             }
-
-            @Override
-            public void onFailure(Call<ConversionResponse> call, Throwable t) {
-                showToastMessage(t.getMessage());
-            }
-        });
+            onFromTextChanged(edtSymbolFrom.getText());
+        }
     }
 
     private void getTransactionFee() {

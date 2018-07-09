@@ -3,8 +3,6 @@ package com.norestlabs.restlesswallet.models.response;
 import com.google.gson.annotations.SerializedName;
 import com.norestlabs.restlesswallet.models.CoinMarketCap;
 
-import java.util.Date;
-
 public class ConversionResponse {
 
     private MarketData data;

@@ -21,9 +21,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.RWApplication;
+import com.norestlabs.restlesswallet.api.ApiClient;
+import com.norestlabs.restlesswallet.models.CoinMarketCap;
+import com.norestlabs.restlesswallet.models.response.ConversionResponse;
 import com.norestlabs.restlesswallet.models.wallet.Transaction;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment_;
+import com.norestlabs.restlesswallet.utils.Constants;
 import com.norestlabs.restlesswallet.utils.Global;
 import com.norestlabs.restlesswallet.utils.Utils;
 import com.norestlabs.restlesswallet.utils.WalletUtils;
@@ -33,9 +37,13 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import module.nrlwallet.com.nrlwalletsdk.abstracts.NRLCallback;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity
@@ -95,10 +103,46 @@ public class MainActivity extends AppCompatActivity
         homeFragment = new HomeFragment_.FragmentBuilder_().build();
         loadFragment(selectedFragmentIndex);
 
+        getUSDConversionRate();
+
         if (RWApplication.getApp().getBitcoin() == null) {
             new GenerateTask().execute();
-//            new Handler().postDelayed(() -> generateWallet(), Constants.REQUEST_DURATION);
         }
+    }
+
+    private void getUSDConversionRate() {
+        Call<ConversionResponse> call = ApiClient.getInterface(Constants.COINMARKET_URL).getCoinMarketCap("USD");
+        call.enqueue(new Callback<ConversionResponse>() {
+            @Override
+            public void onResponse(Call<ConversionResponse> call, Response<ConversionResponse> response) {
+                int statusCode = response.code();
+                if (statusCode == 200) {
+                    final ConversionResponse data = response.body();
+                    if (data != null) {
+                        final List<CoinMarketCap> coinMarketCaps = new ArrayList<>();
+                        coinMarketCaps.add(data.getBTC());
+                        coinMarketCaps.add(data.getETH());
+                        coinMarketCaps.add(data.getLTC());
+                        coinMarketCaps.add(data.getNEO());
+                        coinMarketCaps.add(data.getSTL());
+                        Global.marketInfo = coinMarketCaps;
+
+                        homeFragment.onMarketInfoChange();
+                    }
+                } else {
+                    showToastMessage(Utils.getErrorStringFromBody(response.errorBody()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ConversionResponse> call, Throwable t) {
+                showToastMessage(t.getMessage());
+            }
+        });
+    }
+
+    private void showToastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void generateWallet() {
