@@ -281,24 +281,24 @@ public class MainActivity extends AppCompatActivity
         });
 
         //BTC
-//        final String balance = WalletUtils.getBitcoinWallet(bSeed, new NRLCallback() {
-//            @Override
-//            public void onFailure(Throwable t) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(String response) {
-//
-//            }
-//
-//            @Override
-//            public void onResponseArray(JSONArray jsonArray) {
-//                Global.btcTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
-//            }
-//        });
-//        Global.btcBalance = Double.valueOf(balance);
-//        homeFragment.onBalanceChange(Global.btcBalance, 0);
+        final String balance = WalletUtils.getBitcoinWallet(bSeed, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {
+                Global.btcTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
+            }
+        });
+        Global.btcBalance = Double.valueOf(balance);
+        homeFragment.onBalanceChange(Global.btcBalance, 0);
     }
 
     @Override

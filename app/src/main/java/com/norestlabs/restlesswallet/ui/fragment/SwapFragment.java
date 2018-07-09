@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.norestlabs.restlesswallet.R;
+import com.norestlabs.restlesswallet.RWApplication;
 import com.norestlabs.restlesswallet.api.ApiClient;
 import com.norestlabs.restlesswallet.models.Coin;
 import com.norestlabs.restlesswallet.models.CoinModel;
@@ -38,6 +39,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLBitcoin;
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLEthereum;
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLLite;
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLNeo;
+import module.nrlwallet.com.nrlwalletsdk.Coins.NRLStellar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -284,8 +290,43 @@ public class SwapFragment extends Fragment {
     }
 
     private void shift(double fromValue) {
-        //TODO: set withdrawal and returnAddress parameter
-        Call<MarketInfoResponse> call = ApiClient.getInterface(Constants.SHAPESHIFT_URL).shift(new ShiftRequest("", baseCoin.getSymbol().toLowerCase() + "_" + selectedSymbol.toLowerCase(), ""));
+        final TransactionActivity activity = ((TransactionActivity)getContext());
+        String pairedAddress = "";
+        switch (selectedSymbol) {
+            case "BTC":
+                final NRLBitcoin nrlBitcoin = RWApplication.getApp().getBitcoin();
+                if (nrlBitcoin != null) {
+                    pairedAddress = nrlBitcoin.getAddress();
+                }
+                break;
+            case "ETH":
+                final NRLEthereum nrlEthereum = RWApplication.getApp().getEthereum();
+                if (nrlEthereum != null) {
+                    pairedAddress = nrlEthereum.getAddress();
+                }
+                break;
+            case "LTC":
+                final NRLLite nrlLite = RWApplication.getApp().getLitecoin();
+                if (nrlLite != null) {
+                    pairedAddress = nrlLite.getAddress();
+                }
+            case "NEO":
+                final NRLNeo nrlNeo = RWApplication.getApp().getNeo();
+                if (nrlNeo != null) {
+                    pairedAddress = nrlNeo.getAddress();
+                }
+            case "STL":
+                final NRLStellar nrlStellar = RWApplication.getApp().getStellar();
+                if (nrlStellar != null) {
+                    pairedAddress = nrlStellar.getAddress();
+                }
+                break;
+            default:
+                break;
+        }
+
+        Call<MarketInfoResponse> call = ApiClient.getInterface(Constants.SHAPESHIFT_URL)
+                .shift(new ShiftRequest(pairedAddress, baseCoin.getSymbol().toLowerCase() + "_" + selectedSymbol.toLowerCase(), activity.selectedAddress));
         call.enqueue(new Callback<MarketInfoResponse>() {
             @Override
             public void onResponse(Call<MarketInfoResponse> call, Response<MarketInfoResponse> response) {
@@ -299,14 +340,12 @@ public class SwapFragment extends Fragment {
                     }
                 } else {
                     showToastMessage(Utils.getErrorStringFromBody(response.errorBody()));
-                    setEnabled(false);
                 }
             }
 
             @Override
             public void onFailure(Call<MarketInfoResponse> call, Throwable t) {
                 showToastMessage(t.getMessage());
-                setEnabled(false);
             }
         });
     }

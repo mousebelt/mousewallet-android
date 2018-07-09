@@ -1,6 +1,7 @@
 package com.norestlabs.restlesswallet.api;
 
 import com.norestlabs.restlesswallet.RWApplication;
+import com.norestlabs.restlesswallet.utils.Constants;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,8 +18,8 @@ public class ApiClient {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .addInterceptor(new ConnectivityInterceptor(RWApplication.getApp().getApplicationContext()))
-                .readTimeout(10, TimeUnit.SECONDS)
-                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(Constants.CONNECT_TIMEOUT, TimeUnit.SECONDS)
+                .connectTimeout(Constants.CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
