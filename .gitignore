@@ -9,3 +9,6 @@ local.properties
 build
 captures
 .externalNativeBuild
+*.apk
+debug/
+release/
