@@ -45,16 +45,16 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAdapter);
 
-        setDummyData();
+        initData();
     }
 
-    private void setDummyData() {
+    private void initData() {
         mModels = new ArrayList<>();
-        mModels.add(new CoinModel("BTC", "Bitcoin", Global.btcBalance, 450, R.mipmap.btc));
-        mModels.add(new CoinModel("ETH", "Ethereum", Global.ethBalance, 6450, R.mipmap.eth));
-        mModels.add(new CoinModel("LTC", "Litecoin", Global.ltcBalance, 6450, R.mipmap.ltc));
-        mModels.add(new CoinModel("NEO", "Neo", Global.neoBalance, 6450, R.mipmap.neo));
-        mModels.add(new CoinModel("STL", "Stellar", Global.stlBalance, 250, R.mipmap.stl));
+        mModels.add(new CoinModel("BTC", "Bitcoin", Global.btcBalance, R.mipmap.btc));
+        mModels.add(new CoinModel("ETH", "Ethereum", Global.ethBalance, R.mipmap.eth));
+        mModels.add(new CoinModel("LTC", "Litecoin", Global.ltcBalance, R.mipmap.ltc));
+        mModels.add(new CoinModel("NEO", "Neo", Global.neoBalance, R.mipmap.neo));
+        mModels.add(new CoinModel("STL", "Stellar", Global.stlBalance, R.mipmap.stl));
         mAdapter.edit()
                 .replaceAll(filter(mModels, ((MainActivity)getActivity()).searchView.getQuery().toString()))
                 .commit();
@@ -84,6 +84,12 @@ public class HomeFragment extends Fragment {
             getActivity().runOnUiThread(() -> {
                 mAdapter.notifyDataSetChanged();
             });
+        }
+    }
+
+    public void onMarketInfoChange() {
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
         }
     }
 }

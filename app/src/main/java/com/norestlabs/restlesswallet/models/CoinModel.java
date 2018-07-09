@@ -11,14 +11,12 @@ public class CoinModel implements SortedListAdapter.ViewModel, Serializable {
     private String symbol;
     private String coin;
     private double balance;
-    private double price;
     private int imgResId;
 
-    public CoinModel(String symbol, String coin, double balance, double price, int imgResId) {
+    public CoinModel(String symbol, String coin, double balance, int imgResId) {
         this.symbol = symbol;
         this.coin = coin;
         this.balance = balance;
-        this.price = price;
         this.imgResId = imgResId;
     }
 
@@ -34,20 +32,12 @@ public class CoinModel implements SortedListAdapter.ViewModel, Serializable {
         return balance;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
     public int getImgResId() {
         return imgResId;
     }
 
     public void setBalance(double balance) {
         this.balance = balance;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     @Override
