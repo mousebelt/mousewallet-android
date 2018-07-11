@@ -19,6 +19,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName ="Mouse Wallet v${variant.versionName}(${variant.versionCode}).apk"
+        }
+    }
 }
 
 def AAVersion = '4.4.0'

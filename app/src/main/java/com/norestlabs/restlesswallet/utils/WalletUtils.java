@@ -14,6 +14,7 @@ public class WalletUtils {
     public static String getBitcoinWallet(byte[] bSeed, NRLCallback tCallback) {
         final NRLBitcoin nrlBitcoin = new NRLBitcoin(bSeed, RWApplication.getApp().getPreferences().getMnemonic());
         nrlBitcoin.getTransctions(tCallback);
+        RWApplication.getApp().setBitcoin(nrlBitcoin);
         return nrlBitcoin.getBalance();
     }
 
