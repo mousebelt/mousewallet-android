@@ -24,6 +24,7 @@ import com.norestlabs.restlesswallet.RWApplication;
 import com.norestlabs.restlesswallet.api.ApiClient;
 import com.norestlabs.restlesswallet.models.CoinMarketCap;
 import com.norestlabs.restlesswallet.models.response.ConversionResponse;
+import com.norestlabs.restlesswallet.models.wallet.EthereumBalance;
 import com.norestlabs.restlesswallet.models.wallet.Transaction;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment_;
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity
             }
             @Override
             public void onResponseArray(JSONArray jsonArray) {
-
+                Global.ethBalances = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<EthereumBalance>>(){}.getType());
             }
         }, new NRLCallback() {
             @Override

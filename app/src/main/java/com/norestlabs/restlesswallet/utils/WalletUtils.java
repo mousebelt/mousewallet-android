@@ -33,7 +33,7 @@ public class WalletUtils {
     }
 
     public static void getNeoWallet(byte[] bSeed, NRLCallback bCallback, NRLCallback tCallback) {
-        final NRLNeo nrlNeo = new NRLNeo(bSeed);
+        final NRLNeo nrlNeo = new NRLNeo(bSeed, RWApplication.getApp().getPreferences().getMnemonic());
         nrlNeo.getBalance(bCallback);
         nrlNeo.getTransactions(tCallback);
         RWApplication.getApp().setNeo(nrlNeo);

@@ -268,8 +268,7 @@ public class SendFragment extends Fragment {
         });
     }
 
-    private void send(double fromValue) {
-        final long amount = (long)fromValue;
+    private void send(double amount) {
         final String address = edtAddress.getText().toString();
         final String memo = edtMemo.getText().toString();
         final long fee = (long)transactionFee[seekBar.getProgress()];
@@ -277,7 +276,7 @@ public class SendFragment extends Fragment {
             case "BTC":
                 final NRLBitcoin nrlBitcoin = RWApplication.getApp().getBitcoin();
                 if (nrlBitcoin != null) {
-                    nrlBitcoin.createTransaction(amount, address, new NRLCallback() {
+                    nrlBitcoin.createTransaction((long)amount, address, new NRLCallback() {
                         @Override
                         public void onFailure(Throwable t) {
 
@@ -319,7 +318,7 @@ public class SendFragment extends Fragment {
             case "LTC":
                 final NRLLite nrlLite = RWApplication.getApp().getLitecoin();
                 if (nrlLite != null) {
-                    nrlLite.createTransaction(amount, address, memo, fee, new NRLCallback() {
+                    nrlLite.createTransaction(String.valueOf(amount), address, memo, fee, new NRLCallback() {
                         @Override
                         public void onFailure(Throwable t) {
 
@@ -361,7 +360,7 @@ public class SendFragment extends Fragment {
             case "STL":
                 final NRLStellar nrlStellar = RWApplication.getApp().getStellar();
                 if (nrlStellar != null) {
-                    nrlStellar.createTransaction(amount, address, new NRLCallback() {
+                    nrlStellar.createTransaction((long)amount, address, new NRLCallback() {
                         @Override
                         public void onFailure(Throwable t) {
 
