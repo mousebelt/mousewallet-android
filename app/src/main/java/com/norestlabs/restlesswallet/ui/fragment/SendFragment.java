@@ -30,6 +30,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.SeekBarProgressChange;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
 
 import java.util.Locale;
 
@@ -38,6 +39,7 @@ import module.nrlwallet.com.nrlwalletsdk.Coins.NRLEthereum;
 import module.nrlwallet.com.nrlwalletsdk.Coins.NRLLite;
 import module.nrlwallet.com.nrlwalletsdk.Coins.NRLNeo;
 import module.nrlwallet.com.nrlwalletsdk.Coins.NRLStellar;
+import module.nrlwallet.com.nrlwalletsdk.abstracts.NRLCallback;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -195,17 +197,20 @@ public class SendFragment extends Fragment {
 
     private void getTransactionFee() {
         switch (coinModel.getSymbol()) {
-            case "BTC":
+            case "BTC"://satoshis
+            case "LTC":
                 getBTCFee();
                 break;
-            case "ETH":
-                getETHFee();
-                break;
-            case "LTC":
-            case "NEO":
-            case "STL":
+            case "STL"://stroops
+                transactionFee[0] = 100;
+                transactionFee[1] = 100;
+                transactionFee[2] = 100;
                 updateFeeView();
                 break;
+            case "ETH"://wei
+                getETHFee();
+                break;
+            case "NEO":
             default:
                 break;
         }
@@ -220,9 +225,9 @@ public class SendFragment extends Fragment {
                 if (statusCode == 200) {
                     final EtherChainResponse fee = response.body();
                     if (fee != null) {
-                        transactionFee[0] = fee.getSafeLow();
-                        transactionFee[1] = fee.getStandard();
-                        transactionFee[2] = fee.getFast();
+                        transactionFee[0] = fee.getSafeLow() * Math.pow(10, 9);
+                        transactionFee[1] = fee.getStandard() * Math.pow(10, 9);
+                        transactionFee[2] = fee.getFast() * Math.pow(10, 9);
                         updateFeeView();
                     }
                 } else {
@@ -272,31 +277,106 @@ public class SendFragment extends Fragment {
             case "BTC":
                 final NRLBitcoin nrlBitcoin = RWApplication.getApp().getBitcoin();
                 if (nrlBitcoin != null) {
-                    nrlBitcoin.createTransaction(amount, address);
+                    nrlBitcoin.createTransaction(amount, address, new NRLCallback() {
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                        }
+
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+
+                        @Override
+                        public void onResponseArray(JSONArray jsonArray) {
+
+                        }
+                    });
                 }
                 break;
             case "ETH":
                 final NRLEthereum nrlEthereum = RWApplication.getApp().getEthereum();
                 if (nrlEthereum != null) {
-                    nrlEthereum.createTransaction(String.valueOf(amount), address, memo, fee);
+                    nrlEthereum.createTransaction(String.valueOf(amount), address, memo, fee, new NRLCallback() {
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                        }
+
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+
+                        @Override
+                        public void onResponseArray(JSONArray jsonArray) {
+
+                        }
+                    });
                 }
                 break;
             case "LTC":
                 final NRLLite nrlLite = RWApplication.getApp().getLitecoin();
                 if (nrlLite != null) {
-                    nrlLite.createTransaction(amount, address, memo, fee);
+                    nrlLite.createTransaction(amount, address, memo, fee, new NRLCallback() {
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                        }
+
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+
+                        @Override
+                        public void onResponseArray(JSONArray jsonArray) {
+
+                        }
+                    });
                 }
                 break;
             case "NEO":
                 final NRLNeo nrlNeo = RWApplication.getApp().getNeo();
                 if (nrlNeo != null) {
-                    nrlNeo.createTransaction(amount, address, memo, fee);
+                    nrlNeo.createTransaction(amount, address, memo, fee, new NRLCallback() {
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                        }
+
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+
+                        @Override
+                        public void onResponseArray(JSONArray jsonArray) {
+
+                        }
+                    });
                 }
                 break;
             case "STL":
                 final NRLStellar nrlStellar = RWApplication.getApp().getStellar();
                 if (nrlStellar != null) {
-                    nrlStellar.createTransaction(amount, address);
+                    nrlStellar.createTransaction(amount, address, new NRLCallback() {
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                        }
+
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+
+                        @Override
+                        public void onResponseArray(JSONArray jsonArray) {
+
+                        }
+                    });
                 }
                 break;
             default:
