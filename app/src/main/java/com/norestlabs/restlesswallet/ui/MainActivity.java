@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity
 
             }
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String response) {//ETH Balance
                 Global.ethBalance = Double.valueOf(response);
                 homeFragment.onBalanceChange(Global.ethBalance, 1);
             }
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void onResponseArray(JSONArray jsonArray) {
+            public void onResponseArray(JSONArray jsonArray) {//ETH Transaction
                 Global.ethTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
             }
         });
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity
 
             }
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String response) {//LTC Balance
                 Global.ltcBalance = Double.valueOf(response);
                 homeFragment.onBalanceChange(Global.ltcBalance, 2);
             }
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void onResponseArray(JSONArray jsonArray) {
+            public void onResponseArray(JSONArray jsonArray) {//LTC Transaction
                 Global.ltcTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
             }
         });
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity
 
             }
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String response) {//NEO Balance
                 Global.neoBalance = Double.valueOf(response);
                 homeFragment.onBalanceChange(Global.neoBalance, 3);
             }
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void onResponseArray(JSONArray jsonArray) {
+            public void onResponseArray(JSONArray jsonArray) {//NEO Transaction
                 Global.neoTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
             }
         });
@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity
 
             }
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String response) {//STL Balance
                 try {
                     Global.stlBalance = Double.valueOf(response);
                     homeFragment.onBalanceChange(Global.stlBalance, 4);
@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void onResponseArray(JSONArray jsonArray) {
+            public void onResponseArray(JSONArray jsonArray) {//STL Transaction
                 Global.stlTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
             }
         });
@@ -293,11 +293,11 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void onResponseArray(JSONArray jsonArray) {
+            public void onResponseArray(JSONArray jsonArray) {//BTC Transaction
                 Global.btcTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
             }
         });
-        Global.btcBalance = Double.valueOf(balance);
+        Global.btcBalance = Double.valueOf(balance);//BTC Balance
         homeFragment.onBalanceChange(Global.btcBalance, 0);
     }
 
