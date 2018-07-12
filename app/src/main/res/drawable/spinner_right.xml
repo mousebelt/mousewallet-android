@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:right="5dp"
+        android:state_pressed="true">
+        <bitmap
+            android:gravity="center_vertical|right"
+            android:tint="@color/colorAccent"
+            android:src="@mipmap/forward" />
+    </item>
+    <item android:right="5dp">
+        <bitmap
+            android:gravity="center_vertical|right"
+            android:src="@mipmap/forward" />
+    </item>
+</selector>

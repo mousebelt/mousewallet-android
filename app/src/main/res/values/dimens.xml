@@ -5,7 +5,8 @@
     <dimen name="nav_header_height">176dp</dimen>
 
     <dimen name="default_margin">8dp</dimen>
-    <dimen name="default_margin_2x">14dp</dimen>
+    <dimen name="default_margin_2x">10dp</dimen>
+    <dimen name="default_margin_3x">14dp</dimen>
     <dimen name="default_padding">16dp</dimen>
     <dimen name="default_padding_2x">24dp</dimen>
     <dimen name="default_padding_3x">32dp</dimen>

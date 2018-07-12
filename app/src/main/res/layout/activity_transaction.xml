@@ -12,10 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@drawable/tab_background"
-        android:layout_marginLeft="@dimen/default_margin_2x"
-        android:layout_marginRight="@dimen/default_margin_2x"
-        android:layout_marginTop="@dimen/default_margin_2x"
-        android:padding="10dp">
+        android:layout_marginLeft="@dimen/default_margin_3x"
+        android:layout_marginRight="@dimen/default_margin_3x"
+        android:layout_marginTop="@dimen/default_margin_3x"
+        android:padding="@dimen/default_margin_2x">
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"

@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +22,9 @@ import com.norestlabs.restlesswallet.api.ApiClient;
 import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.models.response.BitcoinFeeResponse;
 import com.norestlabs.restlesswallet.models.response.EtherChainResponse;
+import com.norestlabs.restlesswallet.models.wallet.EthereumBalance;
 import com.norestlabs.restlesswallet.ui.TransactionActivity;
+import com.norestlabs.restlesswallet.ui.adapter.BalanceAdapter;
 import com.norestlabs.restlesswallet.utils.Constants;
 import com.norestlabs.restlesswallet.utils.Global;
 import com.norestlabs.restlesswallet.utils.Utils;
@@ -48,10 +53,13 @@ import retrofit2.Response;
 public class SendFragment extends Fragment {
 
     @ViewById
-    ImageView imgSymbol;
+    ImageView imgSymbol, imgArrow;
 
     @ViewById
     TextView txtSymbol, txtCoin, txtSymbolFrom, txtSymbolTo, txtBalance, txtTransactionFee;
+
+    @ViewById
+    Spinner spinnerView;
 
     @ViewById
     EditText edtAddress, edtSymbolFrom, edtSymbolTo, edtMemo;
@@ -61,6 +69,8 @@ public class SendFragment extends Fragment {
 
     @ViewById
     Button btnSend;
+
+    BalanceAdapter adapterBalance;
 
     CoinModel coinModel;
     double conversionRate, balance;
@@ -72,10 +82,15 @@ public class SendFragment extends Fragment {
         coinModel = activity.coinModel;
         balance = activity.selectedBalance;
 
-        imgSymbol.setImageResource(Utils.getResourceId(activity, coinModel.getSymbol().toLowerCase()));
-        txtSymbol.setText(coinModel.getSymbol());
-        txtCoin.setText("(" + coinModel.getCoin() + ")");
-        txtBalance.setText(getString(R.string.current_balance_value, balance, coinModel.getSymbol()));
+        if (coinModel.getSymbol().equals("ETH") && Global.ethBalances != null) {
+            updateETHView();
+        } else {
+            imgSymbol.setImageResource(Utils.getResourceId(activity, coinModel.getSymbol().toLowerCase()));
+            txtSymbol.setText(coinModel.getSymbol());
+            txtCoin.setText("(" + coinModel.getCoin() + ")");
+            txtBalance.setText(getString(R.string.current_balance_value, balance, coinModel.getSymbol()));
+        }
+
         edtSymbolFrom.setHint(coinModel.getSymbol());
         edtSymbolTo.setHint("USD");
 
@@ -149,6 +164,29 @@ public class SendFragment extends Fragment {
         }
     }
 
+    private void updateETHView() {
+        if (Global.ethBalances == null) return;
+        imgArrow.setVisibility(View.GONE);
+        spinnerView.setVisibility(View.VISIBLE);
+        adapterBalance = new BalanceAdapter(getContext(), R.layout.spinner_item, Global.ethBalances, false);
+        spinnerView.setAdapter(adapterBalance);
+        spinnerView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                final EthereumBalance balance = Global.ethBalances.get(position);
+                imgSymbol.setImageResource(Utils.getResourceId(getContext(), balance.getSymbol().toLowerCase()));
+                txtSymbol.setText(balance.getSymbol());
+                txtCoin.setText("(" + Utils.getCoinNameFromSymbol(balance.getSymbol()) + ")");
+                txtBalance.setText(getString(R.string.current_balance_value, balance.getBalance(), balance.getSymbol()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
     private void updateFeeView() {
         double amount;
         try {
@@ -177,16 +215,26 @@ public class SendFragment extends Fragment {
             switch (coinModel.getSymbol()) {
                 case "BTC":
                     conversionRate = Global.marketInfo.get(0).getUSDPrice();
+                    //TODO: should be removed
+                    edtAddress.setText("134JaVTn6ZcjuSnBZaPHdvw7rkZJ8Cwcg9");
                     break;
                 case "ETH":
                     conversionRate = Global.marketInfo.get(1).getUSDPrice();
+                    //TODO: should be removed
+                    edtAddress.setText("0xe9e9bb953200622e8d3ce5a01dd6f608bcde3b41");
                     break;
                 case "LTC":
                     conversionRate = Global.marketInfo.get(2).getUSDPrice();
+                    //TODO: should be removed
+                    edtAddress.setText("LeR3qsGMvP3bzQux7hj3LLoKfdDSHdtFo8");
                 case "NEO":
                     conversionRate = Global.marketInfo.get(3).getUSDPrice();
+                    //TODO: should be removed
+                    edtAddress.setText("AWFwJFrd15MxibXi3oGd6FxQRsvs6G8kna");
                 case "STL":
                     conversionRate = Global.marketInfo.get(4).getUSDPrice();
+                    //TODO: should be removed
+                    edtAddress.setText("GC2SYM6Q67THT5J6BZ4A7FFZ4YZB6COTLIXNYTYAXRIJFEHSB7HPWVUU");
                     break;
                 default:
                     return;

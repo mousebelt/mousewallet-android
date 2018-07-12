@@ -9,15 +9,20 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.norestlabs.restlesswallet.R;
 import com.norestlabs.restlesswallet.models.CoinModel;
+import com.norestlabs.restlesswallet.models.wallet.EthereumBalance;
 import com.norestlabs.restlesswallet.models.wallet.Transaction;
 import com.norestlabs.restlesswallet.ui.TransactionActivity;
+import com.norestlabs.restlesswallet.ui.adapter.BalanceAdapter;
 import com.norestlabs.restlesswallet.ui.adapter.TransactionAdapter;
+import com.norestlabs.restlesswallet.utils.Global;
 import com.norestlabs.restlesswallet.utils.QRGenerator;
 import com.norestlabs.restlesswallet.utils.Utils;
 
@@ -38,13 +43,18 @@ public class ReceiveFragment extends Fragment {
     View pbQRCode;
 
     @ViewById
-    ImageView imgSymbol;
+    ImageView imgSymbol, imgArrow;
+
+    @ViewById
+    Spinner spinnerView;
 
     @ViewById
     TextView txtQRCode, txtBalance;
 
     @ViewById
     RecyclerView recyclerView;
+
+    BalanceAdapter adapterBalance;
 
     CoinModel coinModel;
     String address;
@@ -61,8 +71,12 @@ public class ReceiveFragment extends Fragment {
         balance = activity.selectedBalance;
         transactions = activity.selectedTransactions;
 
-        imgSymbol.setImageResource(Utils.getResourceId(activity, coinModel.getSymbol().toLowerCase()));
-        txtBalance.setText(getString(R.string.current_balance_value, balance, coinModel.getSymbol()));
+        if (coinModel.getSymbol().equals("ETH") && Global.ethBalances != null) {
+            updateETHView();
+        } else {
+            imgSymbol.setImageResource(Utils.getResourceId(activity, coinModel.getSymbol().toLowerCase()));
+            txtBalance.setText(getString(R.string.current_balance_value, balance, coinModel.getSymbol()));
+        }
 
         if (address != null) {
             showQRCode(address);
@@ -81,6 +95,27 @@ public class ReceiveFragment extends Fragment {
         final ClipData clip = ClipData.newPlainText("Wallet Address", address);
         clipboard.setPrimaryClip(clip);
         Toast.makeText(getContext(), R.string.alert_copied, Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateETHView() {
+        if (Global.ethBalances == null) return;
+        imgSymbol.setVisibility(View.GONE);
+        imgArrow.setVisibility(View.GONE);
+        spinnerView.setVisibility(View.VISIBLE);
+        adapterBalance = new BalanceAdapter(getContext(), R.layout.spinner_item, Global.ethBalances, true);
+        spinnerView.setAdapter(adapterBalance);
+        spinnerView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                final EthereumBalance balance = Global.ethBalances.get(position);
+                txtBalance.setText(getString(R.string.current_balance_value, balance.getBalance(), balance.getSymbol()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void showQRCode(final String qrCode) {

@@ -47,7 +47,7 @@
                     android:id="@+id/tagContainerLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:padding="@dimen/default_margin_2x"
                     app:container_background_color="#0000"
                     app:container_border_radius="5dp"
                     app:container_border_width="0dp"
@@ -61,12 +61,12 @@
                     app:tag_border_width="1dp"
                     app:tag_clickable="true"
                     app:tag_corner_radius="3dp"
-                    app:tag_horizontal_padding="10dp"
+                    app:tag_horizontal_padding="@dimen/default_margin_2x"
                     app:tag_max_length="18"
                     app:tag_text_color="@color/colorPrimary"
                     app:tag_text_size="14sp"
                     app:tag_theme="none"
-                    app:tag_vertical_padding="10dp"
+                    app:tag_vertical_padding="@dimen/default_margin_2x"
                     app:vertical_interval="8dp" />
             </FrameLayout>
         </LinearLayout>
