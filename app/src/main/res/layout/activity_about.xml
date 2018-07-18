@@ -89,7 +89,7 @@
             android:layout_marginTop="@dimen/default_padding"
             android:layout_marginBottom="@dimen/default_margin"
             style="@style/DefaultText"
-            android:text="@string/about3"
+            android:text="@string/about4"
             android:textAlignment="textStart"
             android:textColor="#666666"/>
         <Button

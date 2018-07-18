@@ -82,6 +82,7 @@
                         android:id="@+id/edtSymbolFrom"
                         android:layout_weight="1"
                         style="@style/ItemTextInput"
+                        android:imeOptions="actionDone"
                         android:inputType="numberDecimal"
                         android:textAlignment="textStart"/>
                     <ImageView
@@ -93,6 +94,7 @@
                         android:id="@+id/edtSymbolTo"
                         android:layout_weight="1"
                         style="@style/ItemTextInput"
+                        android:imeOptions="actionDone"
                         android:inputType="numberDecimal"
                         android:textAlignment="textEnd"/>
                 </LinearLayout>
@@ -186,5 +188,13 @@
             </FrameLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:elevation="2dp"
+        android:visibility="gone"/>
 
 </FrameLayout>

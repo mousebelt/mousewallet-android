@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_padding_2x"
+    tools:context=".ui.SettingsActivity">
+
+    <Button
+        android:id="@+id/btnLogout"
+        style="@style/DefaultButton"
+        android:onClick="onClick"
+        android:text="@string/logout"
+        android:textColor="#f00"/>
+</LinearLayout>

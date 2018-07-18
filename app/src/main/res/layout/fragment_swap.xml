@@ -263,4 +263,12 @@
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:elevation="2dp"
+        android:visibility="gone"/>
+
 </FrameLayout>
