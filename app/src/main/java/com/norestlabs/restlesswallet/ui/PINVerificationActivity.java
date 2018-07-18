@@ -82,7 +82,8 @@ public class PINVerificationActivity extends AppCompatActivity implements Number
     private void onSuccess() {
         new Handler().postDelayed(() -> {
             final AppPreferences appPreferences = RWApplication.getApp().getPreferences();
-            String mnemonic, seed;
+            final String mnemonic, seed;
+            final byte[] bSeed;
 
             if (mSavedPinCode == null) {
                 if (!appPreferences.setPin(mPinCode)) return;
@@ -91,17 +92,21 @@ public class PINVerificationActivity extends AppCompatActivity implements Number
                 if (!appPreferences.setMnemonic(mnemonic)) return;
 
                 seed = getIntent().getStringExtra("seed");
+                bSeed = getIntent().getByteArrayExtra("bseed");
             } else {
                 mnemonic = appPreferences.getMnemonic();
                 if (mnemonic == null) return;
 
                 seed = Utils.generateSeed(mnemonic);
+                bSeed = Utils.generateBSeed(mnemonic);
             }
 
             if (seed == null || seed.isEmpty()) return;
             RWApplication.getApp().setSeed(seed);
+            RWApplication.getApp().setBSeed(bSeed);
 
             Intent intent = new Intent(this, MainActivity_.class);
+            intent.putExtra("exist", mSavedPinCode != null);
             startActivity(intent);
             finish();
         }, 0);

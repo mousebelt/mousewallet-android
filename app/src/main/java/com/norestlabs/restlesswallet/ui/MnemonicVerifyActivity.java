@@ -91,9 +91,11 @@ public class MnemonicVerifyActivity extends AppCompatActivity {
 
         final String mnemonic = TextUtils.join(" ", tags);
         final String seed = Utils.generateSeed(mnemonic);
+        final byte[] bSeed = Utils.generateBSeed(mnemonic);
 
         Log.d("MNEMONIC", mnemonic);
         Log.d("SEED", seed);
+        Log.d("BSEED", seed);
 
         if (seed == null || seed.isEmpty()) {
             showFailedError(R.string.invalid_mnemonic);
@@ -101,6 +103,7 @@ public class MnemonicVerifyActivity extends AppCompatActivity {
             Intent intent = new Intent(this, PINVerificationActivity_.class);
             intent.putExtra("mnemonic", mnemonic);
             intent.putExtra("seed", seed);
+            intent.putExtra("bseed", bSeed);
             startActivity(intent);
             finish();
         }

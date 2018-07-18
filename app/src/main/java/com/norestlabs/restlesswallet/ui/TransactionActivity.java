@@ -127,6 +127,7 @@ public class TransactionActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+                if (menu == null) return;
                 if (position == 1) {
                     menu.getItem(0).setIcon(R.mipmap.ic_capture);
                 } else {

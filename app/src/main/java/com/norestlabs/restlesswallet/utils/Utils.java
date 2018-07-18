@@ -53,9 +53,13 @@ public class Utils {
     }
 
     public static String generateSeed(String strMnemonic) {
-        final byte[] bseed = new MnemonicToSeed().calculateSeedByte(strMnemonic, "");
         final String seed = new MnemonicToSeed().calculateSeed(strMnemonic, "");
         return seed;
+    }
+
+    public static byte[] generateBSeed(String strMnemonic) {
+        final byte[] bSeed = new MnemonicToSeed().calculateSeedByte(strMnemonic, "");
+        return bSeed;
     }
 
     public static int getResourceId(Context context, String name) {

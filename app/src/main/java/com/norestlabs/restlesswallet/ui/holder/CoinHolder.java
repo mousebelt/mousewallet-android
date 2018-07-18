@@ -41,7 +41,7 @@ public class CoinHolder extends SortedListAdapter.ViewHolder<CoinModel> {
     protected void performBind(@NonNull CoinModel item) {
         txtSymbol.setText(item.getSymbol());
         txtCoin.setText(item.getCoin());
-        txtBalance.setText(String.format(Locale.US, "%.4f", item.getBalance()));
+        txtBalance.setText(String.format(Locale.US, "%f", item.getBalance()));
 
         if (Global.marketInfo != null) {
             double usdPrice = 0;

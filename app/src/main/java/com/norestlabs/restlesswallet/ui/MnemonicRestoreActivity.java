@@ -156,6 +156,7 @@ public class MnemonicRestoreActivity extends AppCompatActivity implements Keyboa
 
         final String mnemonic = Utils.arrayListToString(tagContainerLayout.getTags());
         final String seed = Utils.generateSeed(mnemonic);
+        final byte[] bSeed = Utils.generateBSeed(mnemonic);
         Log.d("MNEMONIC", mnemonic);
         Log.d("SEED", seed);
 
@@ -165,6 +166,7 @@ public class MnemonicRestoreActivity extends AppCompatActivity implements Keyboa
             Intent intent = new Intent(this, PINVerificationActivity_.class);
             intent.putExtra("mnemonic", mnemonic);
             intent.putExtra("seed", seed);
+            intent.putExtra("bseed", bSeed);
             startActivity(intent);
             finish();
         }

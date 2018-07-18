@@ -37,8 +37,9 @@ public class BalanceAdapter extends ArrayAdapter<EthereumBalance> {
 
         EthereumBalance rowItem = getItem(position);
         if (isIconVisible) {
-            ImageView imgSymbol = convertView.findViewById(R.id.imgSymbol);
-            imgSymbol.setImageResource(Utils.getResourceId(context, rowItem.getSymbol().toLowerCase()));
+            final ImageView imgSymbol = convertView.findViewById(R.id.imgSymbol);
+            final int resId = Utils.getResourceId(context, rowItem.getSymbol().toLowerCase());
+            imgSymbol.setImageResource(resId > 0 ? resId : R.mipmap.eth);
         }
 
         return convertView;
@@ -51,7 +52,8 @@ public class BalanceAdapter extends ArrayAdapter<EthereumBalance> {
         EthereumBalance rowItem = getItem(position);
         ImageView imgSymbol = view.findViewById(R.id.imgSymbol);
         TextView txtBalance = view.findViewById(R.id.txtBalance);
-        imgSymbol.setImageResource(Utils.getResourceId(context, rowItem.getSymbol().toLowerCase()));
+        final int resId = Utils.getResourceId(context, rowItem.getSymbol().toLowerCase());
+        imgSymbol.setImageResource(resId > 0 ? resId : R.mipmap.eth);
         txtBalance.setText(context.getString(R.string.token_balance, rowItem.getBalance(), rowItem.getSymbol()));
 
         return view;

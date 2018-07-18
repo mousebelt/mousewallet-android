@@ -15,6 +15,7 @@ public class RWApplication extends Application {
     private static RWApplication mApp;
     private AppPreferences mPreferences;
     private String mSeed;
+    private byte[] mBSeed;
 
     private NRLBitcoin mBitcoin;
     private NRLEthereum mEthereum;
@@ -52,6 +53,14 @@ public class RWApplication extends Application {
 
     public void setSeed(String seed) {
         mSeed = seed;
+    }
+
+    public byte[] getBSeed() {
+        return mBSeed;
+    }
+
+    public void setBSeed(byte[] mBSeed) {
+        this.mBSeed = mBSeed;
     }
 
     public NRLBitcoin getBitcoin() {

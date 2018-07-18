@@ -11,9 +11,9 @@ import module.nrlwallet.com.nrlwalletsdk.abstracts.NRLCallback;
 
 public class WalletUtils {
 
-    public static String getBitcoinWallet(byte[] bSeed, NRLCallback tCallback) {
+    public static String getBitcoinWallet(byte[] bSeed, boolean exist, NRLCallback tCallback) {
         final NRLBitcoin nrlBitcoin = new NRLBitcoin(bSeed, RWApplication.getApp().getPreferences().getMnemonic());
-        nrlBitcoin.getTransctions(tCallback);
+        nrlBitcoin.getTransactions(tCallback);
         RWApplication.getApp().setBitcoin(nrlBitcoin);
         return nrlBitcoin.getBalance();
     }
@@ -40,7 +40,7 @@ public class WalletUtils {
     }
 
     public static void getStellarWallet(byte[] bSeed, NRLCallback bCallback, NRLCallback tCallback) {
-        final NRLStellar nrlStellar = new NRLStellar(bSeed);
+        final NRLStellar nrlStellar = new NRLStellar(bSeed, RWApplication.getApp().getSeed());
         nrlStellar.getBalance(bCallback);
         nrlStellar.getTransactions(tCallback);
         RWApplication.getApp().setStellar(nrlStellar);
