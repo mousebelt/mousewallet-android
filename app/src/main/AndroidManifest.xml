@@ -62,6 +62,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="screenOrientation" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="module.nrlwallet"

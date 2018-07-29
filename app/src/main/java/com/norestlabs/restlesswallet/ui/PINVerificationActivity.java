@@ -106,7 +106,7 @@ public class PINVerificationActivity extends AppCompatActivity implements Number
             RWApplication.getApp().setBSeed(bSeed);
 
             Intent intent = new Intent(this, MainActivity_.class);
-            intent.putExtra("exist", mSavedPinCode != null);
+            intent.putExtra("is_exist", mSavedPinCode != null);
             startActivity(intent);
             finish();
         }, 0);

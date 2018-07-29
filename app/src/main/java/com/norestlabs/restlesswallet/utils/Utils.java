@@ -84,23 +84,4 @@ public class Utils {
             return e.getMessage();
         }
     }
-
-    public static String getCoinNameFromSymbol(final String symbol) {
-        switch (symbol) {
-            case "BTC":
-                return "Bitcoin";
-            case "ETH":
-                return "Ethereum";
-            case "LTC":
-                return "Litecoin";
-            case "NEO":
-                return "Neo";
-            case "OMG":
-                return "OmiseGo";
-            case "STL":
-                return "Stellar";
-            default:
-                return "";
-        }
-    }
 }

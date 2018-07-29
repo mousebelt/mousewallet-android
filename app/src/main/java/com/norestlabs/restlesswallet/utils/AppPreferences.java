@@ -19,6 +19,7 @@ public class AppPreferences {
 
     public static final String PREFERENCE_NAME = "RESTLESS_WALLET_PREFERENCE";
     private static final String PREFERENCE_MNEMONIC = "MNEMONIC";
+    private static final String PREFERENCE_IS_SAME_MNEMONIC = "IS_SAME_MNEMONIC";
     private static final String PREFERENCE_PINCODE = "PINCODE";
 
     private static final String CHARSET = "UTF-8";
@@ -99,6 +100,8 @@ public class AppPreferences {
             preferences.edit().remove(PREFERENCE_MNEMONIC).apply();
             return false;
         } else {
+            final String oldMnemonic = getMnemonic();
+            preferences.edit().putBoolean(PREFERENCE_IS_SAME_MNEMONIC, oldMnemonic != null && value.equals(oldMnemonic)).apply();
             preferences.edit().putString(PREFERENCE_MNEMONIC, encrypt(value, key)).apply();
             return true;
         }
@@ -110,8 +113,15 @@ public class AppPreferences {
         if (encrypted == null || key == null) {
             return null;
         } else {
-            return decrypt(encrypted, key);
+            //TODO: should be removed
+//            return "target crater noble virus album surge kidney tennis snow click faculty robust";//for ETH Test
+            return "garbage alone hidden dizzy account novel essay cotton nephew first vital drink";//for LTC Test
+//            return decrypt(encrypted, key);
         }
+    }
+
+    public boolean isSameMnemonic() {
+        return preferences.getBoolean(PREFERENCE_IS_SAME_MNEMONIC, false);
     }
 
     private String toKey(String pincode) {

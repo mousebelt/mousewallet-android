@@ -2,11 +2,13 @@ package com.norestlabs.restlesswallet.ui.fragment;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
 import com.norestlabs.restlesswallet.R;
+import com.norestlabs.restlesswallet.RWApplication;
 import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.ui.MainActivity;
 import com.norestlabs.restlesswallet.ui.TransactionActivity_;
@@ -25,10 +27,15 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     @ViewById
+    public SwipeRefreshLayout refreshLayout;
+
+    @ViewById
     RecyclerView recyclerView;
 
     CoinAdapter mAdapter;
     List<CoinModel> mModels;
+
+    MainActivity activity;
 
     private static final Comparator<CoinModel> COMPARATOR = new SortedListAdapter.ComparatorBuilder<CoinModel>()
             .setOrderForModel(CoinModel.class, (a, b) -> a.getSymbol().compareTo(b.getSymbol()))
@@ -36,7 +43,12 @@ public class HomeFragment extends Fragment {
 
     @AfterViews
     void init() {
-        mAdapter = new CoinAdapter(getContext(), CoinModel.class, COMPARATOR, model -> {
+        activity = (MainActivity)getActivity();
+        refreshLayout.setOnRefreshListener(() -> {
+            activity.sync();
+        });
+
+        mAdapter = new CoinAdapter(activity, CoinModel.class, COMPARATOR, model -> {
             Intent intent = new Intent(getContext(), TransactionActivity_.class);
             intent.putExtra("data", model);
             startActivity(intent);
@@ -46,17 +58,21 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
 
         initData();
+
+        if (RWApplication.getApp().getBitcoin() == null) {
+            activity.sync();
+        }
     }
 
     private void initData() {
         mModels = new ArrayList<>();
         mModels.add(new CoinModel("BTC", "Bitcoin", Global.btcBalance, R.mipmap.btc));
-        mModels.add(new CoinModel("ETH", "Ethereum", Global.ethBalance, R.mipmap.eth));
+        mModels.add(new CoinModel("ETH", "Ethereum", 0/*Global.ethBalance*/, R.mipmap.eth));//ignoring because eth has tokens
         mModels.add(new CoinModel("LTC", "Litecoin", Global.ltcBalance, R.mipmap.ltc));
         mModels.add(new CoinModel("NEO", "Neo", Global.neoBalance, R.mipmap.neo));
         mModels.add(new CoinModel("STL", "Stellar", Global.stlBalance, R.mipmap.stl));
         mAdapter.edit()
-                .replaceAll(filter(mModels, ((MainActivity)getActivity()).searchView.getQuery().toString()))
+                .replaceAll(filter(mModels, activity.searchView.getQuery().toString()))
                 .commit();
     }
 
@@ -81,9 +97,7 @@ public class HomeFragment extends Fragment {
     public void onBalanceChange(double balance, int index) {
         mModels.get(index).setBalance(balance);
         if (mAdapter != null && getActivity() != null) {
-            getActivity().runOnUiThread(() -> {
-                mAdapter.notifyDataSetChanged();
-            });
+            getActivity().runOnUiThread(() -> mAdapter.notifyDataSetChanged());
         }
     }
 

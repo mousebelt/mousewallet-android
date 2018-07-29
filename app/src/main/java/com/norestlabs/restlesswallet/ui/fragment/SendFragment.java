@@ -2,6 +2,7 @@ package com.norestlabs.restlesswallet.ui.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import com.norestlabs.restlesswallet.models.CoinModel;
 import com.norestlabs.restlesswallet.models.response.BitcoinFeeResponse;
 import com.norestlabs.restlesswallet.models.response.EtherChainResponse;
 import com.norestlabs.restlesswallet.models.wallet.EthereumBalance;
+import com.norestlabs.restlesswallet.models.wallet.EthereumToken;
 import com.norestlabs.restlesswallet.ui.TransactionActivity;
 import com.norestlabs.restlesswallet.ui.adapter.BalanceAdapter;
 import com.norestlabs.restlesswallet.utils.Constants;
@@ -50,7 +53,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @EFragment(R.layout.fragment_send)
-public class SendFragment extends Fragment {
+public class SendFragment extends Fragment implements NRLCallback {
 
     @ViewById
     ImageView imgSymbol, imgArrow;
@@ -70,11 +73,34 @@ public class SendFragment extends Fragment {
     @ViewById
     Button btnSend;
 
+    @ViewById
+    ProgressBar progressBar;
+
     BalanceAdapter adapterBalance;
 
-    CoinModel coinModel;
-    double conversionRate, balance;
-    double transactionFee[] = {0, 0, 0};
+    private CoinModel coinModel;
+    private EthereumToken ethereumToken;
+    private double conversionRate, balance;
+    private double transactionFee[] = {0, 0, 0};
+
+    private class SendTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            final double fromValue = Double.valueOf(edtSymbolFrom.getText().toString());
+            send(fromValue);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+        }
+    }
 
     @AfterViews
     void init() {
@@ -107,9 +133,7 @@ public class SendFragment extends Fragment {
             Toast.makeText(getContext(), R.string.swap_amount_empty_error, Toast.LENGTH_SHORT).show();
             return;
         }
-        final double fromValue = Double.valueOf(edtSymbolFrom.getText().toString());
-        final double toValue = Double.valueOf(edtSymbolTo.getText().toString());
-        send(fromValue);
+        new SendTask().execute();
     }
 
     @TextChange(R.id.edtSymbolFrom)
@@ -121,7 +145,7 @@ public class SendFragment extends Fragment {
             amount = -1;
         }
         if (edtSymbolFrom.hasFocus()) {
-            edtSymbolTo.setText(amount < 0 ? "" : String.format(Locale.US, "%.3f", amount * conversionRate));
+            edtSymbolTo.setText(amount < 0 ? "" : String.format(Locale.US, "%f", amount * conversionRate));
         }
         updateFeeView();
     }
@@ -135,7 +159,7 @@ public class SendFragment extends Fragment {
             amount = -1;
         }
         if (edtSymbolTo.hasFocus() && conversionRate > 0) {
-            edtSymbolFrom.setText(amount < 0 ? "" : String.format(Locale.US, "%.3f", amount / conversionRate));
+            edtSymbolFrom.setText(amount < 0 ? "" : String.format(Locale.US, "%f", amount / conversionRate));
         }
     }
 
@@ -152,12 +176,12 @@ public class SendFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (result.getContents() == null) {
-                Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
-            } else {
-                edtAddress.setText(result.getContents());
+        if (requestCode == IntentIntegrator.REQUEST_CODE) {
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            if (result != null) {
+                if (result.getContents() != null) {//null means cancelled
+                    edtAddress.setText(result.getContents());
+                }
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -174,10 +198,21 @@ public class SendFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 final EthereumBalance balance = Global.ethBalances.get(position);
-                imgSymbol.setImageResource(Utils.getResourceId(getContext(), balance.getSymbol().toLowerCase()));
+                final int resId = Utils.getResourceId(getContext(), balance.getSymbol().toLowerCase());
+                imgSymbol.setImageResource(resId > 0 ? resId : R.mipmap.eth);
                 txtSymbol.setText(balance.getSymbol());
-                txtCoin.setText("(" + Utils.getCoinNameFromSymbol(balance.getSymbol()) + ")");
                 txtBalance.setText(getString(R.string.current_balance_value, balance.getBalance(), balance.getSymbol()));
+
+                SendFragment.this.balance = balance.getBalance();
+
+                for (final EthereumToken token : Constants.ETH_TOKENS) {
+                    if (token.getSymbol().equals(balance.getSymbol())) {
+                        SendFragment.this.ethereumToken = token;
+                        final String name = token.getName();
+                        if (!name.isEmpty()) txtCoin.setText("(" + name + ")");
+                        return;
+                    }
+                }
             }
 
             @Override
@@ -188,6 +223,7 @@ public class SendFragment extends Fragment {
     }
 
     private void updateFeeView() {
+        if (edtSymbolFrom ==null) return;
         double amount;
         try {
             amount = Double.valueOf(edtSymbolFrom.getText().toString());
@@ -207,7 +243,7 @@ public class SendFragment extends Fragment {
     }
 
     private void showToastMessage(String message) {
-        if (isVisible()) Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        if (isVisible()) Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     private void getUSDConversionRate() {
@@ -216,25 +252,27 @@ public class SendFragment extends Fragment {
                 case "BTC":
                     conversionRate = Global.marketInfo.get(0).getUSDPrice();
                     //TODO: should be removed
-                    edtAddress.setText("134JaVTn6ZcjuSnBZaPHdvw7rkZJ8Cwcg9");
+//                    edtAddress.setText("1Ncbaw4SbQt2UJYhA3fJVzBg43Zwdk9w5L");
                     break;
                 case "ETH":
                     conversionRate = Global.marketInfo.get(1).getUSDPrice();
                     //TODO: should be removed
-                    edtAddress.setText("0xe9e9bb953200622e8d3ce5a01dd6f608bcde3b41");
+//                    edtAddress.setText("0x9aFEE7Af06290771F589381730312939c2657239");
                     break;
                 case "LTC":
                     conversionRate = Global.marketInfo.get(2).getUSDPrice();
                     //TODO: should be removed
-                    edtAddress.setText("LeR3qsGMvP3bzQux7hj3LLoKfdDSHdtFo8");
+//                    edtAddress.setText("LeR3qsGMvP3bzQux7hj3LLoKfdDSHdtFo8");
+                    break;
                 case "NEO":
                     conversionRate = Global.marketInfo.get(3).getUSDPrice();
                     //TODO: should be removed
-                    edtAddress.setText("AWFwJFrd15MxibXi3oGd6FxQRsvs6G8kna");
+//                    edtAddress.setText("AQhwKFBVN1DicQkdqRaDGaDbxhXQEKzzxX");
+                    break;
                 case "STL":
                     conversionRate = Global.marketInfo.get(4).getUSDPrice();
                     //TODO: should be removed
-                    edtAddress.setText("GC2SYM6Q67THT5J6BZ4A7FFZ4YZB6COTLIXNYTYAXRIJFEHSB7HPWVUU");
+//                    edtAddress.setText("GB6YPGW5JFMMP2QB2USQ33EUWTXVL4ZT5ITUNCY3YKVWOJPP57CANOF3");
                     break;
                 default:
                     return;
@@ -320,114 +358,71 @@ public class SendFragment extends Fragment {
         final String address = edtAddress.getText().toString();
         final String memo = edtMemo.getText().toString();
         final long fee = (long)transactionFee[seekBar.getProgress()];
+
         switch (coinModel.getSymbol()) {
             case "BTC":
                 final NRLBitcoin nrlBitcoin = RWApplication.getApp().getBitcoin();
                 if (nrlBitcoin != null) {
-                    nrlBitcoin.createTransaction((long)amount, address, new NRLCallback() {
-                        @Override
-                        public void onFailure(Throwable t) {
-
-                        }
-
-                        @Override
-                        public void onResponse(String response) {
-
-                        }
-
-                        @Override
-                        public void onResponseArray(JSONArray jsonArray) {
-
-                        }
-                    });
+                    nrlBitcoin.setTransaction((long)(amount * Math.pow(10, 8)), address, this);
                 }
                 break;
             case "ETH":
                 final NRLEthereum nrlEthereum = RWApplication.getApp().getEthereum();
                 if (nrlEthereum != null) {
-                    nrlEthereum.createTransaction(String.valueOf(amount), address, memo, fee, new NRLCallback() {
-                        @Override
-                        public void onFailure(Throwable t) {
-
-                        }
-
-                        @Override
-                        public void onResponse(String response) {
-
-                        }
-
-                        @Override
-                        public void onResponseArray(JSONArray jsonArray) {
-
-                        }
-                    });
+                    final String value = String.valueOf((long)(amount * Math.pow(10, ethereumToken.getDecimal())));
+                    nrlEthereum.createTransaction(value, address, txtSymbol.getText().toString(), fee, ethereumToken.getAddress(), this);
                 }
                 break;
             case "LTC":
                 final NRLLite nrlLite = RWApplication.getApp().getLitecoin();
                 if (nrlLite != null) {
-                    nrlLite.createTransaction(String.valueOf(amount), address, memo, fee, new NRLCallback() {
-                        @Override
-                        public void onFailure(Throwable t) {
-
-                        }
-
-                        @Override
-                        public void onResponse(String response) {
-
-                        }
-
-                        @Override
-                        public void onResponseArray(JSONArray jsonArray) {
-
-                        }
-                    });
+                    nrlLite.sendBalanceFromBR(address, String.valueOf(amount * Math.pow(10, 8)), this);
                 }
                 break;
             case "NEO":
                 final NRLNeo nrlNeo = RWApplication.getApp().getNeo();
                 if (nrlNeo != null) {
-                    nrlNeo.createTransaction(amount, address, memo, fee, new NRLCallback() {
-                        @Override
-                        public void onFailure(Throwable t) {
-
-                        }
-
-                        @Override
-                        public void onResponse(String response) {
-
-                        }
-
-                        @Override
-                        public void onResponseArray(JSONArray jsonArray) {
-
-                        }
-                    });
+                    nrlNeo.createTransaction(amount, address, memo, fee, this);
                 }
                 break;
             case "STL":
                 final NRLStellar nrlStellar = RWApplication.getApp().getStellar();
                 if (nrlStellar != null) {
-                    nrlStellar.createTransaction((long)amount, address, new NRLCallback() {
-                        @Override
-                        public void onFailure(Throwable t) {
-
-                        }
-
-                        @Override
-                        public void onResponse(String response) {
-
-                        }
-
-                        @Override
-                        public void onResponseArray(JSONArray jsonArray) {
-
-                        }
-                    });
+                    nrlStellar.SendTransaction((long)amount, address, this);
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
+        if (getActivity() == null) return;
+        getActivity().runOnUiThread(() -> {
+            progressBar.setVisibility(View.GONE);
+            showToastMessage(t.getMessage());
+        });
+    }
+
+    @Override
+    public void onResponse(String response) {
+        if (getActivity() == null) return;
+        getActivity().runOnUiThread(() -> {
+            progressBar.setVisibility(View.GONE);
+            showToastMessage(response);
+            if (!response.toLowerCase().contains("error")) {
+                getActivity().finish();
+            }
+        });
+    }
+
+    @Override
+    public void onResponseArray(JSONArray jsonArray) {
+        if (getActivity() == null) return;
+        getActivity().runOnUiThread(() -> {
+            progressBar.setVisibility(View.GONE);
+            showToastMessage(jsonArray.toString());
+        });
     }
 }

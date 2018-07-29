@@ -220,7 +220,7 @@ public class SwapFragment extends Fragment implements NRLCallback {
                         pairedBalance = String.valueOf(Global.btcBalance);
                         break;
                     case "ETH":
-                        pairedBalance = String.valueOf(Global.ethBalance);
+                        pairedBalance = "0";//String.valueOf(Global.ethBalance);
                         break;
                     case "LTC":
                         pairedBalance = String.valueOf(Global.ltcBalance);
@@ -455,6 +455,12 @@ public class SwapFragment extends Fragment implements NRLCallback {
                 break;
         }
 
+        if (TextUtils.isEmpty(pairedAddress)) {
+            progressBar.setVisibility(View.GONE);
+            showToastMessage("Paired Address is empty!");
+            return;
+        }
+
         Call<ShiftResponse> call = ApiClient.getInterface(Constants.SHAPESHIFT_URL)
                 .shift(new ShiftRequest(pairedAddress, baseCoin.getSymbol().toLowerCase() + "_" + selectedSymbol.toLowerCase(), activity.selectedAddress));
         call.enqueue(new Callback<ShiftResponse>() {
@@ -493,13 +499,13 @@ public class SwapFragment extends Fragment implements NRLCallback {
                 final NRLEthereum nrlEthereum = RWApplication.getApp().getEthereum();
                 if (nrlEthereum != null) {
                     final String value = String.valueOf((long)(amount * Math.pow(10, 18)));
-                    nrlEthereum.createTransaction(value, address, memo, fee, this);
+                    nrlEthereum.createTransaction(value, address, txtSymbolFrom.getText().toString(), fee, null, this);
                 }
                 break;
             case "LTC":
                 final NRLLite nrlLite = RWApplication.getApp().getLitecoin();
                 if (nrlLite != null) {
-                    nrlLite.createTransaction(String.valueOf(amount), address, memo, fee, this);
+                    nrlLite.sendBalanceFromBR(address, String.valueOf(amount * Math.pow(10, 8)), this);
                 }
                 break;
             case "NEO":
@@ -534,6 +540,9 @@ public class SwapFragment extends Fragment implements NRLCallback {
         getActivity().runOnUiThread(() -> {
             progressBar.setVisibility(View.GONE);
             showToastMessage(response);
+            if (!response.toLowerCase().contains("error")) {
+                getActivity().finish();
+            }
         });
     }
 

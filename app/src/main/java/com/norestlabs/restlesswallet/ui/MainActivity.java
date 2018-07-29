@@ -1,5 +1,6 @@
 package com.norestlabs.restlesswallet.ui;
 
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -13,8 +14,6 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -24,7 +23,9 @@ import com.norestlabs.restlesswallet.RWApplication;
 import com.norestlabs.restlesswallet.api.ApiClient;
 import com.norestlabs.restlesswallet.models.CoinMarketCap;
 import com.norestlabs.restlesswallet.models.response.ConversionResponse;
+import com.norestlabs.restlesswallet.models.response.LitecoinResponse;
 import com.norestlabs.restlesswallet.models.wallet.EthereumBalance;
+import com.norestlabs.restlesswallet.models.wallet.LitecoinTransaction;
 import com.norestlabs.restlesswallet.models.wallet.Transaction;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment;
 import com.norestlabs.restlesswallet.ui.fragment.HomeFragment_;
@@ -37,10 +38,12 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import module.nrlwallet.com.nrlwalletsdk.abstracts.LTCCallback;
 import module.nrlwallet.com.nrlwalletsdk.abstracts.NRLCallback;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,17 +65,16 @@ public class MainActivity extends AppCompatActivity
     @ViewById
     public SearchView searchView;
 
-    @ViewById
-    ProgressBar progressBar;
-
     private HomeFragment homeFragment;
     private int selectedFragmentIndex = 0;
+    private boolean isSyncing, isLTCSyncing;
 
-    private class GenerateTask extends AsyncTask<Void, Void, Void> {
+    private class SyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
+            isSyncing = true;
+            if (homeFragment.refreshLayout != null) homeFragment.refreshLayout.setRefreshing(true);
         }
 
         @Override
@@ -83,7 +85,8 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            progressBar.setVisibility(View.GONE);
+            isSyncing = false;
+            if (/*!isLTCSyncing &&*/ homeFragment.refreshLayout != null) homeFragment.refreshLayout.setRefreshing(false);
         }
     }
 
@@ -105,10 +108,10 @@ public class MainActivity extends AppCompatActivity
         loadFragment(selectedFragmentIndex);
 
         getUSDConversionRate();
+    }
 
-        if (RWApplication.getApp().getBitcoin() == null) {
-            new GenerateTask().execute();
-        }
+    public void sync() {
+        new SyncTask().execute();
     }
 
     private void getUSDConversionRate() {
@@ -147,10 +150,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void generateWallet() {
-        final byte[] bSeed = Utils.stringToBytes(RWApplication.getApp().getSeed());
+        final byte[] bSeed = RWApplication.getApp().getBSeed();
+        final String mnemonic = RWApplication.getApp().getPreferences().getMnemonic();
+        final boolean isExist = getIntent().getBooleanExtra("is_exist", false);
 
-        //ETH
-        WalletUtils.getEthereumWallet(bSeed, new NRLCallback() {
+        syncETH(bSeed, mnemonic);
+        syncSTL(bSeed);
+        syncNEO(bSeed, mnemonic);
+        syncLTC(bSeed, mnemonic, isExist);
+//        syncBTC(bSeed, mnemonic, isExist);
+    }
+
+    private void syncETH(final byte[] bSeed, final String mnemonic) {
+        WalletUtils.getEthereumWallet(bSeed, mnemonic, new NRLCallback() {
             @Override
             public void onFailure(Throwable t) {
 
@@ -163,6 +175,13 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onResponseArray(JSONArray jsonArray) {
                 Global.ethBalances = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<EthereumBalance>>(){}.getType());
+                for (final EthereumBalance balance : Global.ethBalances) {
+                    if (balance.getSymbol().equals("ETH")) {
+                        Global.ethBalance = balance.getBalance();
+                        homeFragment.onBalanceChange(balance.getBalance(), 1);
+                        return;
+                    }
+                }
             }
         }, new NRLCallback() {
             @Override
@@ -180,72 +199,9 @@ public class MainActivity extends AppCompatActivity
                 Global.ethTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
             }
         });
+    }
 
-        //LTC
-        WalletUtils.getLitecoinWallet(bSeed, new NRLCallback() {
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-            @Override
-            public void onResponse(String response) {//LTC Balance
-                Global.ltcBalance = Double.valueOf(response);
-                homeFragment.onBalanceChange(Global.ltcBalance, 2);
-            }
-            @Override
-            public void onResponseArray(JSONArray jsonArray) {
-
-            }
-        }, new NRLCallback() {
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-
-            @Override
-            public void onResponse(String response) {
-
-            }
-
-            @Override
-            public void onResponseArray(JSONArray jsonArray) {//LTC Transaction
-                Global.ltcTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
-            }
-        });
-
-        //NEO
-        WalletUtils.getNeoWallet(bSeed, new NRLCallback() {
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-            @Override
-            public void onResponse(String response) {//NEO Balance
-                Global.neoBalance = Double.valueOf(response);
-                homeFragment.onBalanceChange(Global.neoBalance, 3);
-            }
-            @Override
-            public void onResponseArray(JSONArray jsonArray) {
-
-            }
-        }, new NRLCallback() {
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-
-            @Override
-            public void onResponse(String response) {
-
-            }
-
-            @Override
-            public void onResponseArray(JSONArray jsonArray) {//NEO Transaction
-                Global.neoTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
-            }
-        });
-
-        //STL
+    private void syncSTL(final byte[] bSeed) {
         WalletUtils.getStellarWallet(bSeed, new NRLCallback() {
             @Override
             public void onFailure(Throwable t) {
@@ -280,9 +236,73 @@ public class MainActivity extends AppCompatActivity
                 Global.stlTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
             }
         });
+    }
 
-        //BTC
-        final String balance = WalletUtils.getBitcoinWallet(bSeed, new NRLCallback() {
+    private void syncNEO(final byte[] bSeed, final String mnemonic) {
+        WalletUtils.getNeoWallet(Utils.stringToBytes(RWApplication.getApp().getSeed()), mnemonic, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+            @Override
+            public void onResponse(String response) {//NEO Balance
+                Global.neoBalance = Double.valueOf(response);
+                homeFragment.onBalanceChange(Global.neoBalance, 3);
+            }
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {
+
+            }
+        }, new NRLCallback() {
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
+            public void onResponseArray(JSONArray jsonArray) {//NEO Transaction
+                Global.neoTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
+            }
+        });
+    }
+
+    private void syncLTC(final byte[] bSeed, final String mnemonic, final boolean isExist) {
+        isLTCSyncing = true;
+        runOnUiThread(() -> {
+            WalletUtils.getLitecoinWallet(bSeed, mnemonic, isExist, this, new LTCCallback() {
+                @Override
+                public void onResponse(JSONObject jsonObject) {
+                    isLTCSyncing = false;
+                    if (!isSyncing) runOnUiThread(() -> homeFragment.refreshLayout.setRefreshing(false));
+                    final LitecoinResponse response = new Gson().fromJson(jsonObject.toString(), new TypeToken<LitecoinResponse>(){}.getType());
+                    Global.ltcBalance = response.getBalance();
+                    homeFragment.onBalanceChange(Global.ltcBalance, 2);
+
+                    Global.ltcTransactions = new ArrayList<>();
+                    for (LitecoinTransaction transaction : response.getTransactions()) {
+                        Global.ltcTransactions.add(new Transaction() {{
+                            setTxid(transaction.getTxid());
+                            setValue(transaction.getValue() * (transaction.isReceived() ? 1 : -1));
+                        }});
+                    }
+                }
+
+                @Override
+                public void onFailed(String response) {
+                    isLTCSyncing = false;
+                    if (!isSyncing) runOnUiThread(() -> homeFragment.refreshLayout.setRefreshing(false));
+                }
+            });
+        });
+    }
+
+    private void syncBTC(final byte[] bSeed, final String mnemonic, final boolean isExist) {
+        final String balance = WalletUtils.getBitcoinWallet(bSeed, mnemonic, isExist, new NRLCallback() {
             @Override
             public void onFailure(Throwable t) {
 
@@ -298,7 +318,7 @@ public class MainActivity extends AppCompatActivity
                 Global.btcTransactions = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Transaction>>(){}.getType());
             }
         });
-        Global.btcBalance = Double.valueOf(balance);//BTC Balance
+        Global.btcBalance = Double.valueOf(balance) / Math.pow(10, 8);//balance unit: satoshi
         homeFragment.onBalanceChange(Global.btcBalance, 0);
     }
 
@@ -320,8 +340,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // sync action bar item clicks here. The action bar will
+        // automatically sync clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
@@ -344,11 +364,8 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(this, AboutActivity_.class);
             startActivity(intent);
         } else if (id == R.id.nav_settings) {
-            RWApplication.getApp().getPreferences().setPin(null);
-            RWApplication.getApp().getPreferences().setMnemonic(null);
-            intent = new Intent(this, TutorialActivity_.class);
-            startActivity(intent);
-            finish();
+            intent = new Intent(this, SettingsActivity_.class);
+            startActivityForResult(intent, 101);
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -379,5 +396,27 @@ public class MainActivity extends AppCompatActivity
             homeFragment.onQueryTextChange(query);
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 101 && resultCode == RESULT_OK) {
+            final boolean isLoggingOut = data.getBooleanExtra("logout", false);
+            if (isLoggingOut) {
+                logout();
+            }
+        }
+    }
+
+    private void logout() {
+        if (Constants.USE_SYSTEM_SERVICE_TO_REMOVE_PREFERENCE) {
+            ((ActivityManager)getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData();
+        } else {
+            RWApplication.getApp().getPreferences().setPin(null);
+//            RWApplication.getApp().getPreferences().setMnemonic(null);//commenting to check if same mnemonic when login
+        }
+        Intent intent = new Intent(this, TutorialActivity_.class);
+        startActivity(intent);
+        finish();
     }
 }
